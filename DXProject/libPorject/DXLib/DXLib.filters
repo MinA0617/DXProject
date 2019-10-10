@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{9f51cf41-185f-4896-acc2-946dbd4bfa4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Standard">
+      <UniqueIdentifier>{60b263be-32aa-43e5-94fd-f9527bd92364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{c12e36a1-0bb6-43fe-b37a-8ab7388f8f83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{2eae3940-99fe-45af-9c74-95249b86101d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{54912995-4cda-443e-9bb9-2376537f666f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MButtonCtl.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MGauge.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MIcon.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MList.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MNumber.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MPlayUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MUiComponent.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MTimerUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MBitmap.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MBitmapMgr.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MObject.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MSound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MSoundMgr.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MTimer.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MInput.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MCore.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MWindow.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MCamera.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MWait.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="MPanel.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MScene.cpp">
+      <Filter>Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="MTextInput.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MButtonCtl.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MGauge.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MIcon.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MList.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MPlayUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MNumber.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MTimerUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MUiComponent.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MBitmap.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="MBitmapMgr.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="MObject.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="MSound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MSoundMgr.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MTimer.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MInput.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MCore.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MWait.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MAngle.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MCollision.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MWindow.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MCamera.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MPanel.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MScene.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MStd.h">
+      <Filter>Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="MTextInput.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+struct VSSPLINE_OUTPUT // 444 please
+{
+	float4 Position			: SV_POSITION;	// reservation spell
+};
+
+float4 PS(VSSPLINE_OUTPUT data) : SV_TARGET
+{
+	return float4(1,0,0,1);
+}

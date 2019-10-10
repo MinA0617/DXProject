@@ -1,0 +1,16 @@
+Texture2D g_txDiffuse : register(t0);
+Texture2D g_txMask : register(t1);
+
+SamplerState s0 : register(s0);
+
+struct PS3D_INPUT
+{
+	float4 Position			: SV_POSITION;	// simetic
+	float2 UVPos			: TEXCOORD0;	// simetic
+};
+
+float4 PS(PS3D_INPUT data) : SV_TARGET
+{
+	//float4 color = g_txDiffuse.Sample(s0, data.UVPos);
+	return float4(1,1,1,1);
+}

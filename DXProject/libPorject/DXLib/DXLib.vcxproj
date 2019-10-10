@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{44AB66B9-841A-4CD4-9F7B-6A001B3E377F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>lib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>.</OutDir>
+    <IntDir />
+    <TargetName>$(ProjectName)_D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>.</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$</IncludePath>
+    <IntDir />
+    <TargetName>$(ProjectName)_D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>.</OutDir>
+    <TargetName>$(ProjectName)_R</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>.</OutDir>
+    <TargetName>$(ProjectName)_R</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <OutputFile>DXLib_D.lib</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>copy "*.h" "../../include"
+copy "*.hpp" "../../include"
+copy "fmod_vc.lib" "../../fmod"
+copy "fmod.dll" "../../fmod"
+md "../../Debug/DXLib_0/"
+copy "DXLib_D.lib" "../../Debug/DXLib_0"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../include/dxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "*.h" "../../include"
+copy "*.hpp" "../../include"
+copy "fmod_vc.lib" "../../lib/fmod"
+copy "fmod.dll" "../../lib/fmod"
+md "../../lib/Debug/DXLib_0/"
+copy "DXLib_D.lib" "../../lib/Debug/DXLib_0"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <OutputFile>DXLib_D.lib</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderType>Vertex</ShaderType>
+      <EntryPointName>VS</EntryPointName>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "*.h" "../../include"
+copy "*.hpp" "../../include"
+copy "fmod_vc.lib" "../../fmod"
+copy "fmod.dll" "../../fmod"
+md "../../Release/DXLib_0/"
+copy "DXLib_R.lib" "../../Release/DXLib_0"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <OutputFile>DXLib_R.lib</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "*.h" "../../include"
+copy "*.hpp" "../../include"
+copy "fmod_vc.lib" "../../lib/fmod"
+copy "fmod.dll" "../../fmod"
+md "../../lib/Release/DXLib_0/"
+copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <OutputFile>DXLib_R.lib</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="M2DObject.cpp" />
+    <ClCompile Include="M2DScreen.cpp" />
+    <ClCompile Include="M3DBone.cpp" />
+    <ClCompile Include="MKeyAnimation.cpp" />
+    <ClCompile Include="MKeyAnimationMgr.cpp" />
+    <ClCompile Include="MKeyData.cpp" />
+    <ClCompile Include="MMaterial.cpp" />
+    <ClCompile Include="MMaterialMgr.cpp" />
+    <ClCompile Include="M3DModel.cpp" />
+    <ClCompile Include="M3DObject.cpp" />
+    <ClCompile Include="M3DObjectMgr.cpp" />
+    <ClCompile Include="M3DSpline.cpp" />
+    <ClCompile Include="MBoundingbox.cpp" />
+    <ClCompile Include="MCamera.cpp" />
+    <ClCompile Include="MCameraMgr.cpp" />
+    <ClCompile Include="MCore.cpp" />
+    <ClCompile Include="MCreate.cpp" />
+    <ClCompile Include="M3DMaterial.cpp" />
+    <ClCompile Include="MDevice.cpp" />
+    <ClCompile Include="MDirectLight.cpp" />
+    <ClCompile Include="MDxState.cpp" />
+    <ClCompile Include="MDXWirte.cpp" />
+    <ClCompile Include="MFiledObj.cpp" />
+    <ClCompile Include="MFPSCamera.cpp" />
+    <ClCompile Include="MFreeCamera.cpp" />
+    <ClCompile Include="MFrustum.cpp" />
+    <ClCompile Include="MGrid.cpp" />
+    <ClCompile Include="MGroup.cpp" />
+    <ClCompile Include="MInput.cpp" />
+    <ClCompile Include="MLight.cpp" />
+    <ClCompile Include="MLightMgr.cpp" />
+    <ClCompile Include="MMesh.cpp" />
+    <ClCompile Include="MObject.cpp" />
+    <ClCompile Include="MMeshMgr.cpp" />
+    <ClCompile Include="MOmniLight.cpp" />
+    <ClCompile Include="MParser.cpp" />
+    <ClCompile Include="MRenderTarget.cpp" />
+    <ClCompile Include="MRenderTargetMgr.cpp" />
+    <ClCompile Include="MRPGCamera.cpp" />
+    <ClCompile Include="MSkeleton.cpp" />
+    <ClCompile Include="MSkeletonMgr.cpp" />
+    <ClCompile Include="MSkyLight.cpp" />
+    <ClCompile Include="MSpotLight.cpp" />
+    <ClCompile Include="MTargetCamera.cpp" />
+    <ClCompile Include="MSound.cpp" />
+    <ClCompile Include="MSoundMgr.cpp" />
+    <ClCompile Include="MTexture.cpp" />
+    <ClCompile Include="MTextureMgr.cpp" />
+    <ClCompile Include="MTimer.cpp" />
+    <ClCompile Include="MUnit.cpp" />
+    <ClCompile Include="MWindow.cpp" />
+    <ClCompile Include="PixelShaderMgr.cpp" />
+    <ClCompile Include="VertexShaderMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="M2DObject.h" />
+    <ClInclude Include="M2DScreen.h" />
+    <ClInclude Include="M3DBone.h" />
+    <ClInclude Include="MKeyAnimation.h" />
+    <ClInclude Include="MKeyAnimationMgr.h" />
+    <ClInclude Include="MKeyData.h" />
+    <ClInclude Include="MMaterial.h" />
+    <ClInclude Include="MMaterialMgr.h" />
+    <ClInclude Include="M3DModel.h" />
+    <ClInclude Include="M3DObject.h" />
+    <ClInclude Include="M3DObjectMgr.h" />
+    <ClInclude Include="M3DSpline.h" />
+    <ClInclude Include="MAngle.h" />
+    <ClInclude Include="MAnimateStd.h" />
+    <ClInclude Include="MBoundingbox.h" />
+    <ClInclude Include="MCamera.h" />
+    <ClInclude Include="MCameraMgr.h" />
+    <ClInclude Include="MCollision.h" />
+    <ClInclude Include="MCore.h" />
+    <ClInclude Include="M3DMaterial.h" />
+    <ClInclude Include="MDevice.h" />
+    <ClInclude Include="MDirectLight.h" />
+    <ClInclude Include="MDxState.h" />
+    <ClInclude Include="MDXWirte.h" />
+    <ClInclude Include="MFiledObj.h" />
+    <ClInclude Include="MFPSCamera.h" />
+    <ClInclude Include="MFreeCamera.h" />
+    <ClInclude Include="MFrustum.h" />
+    <ClInclude Include="MGrid.h" />
+    <ClInclude Include="MGroup.h" />
+    <ClInclude Include="MInput.h" />
+    <ClInclude Include="MLight.h" />
+    <ClInclude Include="MLightMgr.h" />
+    <ClInclude Include="MMesh.h" />
+    <ClInclude Include="MObject.h" />
+    <ClInclude Include="MMeshMgr.h" />
+    <ClInclude Include="MOmniLight.h" />
+    <ClInclude Include="MParser.h" />
+    <ClInclude Include="MRenderTarget.h" />
+    <ClInclude Include="MRenderTargetMgr.h" />
+    <ClInclude Include="MRPGCamera.h" />
+    <ClInclude Include="MSkeleton.h" />
+    <ClInclude Include="MSkeletonMgr.h" />
+    <ClInclude Include="MSkyLight.h" />
+    <ClInclude Include="MSpotLight.h" />
+    <ClInclude Include="MTargetCamera.h" />
+    <ClInclude Include="MSound.h" />
+    <ClInclude Include="MSoundMgr.h" />
+    <ClInclude Include="MStd.h" />
+    <ClInclude Include="MTexture.h" />
+    <ClInclude Include="MTextureMgr.h" />
+    <ClInclude Include="MTimer.h" />
+    <ClInclude Include="MUnit.h" />
+    <ClInclude Include="MWindow.h" />
+    <ClInclude Include="PixelShaderMgr.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="VertexShaderMgr.h" />
+    <ClInclude Include="MCreate.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DXLib.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\data\Shader\PS2D.psh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PS3D.psh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PSBONE.psh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PSSPLINE.psh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS2D.vsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS3D.vsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VSCHARACTER.vsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VSSPLINE.vsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

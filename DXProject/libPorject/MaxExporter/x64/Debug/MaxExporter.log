@@ -1,0 +1,10 @@
+﻿  stdafx.cpp
+e:\kgca36\dxproject\include\maxsdk2019\paramtype.h(513): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+e:\kgca36\dxproject\include\maxsdk2019\graphicsconstants.h : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  dllmain.cpp
+e:\kgca36\dxproject\libporject\maxexporter\dllmain.cpp(53): warning C4083: '문자열'이(가) 있어야 하는데 'TODO' 식별자가 있습니다.
+e:\kgca36\dxproject\libporject\maxexporter\dllmain.cpp(59): warning C4083: '문자열'이(가) 있어야 하는데 'TODO' 식별자가 있습니다.
+  MaxExporter.cpp
+  코드를 생성하고 있습니다...
+     E:\KGCA36\DXProject\libPorject\x64\Debug\MaxExporter.lib 라이브러리 및 E:\KGCA36\DXProject\libPorject\x64\Debug\MaxExporter.exp 개체를 생성하고 있습니다.
+  MaxExporter.vcxproj -> E:\KGCA36\DXProject\libPorject\x64\Debug\MaxExporter.dll

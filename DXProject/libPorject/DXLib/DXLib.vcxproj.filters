@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="MWindow.cpp">
+      <Filter>Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="MSound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MSoundMgr.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MCore.cpp">
+      <Filter>Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="MDevice.cpp">
+      <Filter>Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="MInput.cpp">
+      <Filter>Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="MTimer.cpp">
+      <Filter>Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="MTexture.cpp">
+      <Filter>Object\Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MTextureMgr.cpp">
+      <Filter>Object\Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShaderMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShaderMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MDxState.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MCamera.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MFiledObj.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="MGroup.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="MUnit.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DModel.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="M2DObject.cpp">
+      <Filter>Object\2DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DObject.cpp">
+      <Filter>Object\3DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MFreeCamera.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DSpline.cpp">
+      <Filter>Object\3DObject\3DSpline</Filter>
+    </ClCompile>
+    <ClCompile Include="MGrid.cpp">
+      <Filter>Object\3DObject\3DSpline</Filter>
+    </ClCompile>
+    <ClCompile Include="MFPSCamera.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MCameraMgr.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MTargetCamera.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MRPGCamera.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MParser.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="MBoundingbox.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="MFrustum.cpp">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DObjectMgr.cpp">
+      <Filter>Object\3DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="M2DScreen.cpp">
+      <Filter>Object\2DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MCreate.cpp">
+      <Filter>Object\Create</Filter>
+    </ClCompile>
+    <ClCompile Include="MRenderTarget.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MRenderTargetMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MDXWirte.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MDirectLight.cpp">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="MLight.cpp">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="MOmniLight.cpp">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="MSpotLight.cpp">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="MSkyLight.cpp">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="MLightMgr.cpp">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="MMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="MMaterialMgr.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="MKeyAnimation.cpp">
+      <Filter>Object\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="MKeyAnimationMgr.cpp">
+      <Filter>Object\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="MKeyData.cpp">
+      <Filter>Object\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DBone.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="MSkeleton.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="MMesh.cpp">
+      <Filter>Object\Resource\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="MMeshMgr.cpp">
+      <Filter>Object\Resource\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="MSkeletonMgr.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MWindow.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="MSound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MSoundMgr.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MAngle.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MCollision.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MCore.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="MDevice.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="MInput.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="MStd.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="MTimer.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="MTexture.h">
+      <Filter>Object\Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MTextureMgr.h">
+      <Filter>Object\Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShaderMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MDxState.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MCamera.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MFiledObj.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="MGroup.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="MUnit.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DModel.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="M2DObject.h">
+      <Filter>Object\2DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DObject.h">
+      <Filter>Object\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MFreeCamera.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DSpline.h">
+      <Filter>Object\3DObject\3DSpline</Filter>
+    </ClInclude>
+    <ClInclude Include="MGrid.h">
+      <Filter>Object\3DObject\3DSpline</Filter>
+    </ClInclude>
+    <ClInclude Include="MCreate.h">
+      <Filter>Object\Create</Filter>
+    </ClInclude>
+    <ClInclude Include="MFPSCamera.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MCameraMgr.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MTargetCamera.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MRPGCamera.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MAnimateStd.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="MParser.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="MBoundingbox.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="MFrustum.h">
+      <Filter>Object\3DObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DObjectMgr.h">
+      <Filter>Object\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="M2DScreen.h">
+      <Filter>Object\2DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MRenderTargetMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MRenderTarget.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MDXWirte.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MSpotLight.h">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="MDirectLight.h">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="MLight.h">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="MOmniLight.h">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="MSkyLight.h">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="MLightMgr.h">
+      <Filter>Object\3DObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="MMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="MMaterialMgr.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="MKeyAnimation.h">
+      <Filter>Object\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="MKeyAnimationMgr.h">
+      <Filter>Object\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="MKeyData.h">
+      <Filter>Object\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DBone.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="MSkeleton.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="MMesh.h">
+      <Filter>Object\Resource\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="MMeshMgr.h">
+      <Filter>Object\Resource\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="MSkeletonMgr.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{ae391dbe-f69f-45e5-a7f7-1a52fcc6d94e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic">
+      <UniqueIdentifier>{14fb646c-5ab6-45de-b780-7515c0f9e773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{ca570b72-9ed4-46e5-900a-99b2f64dac49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{9ea75d2a-33a3-4d9f-8fd1-9dcfe33e15d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject">
+      <UniqueIdentifier>{1b20aa3f-1a89-43b2-a89b-ae7c36c626a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\Camera">
+      <UniqueIdentifier>{c045f108-216c-4421-a04f-29baadccb90b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\3DModel">
+      <UniqueIdentifier>{07b2d636-6d30-40be-85e6-b0ed005e6998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\2DObject">
+      <UniqueIdentifier>{2e66be8c-b66d-4b5b-872b-ff37279f7709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\3DSpline">
+      <UniqueIdentifier>{7ad8fa19-d52d-4840-bd3a-dda2d0a7cecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\3DHelper">
+      <UniqueIdentifier>{ef29e056-b676-44fc-81aa-4ff626f785d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Create">
+      <UniqueIdentifier>{e1f25579-88ef-467e-8e1c-b13082c02dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Resource">
+      <UniqueIdentifier>{07183795-d901-41c2-b675-995441b1be58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Resource\Texture">
+      <UniqueIdentifier>{dc7621b0-7749-4d38-8bfc-b154943329a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Resource\Obj">
+      <UniqueIdentifier>{8072bbdf-21a5-4260-8c24-9c67f077d6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{66bf20ed-ebdc-4925-87b0-ea016e81f082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\Light">
+      <UniqueIdentifier>{3c30a29b-0079-4662-9dd0-c172a2378077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{656a1593-601c-4f23-80c3-8ce168a8ed01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Material">
+      <UniqueIdentifier>{be76af1b-871d-4542-a76f-830344c5fc8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Animation">
+      <UniqueIdentifier>{f9b1b2fd-9b37-4f86-bc49-48fc35667391}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DXLib.rc">
+      <Filter>Utility</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\data\Shader\PS2D.psh" />
+    <FxCompile Include="..\..\data\Shader\PS3D.psh" />
+    <FxCompile Include="..\..\data\Shader\PSBONE.psh" />
+    <FxCompile Include="..\..\data\Shader\PSSPLINE.psh" />
+    <FxCompile Include="..\..\data\Shader\VS2D.vsh" />
+    <FxCompile Include="..\..\data\Shader\VS3D.vsh" />
+    <FxCompile Include="..\..\data\Shader\VSSPLINE.vsh" />
+    <FxCompile Include="..\..\data\Shader\VSCHARACTER.vsh" />
+  </ItemGroup>
+</Project>
