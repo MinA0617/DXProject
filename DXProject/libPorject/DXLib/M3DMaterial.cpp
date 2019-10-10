@@ -4,6 +4,8 @@
 
 M3DMaterial::M3DMaterial()
 {
+
+
 }
 
 
