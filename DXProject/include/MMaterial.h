@@ -20,7 +20,6 @@ public:
 	DWORD				Environment;
 public:
 	BlendState			m_BlendStateID;
-	//RasterizerState		m_RasterizerStateID;
 	SamplerState		m_SamplerStateID;
 	DepthStencilState	m_DepthStencilStateID;
 public:
