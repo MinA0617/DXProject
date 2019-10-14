@@ -22,7 +22,6 @@ M3DObject::M3DObject()
 	m_bIsInherityRotation = true;
 	m_bIsInherityScale = true;
 
-	m_KeyData = nullptr;
 }
 
 
@@ -172,15 +171,15 @@ M3DObject * M3DObject::GetParents()
 	return m_pParents;
 }
 
-D3DXVECTOR3 M3DObject::GetPosition()
+D3DXVECTOR3 M3DObject::GetLocalPosition()
 {
 	return m_LocalPosition;
 }
-D3DXQUATERNION M3DObject::GetRotation()
+D3DXQUATERNION M3DObject::GetLocalRotation()
 {
 	return m_LocalRotation;
 }
-D3DXVECTOR3 M3DObject::GetScale()
+D3DXVECTOR3 M3DObject::GetLocalScale()
 {
 	return m_LocalScale;
 }
@@ -236,22 +235,4 @@ bool M3DObject::IsHasParents()
 		return true;
 	}
 	return false;
-}
-
-bool M3DObject::UpdateKey(float time)
-{
-	//m_WorldScale.z = m_LocalScale.z * temp.z;
-	if (m_KeyData->m_vPositionKeyList.size() != 0)
-	{
-		m_LocalPosition = m_KeyData->GetCurPosition(time);
-	}
-	if (m_KeyData->m_vRotationKeyList.size() != 0)
-	{
-		m_LocalRotation = m_KeyData->GetCurRotation(time);
-	}
-	if (m_KeyData->m_vScaleKeyList.size() != 0)
-	{
-		m_LocalScale = m_KeyData->GetCurScale(time);
-	}
-	return true;
 }

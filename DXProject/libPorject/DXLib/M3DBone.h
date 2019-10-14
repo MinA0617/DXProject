@@ -23,7 +23,10 @@ public:
 	virtual void		ModifyLocalRotation(D3DXQUATERNION data);
 	virtual void		ModifyLocalScale(D3DXVECTOR3 data) override;
 	D3DXMATRIX			ZeroMatrix;
+	MKeyData*			m_KeyData;
+	MKeyData			m_TempKeyData;
 public:
+	virtual bool		UpdateKey(float time);
 	virtual	bool		SetZero();
 	virtual bool		Init() override;
 	virtual bool		Frame() override;

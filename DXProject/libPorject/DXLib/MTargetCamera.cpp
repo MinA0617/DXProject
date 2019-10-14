@@ -19,8 +19,8 @@ bool MTargetCamera::Init()
 	//// 카메라의 기본값 ////
 	if (m_pTarget != nullptr)
 	{
-		m_LookAt = m_pTarget->GetPosition();
-		m_LocalPosition = m_pTarget->GetPosition() - D3DXVECTOR3(sin(m_LocalRotation.y) * sin(m_LocalRotation.x), cos(m_LocalRotation.x), cos(m_LocalRotation.y) * sin(m_LocalRotation.x)) * -m_fDistance;
+		m_LookAt = m_pTarget->GetLocalPosition();
+		m_LocalPosition = m_pTarget->GetLocalPosition() - D3DXVECTOR3(sin(m_LocalRotation.y) * sin(m_LocalRotation.x), cos(m_LocalRotation.x), cos(m_LocalRotation.y) * sin(m_LocalRotation.x)) * -m_fDistance;
 	}
 	else
 	{
@@ -43,9 +43,9 @@ bool MTargetCamera::Init()
 
 bool MTargetCamera::Frame()
 {
-	m_LookAt = m_pTarget->GetPosition();
+	m_LookAt = m_pTarget->GetLocalPosition();
 
-	D3DXMatrixLookAtLH(&m_matView, &GetPosition(), &(GetPosition() + m_LookAt), &m_Up);
+	D3DXMatrixLookAtLH(&m_matView, &GetLocalPosition(), &(GetLocalPosition() + m_LookAt), &m_Up);
 	D3DXMatrixTranspose(&m_matView, &m_matView);
 
 	D3D11_MAPPED_SUBRESOURCE MappedResource;
@@ -87,7 +87,7 @@ void MTargetCamera::ModifyRotation(D3DXQUATERNION data)
 	//At = D3DXVECTOR3(0, cos(m_WorldRotation.x), -sin(m_WorldRotation.x));
 
 
-	m_LocalPosition = m_pTarget->GetPosition() - D3DXVECTOR3(sin(m_LocalRotation.y) * sin(m_LocalRotation.x), cos(m_LocalRotation.x), cos(m_LocalRotation.y) * sin(m_LocalRotation.x)) * -m_fDistance;
+	m_LocalPosition = m_pTarget->GetLocalPosition() - D3DXVECTOR3(sin(m_LocalRotation.y) * sin(m_LocalRotation.x), cos(m_LocalRotation.x), cos(m_LocalRotation.y) * sin(m_LocalRotation.x)) * -m_fDistance;
 	//D3DXVECTOR3 Right;
 	//D3DXVec3Cross(&Right, &D3DXVECTOR3(0, 0, 0), &At);
 	//D3DXVec3Cross(&Up, &Right, &At);
@@ -95,7 +95,7 @@ void MTargetCamera::ModifyRotation(D3DXQUATERNION data)
 void MTargetCamera::SetRotation(D3DXQUATERNION data)
 {
 	m_LocalRotation = data;
-	m_LocalPosition = m_pTarget->GetPosition() - D3DXVECTOR3(sin(m_LocalRotation.y) * sin(m_LocalRotation.x), cos(m_LocalRotation.x), cos(m_LocalRotation.y) * sin(m_LocalRotation.x)) * -m_fDistance;
+	m_LocalPosition = m_pTarget->GetLocalPosition() - D3DXVECTOR3(sin(m_LocalRotation.y) * sin(m_LocalRotation.x), cos(m_LocalRotation.x), cos(m_LocalRotation.y) * sin(m_LocalRotation.x)) * -m_fDistance;
 }
 
 void MTargetCamera::SetTarget(M3DObject* target)

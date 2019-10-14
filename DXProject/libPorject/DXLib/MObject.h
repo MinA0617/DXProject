@@ -5,6 +5,8 @@
 class MObject
 {
 public:
+	//TCHAR				m_name[30];
+	M_STR				m_name;
 	DWORD				MaterialID;
 protected:
 	ID3D11Buffer*		m_pConstantBuffer;

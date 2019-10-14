@@ -6,7 +6,7 @@ class M3DModel : public M3DObject
 {
 	friend class MParser;
 public:
-	bool			CreateObj(MMesh* data, M_STR name);
+	//bool			CreateObj(MMesh* data);
 public:
 	//bool			Load(M_STR filename);
 	bool			Load_MAP(M_STR filename, MAPTYPE type);

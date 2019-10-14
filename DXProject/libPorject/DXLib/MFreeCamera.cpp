@@ -18,7 +18,7 @@ bool MFreeCamera::Init()
 	m_LookAt = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 	m_Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-	D3DXMatrixLookAtLH(&m_matView, &GetPosition(), &m_LookAt, &m_Up);
+	D3DXMatrixLookAtLH(&m_matView, &GetLocalPosition(), &m_LookAt, &m_Up);
 
 	//// FOV ¼³Á¤ ////
 	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4, (float)g_rtWindowClient.right / (float)g_rtWindowClient.bottom, 1.0f, 10000.0f);
@@ -35,7 +35,7 @@ bool MFreeCamera::Init()
 
 bool MFreeCamera::Frame()
 {
-	D3DXMatrixLookAtLH(&m_matView, &GetPosition(), &(GetPosition() + m_LookAt), &m_Up);
+	D3DXMatrixLookAtLH(&m_matView, &GetLocalPosition(), &(GetLocalPosition() + m_LookAt), &m_Up);
 	D3DXMatrixTranspose(&m_matView, &m_matView);
 
 	m_WorldPosition = m_LocalPosition;

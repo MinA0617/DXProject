@@ -33,3 +33,13 @@ bool MKeyAnimationMgr::Release()
 	}
 	return true;
 }
+
+MKeyAnimation * MKeyAnimationMgr::operator[](M_STR name)
+{
+	ITOR data = m_KeyAniList.find(name);
+	if (data != m_KeyAniList.end())
+	{
+		return (*data).second;
+	}
+	return nullptr;
+}

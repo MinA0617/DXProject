@@ -9,8 +9,8 @@ public:
 	DWORD				ObjID; // 오브젝트매니져용 ID값 없을경우 0
 public:
 	CONSTANT_3DOBJ		m_ConstantOBJ;
-	MKeyData*			m_KeyData;
-	virtual bool		UpdateKey(float time);
+	//MKeyData*			m_KeyData;
+	//virtual bool		UpdateKey(float time);
 	//--------------------------------------------------
 protected:
 	D3DXVECTOR3			m_WorldPosition;
@@ -29,9 +29,9 @@ public:
 	bool				m_bIsInherityRotation;
 	bool				m_bIsInherityScale;
 public:
-	D3DXVECTOR3			GetPosition();
-	D3DXQUATERNION		GetRotation();
-	D3DXVECTOR3			GetScale();
+	D3DXVECTOR3			GetLocalPosition();
+	D3DXQUATERNION		GetLocalRotation();
+	D3DXVECTOR3			GetLocalScale();
 	//--------------------------------------------------
 	virtual bool		CreateConstantBuffer();
 	//--------------------------------------------------

@@ -8,11 +8,13 @@ class M3DObjectMgr : public MSingleton<M3DObjectMgr>
 {
 	friend class MSingleton<M3DObjectMgr>;
 private:
-	map<M_STR, M3DObject*> m_ObjList;
+	typedef std::map<int, M3DObject*>::iterator ITOR;
+	map<int, M3DObject*> m_ObjList;
+	int					iCount;
 public:
-	typedef std::map<M_STR, M3DObject*>::iterator ITOR;
 	M3DObject* operator [] (M_STR name);
-	bool				Add(M_STR name, M3DObject* data);
+	M3DObject* operator [] (int index);
+	bool				Add(M3DObject* data);
 	bool				Delete(M_STR name);
 public:
 	virtual bool		Init();

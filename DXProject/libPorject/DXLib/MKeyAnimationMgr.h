@@ -10,6 +10,7 @@ public:
 	MKeyAnimation*				NewKeyAnimation(M_STR name);
 	//bool						Load(M_STR filename);
 	bool						Release();
+	MKeyAnimation* operator	[](M_STR name);
 private:
 	MKeyAnimationMgr();
 public:

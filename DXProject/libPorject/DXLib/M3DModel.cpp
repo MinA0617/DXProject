@@ -59,16 +59,16 @@ bool M3DModel::Render()
 //
 //	return true;
 //}
-bool M3DModel::CreateObj(MMesh* data, M_STR name)
-{
-	ObjID = I_MeshMgr.Add(data, name);
-	if (ObjID == NULL)
-	{
-		return false;
-	}
-	CreateConstantBuffer();
-	return true;
-}
+//bool M3DModel::CreateObj(MMesh* data)
+//{
+//	ObjID = I_MeshMgr.Add(data);
+//	if (ObjID == NULL)
+//	{
+//		return false;
+//	}
+//	CreateConstantBuffer();
+//	return true;
+//}
 
 bool M3DModel::Load_MAP(M_STR filename, MAPTYPE type)
 {

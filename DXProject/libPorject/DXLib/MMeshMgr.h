@@ -10,10 +10,9 @@ public:
 public:
 	typedef std::map<int, MMesh*>::iterator ITOR;
 	MMesh*	operator [] (int iIndex);
-	MMesh*	operator [] (M_STR name);
 public:
 	//DWORD		Load(M_STR filename);
-	DWORD		Add(MMesh* data, M_STR name);
+	DWORD		Add(MMesh* data);
 	bool		Release();
 private:
 	MMeshMgr();

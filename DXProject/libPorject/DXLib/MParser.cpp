@@ -48,13 +48,20 @@ MAPTYPE MParser::DataToMAPTYPE(ITOR & data)
 	}
 }
 
-M_STR MParser::DataToMSTR(ITOR &data)
+//string MParser::DataToSTR(ITOR &data)
+//{
+//	string temp = *data;
+//	data++;
+//	return temp;
+//}
+
+M_STR MParser::DataToMSTR(ITOR & data)
 {
 	string temp = *data;
-	M_STR name;
-	name.append(temp.begin(), temp.end());
 	data++;
-	return name;
+	M_STR mstr;
+	mstr.append(temp.begin(), temp.end());
+	return mstr;
 }
 
 bool MParser::CreateBuffer(MMesh * Target, vector<MVERTEX>& vertices, vector<DWORD>& index)
@@ -115,6 +122,7 @@ bool MParser::CreateBuffer(MUnit * unit)
 	ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
 	SubresourceData.pSysMem = &ms.at(0);
 	if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &unit->m_pSkinBuffer))) return false;
+	return true;
 }
 
 bool MParser::CreateBuffer(MMesh * Target, vector<DWORD>& index)
@@ -143,12 +151,12 @@ bool MParser::CreateBuffer(M3DBone * Target)
 {
 	SPLINE_VERTEX data[6];
 	ZeroMemory(&data, sizeof(SPLINE_VERTEX) * 6);
-	data[0].p = float3(10, 0, 0);
-	data[1].p = float3(-10, 0, 0);
-	data[2].p = float3(0, 10, 0);
-	data[3].p = float3(0, -10, 0);
-	data[4].p = float3(0, 0, 10);
-	data[5].p = float3(0, 0, -10);
+	data[0].p = float3(1, 0, 0);
+	data[1].p = float3(-1, 0, 0);
+	data[2].p = float3(0, 1, 0);
+	data[3].p = float3(0, -1, 0);
+	data[4].p = float3(0, 0, 1);
+	data[5].p = float3(0, 0, -1);
 	DWORD sindex[6];
 	for (int i = 0; i < 6; i++)
 	{
@@ -225,7 +233,6 @@ bool MParser::Load(M_STR filename)
 	TCHAR Ext[MAX_PATH] = { 0, };
 	_tsplitpath_s(filename.c_str(), Drive, Dir, Name, Ext); // 패스와 이름과 확장자 끊어주기
 	M_STR name = Name; // 이름저장
-	name += Ext; // 확장자 추가해서 저장
 	CreateData(name);
 	return true;
 }
@@ -252,8 +259,9 @@ bool MParser::CreateData(M_STR name)
 				NewModel->CreateConstantBuffer();
 				MMesh* NewMeshObj = new MMesh;
 				M_STR oname = DataToMSTR(data);
-				NewModel->ObjID = I_MeshMgr.Add(NewMeshObj, oname);
-				I_3DObjectMgr.Add(oname, NewModel);
+				NewModel->m_name = oname;
+				NewModel->ObjID = I_MeshMgr.Add(NewMeshObj);
+				I_3DObjectMgr.Add(NewModel);
 				CreateGeometryData(data, NewModel, KeyAni, oname);
 				namelist.push_back(oname);
 				data--;
@@ -265,10 +273,11 @@ bool MParser::CreateData(M_STR name)
 				NewUnit->CreateConstantBuffer();
 				MMesh* NewMeshObj = new MMesh;
 				M_STR oname = DataToMSTR(data);
+				NewUnit->m_name = oname;
 				list.push_back(NewUnit);
-				NewUnit->ObjID = I_MeshMgr.Add(NewMeshObj, oname);
-				I_3DObjectMgr.Add(oname, NewUnit);
-				CreateSkinningData(data, NewUnit);
+				NewUnit->ObjID = I_MeshMgr.Add(NewMeshObj);
+				I_3DObjectMgr.Add(NewUnit);
+				CreateSkinningData(data, NewUnit, skt);
 				namelist.push_back(oname);
 				data--;
 			}
@@ -284,28 +293,38 @@ bool MParser::CreateData(M_STR name)
 		}
 	}
 	// ----------------------------------------------------
+	m_wordlist.clear();
 	if (skt->m_BoneList.size() != 0)
 	{
-		skt->BindAni(KeyAni);
-		skt->Set();
-		I_SkeletonMgr.Add(skt);
-		for (MUnit* data : list)
+		if (list.size() == 0)
 		{
-			data->Init();
-			data->m_Skeleton = skt;
-			CreateBuffer(data);
+			skt->Release();
+			delete skt;
+		}
+		else
+		{
+			skt->BindAni(name);
+			skt->Set();
+			I_SkeletonMgr.Add(skt);
+			for (MUnit* data : list)
+			{
+				data->Init();
+				data->m_Skeleton = skt;
+				CreateBuffer(data);
+			}
 		}
 	}
 	else
 	{
+		skt->Release();
 		delete skt;
+		return true;
 	}
 	return true;
 }
 
 bool MParser::CreateGeometryData(ITOR &data, M3DModel * target, MKeyAnimation* ani, M_STR name)
 {
-	MKeyData* keydata = new MKeyData;
 	vector<MVERTEX>	vertices;
 	vector<DWORD>	index;
 	while (1)
@@ -374,36 +393,6 @@ bool MParser::CreateGeometryData(ITOR &data, M3DModel * target, MKeyAnimation* a
 			}
 			data--;
 		}
-		if (*data == "POSITION_KEY_COUNT")
-		{
-			data++;
-			int iCount = DataToInt(data);
-			for (int i = 0; i < iCount; i++)
-			{
-				float t = DataToFloat(data);
-				float x = DataToFloat(data);
-				float y = DataToFloat(data);
-				float z = DataToFloat(data);
-				keydata->m_vPositionKeyList.push_back(KEY_Position(t, x, y, z));
-			}
-			data--;
-		}
-		if (*data == "ROTATION_KEY_COUNT")
-		{
-			data++;
-			int iCount = DataToInt(data);
-			for (int i = 0; i < iCount; i++)
-			{
-				float t = DataToFloat(data);
-				D3DXQUATERNION qRotation;
-				qRotation.x = DataToFloat(data);
-				qRotation.y = DataToFloat(data);
-				qRotation.z = DataToFloat(data);
-				qRotation.w = DataToFloat(data);
-				keydata->m_vRotationKeyList.push_back(KEY_Rotation(t, qRotation));
-			}
-			data--;
-		}
 		if (*data == "MAP_ID")
 		{
 			data++;
@@ -419,15 +408,6 @@ bool MParser::CreateGeometryData(ITOR &data, M3DModel * target, MKeyAnimation* a
 			I_MeshMgr[target->ObjID]->m_iIndexCount = index.size();
 			vertices.clear();
 			index.clear();
-			if (keydata->isUse())
-			{
-				target->m_KeyData = keydata;
-				ani->m_List.insert(make_pair(name, keydata));
-			}
-			else
-			{
-				delete keydata;
-			}
 			return true;
 		}
 		data++;
@@ -435,7 +415,7 @@ bool MParser::CreateGeometryData(ITOR &data, M3DModel * target, MKeyAnimation* a
 	return false;
 }
 
-bool MParser::CreateSkinningData(ITOR &data, MUnit* target)
+bool MParser::CreateSkinningData(ITOR &data, MUnit* target, MSkeleton* skt)
 {
 	vector<DWORD>	index;
 	while (1)
@@ -448,6 +428,24 @@ bool MParser::CreateSkinningData(ITOR &data, MUnit* target)
 				M_STR name = DataToMSTR(data);
 				target->LinkParents(I_3DObjectMgr[name]);
 			}
+			data--;
+		}
+		if (*data == "Skin_Bone_Name")
+		{
+			data++;
+			M_STR oname = DataToMSTR(data);
+			data++;
+			D3DXVECTOR3 pos;
+			D3DXQUATERNION rot;
+			pos.x = DataToFloat(data);
+			pos.y = DataToFloat(data);
+			pos.z = DataToFloat(data);
+			data++;
+			rot.x = DataToFloat(data);
+			rot.y = DataToFloat(data);
+			rot.z = DataToFloat(data);
+			rot.w = DataToFloat(data);
+			skt->AddZeroMat(oname, pos, rot);
 			data--;
 		}
 		if (*data == "World_Position")
@@ -542,7 +540,7 @@ bool MParser::CreateBoneData(M_STR name, ITOR &data, M3DBone* target, MKeyAnimat
 			if (*data != "NULL")
 			{
 				M_STR pname = DataToMSTR(data);
-				target->LinkParents((*(skt->m_BoneList.find(pname))).second);
+				target->LinkParents(skt->Find(pname));
 				data--;
 			}
 		}

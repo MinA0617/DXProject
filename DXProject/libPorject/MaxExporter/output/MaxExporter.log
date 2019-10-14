@@ -1,16 +1,17 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(376,5): warning MSB8004: Intermediate 디렉터리가 슬래시로 끝나지 않습니다. Intermediate 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
   MinWriter.cpp
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(56): warning C4267: 'return': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(69): warning C4267: 'return': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(284): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(294): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(565): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(581): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(820): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(836): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(958): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(959): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(989): warning C4477: 'fwprintf' : 서식 문자열 '%s'에 'wchar_t *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'WStr'입니다.
-e:\kgca36\dxproject\libporject\maxexporter\minwriter.cpp(1053): warning C4267: 'return': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(56): warning C4267: 'return': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(69): warning C4267: 'return': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(284): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(294): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(593): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(609): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(849): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(865): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(987): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(988): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(1018): warning C4477: 'fwprintf' : 서식 문자열 '%s'에 'wchar_t *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'WStr'입니다.
+e:\kgca36\gitdx\dxproject\libporject\maxexporter\minwriter.cpp(1082): warning C4267: 'return': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     C:\Program Files\Autodesk\3ds Max 2019\Plugins\MinExporter.lib 라이브러리 및 C:\Program Files\Autodesk\3ds Max 2019\Plugins\MinExporter.exp 개체를 생성하고 있습니다.
   MaxExporter.vcxproj -> C:\Program Files\Autodesk\3ds Max 2019\Plugins\MinExporter.dle

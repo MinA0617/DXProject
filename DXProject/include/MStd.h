@@ -57,6 +57,10 @@ using namespace std;
 #define SAFE_RELEASE(temp)	if (temp){temp->Release();temp = NULL;}
 
 using M_STR = basic_string<TCHAR>;
+//using M_STR = wstring;
+
+struct float2;
+struct float3;
 
 struct float2
 {

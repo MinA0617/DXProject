@@ -386,6 +386,34 @@ void MinWriter::ExportSkinningMesh(INode * pNode)
 	ISkin *skin = (ISkin *)skinMod->GetInterface(I_SKIN);
 	ISkinContextData *skinData = skin->GetContextInterface(pNode);
 
+	// --------------------------------------------------------------------------------------------
+	//int iBoneCount = skin->GetNumBones();
+	//for (int i = 0; i < iBoneCount; i++)
+	//{
+	//	Matrix3 temp;
+	//	INode* bone = skin->GetBone(i);
+	//	skin->GetBoneInitTM(bone, temp);
+
+	//	Point3 pos;
+	//	Quat rot;
+
+	//	AffineParts ap;
+	//	decomp_affine(temp, &ap);
+	//	pos = ap.t;
+	//	SwapFloat(pos.y, pos.z);
+
+	//	AngAxis temprot(temp);
+	//	SwapFloat(temprot.axis.y, temprot.axis.z);
+	//	rot = Quat(temprot);
+	//	// 스케일은 나중에 하는걸로
+	//	_ftprintf(m_pStream, L"Skin_Bone_Name %s\n", bone->GetName());
+	//	_ftprintf(m_pStream, L"Skin_Bone_Init_Position %10.4f %10.4f %10.4f\n", pos.x, pos.y, pos.z);
+	//	_ftprintf(m_pStream, L"Skin_Bone_Init_Rotation %10.4f %10.4f %10.4f %10.4f\n", rot.x, rot.y, rot.z, rot.w);
+	//}
+	// --------------------------------------------------------------------------------------------
+
+
+
 	vector<BonePoint> BPList;
 
 	if (skin && skinData)
@@ -612,6 +640,7 @@ void MinWriter::ExportSkinningMesh2(INode * pNode)
 	//get the skin interface
 	ISkin *skin = (ISkin *)skinMod->GetInterface(I_SKIN);
 	ISkinContextData *skinData = skin->GetContextInterface(pNode);
+	return;
 
 	vector<BonePoint> BPList;
 
@@ -1086,8 +1115,8 @@ bool MinWriter::Export()
 			ExportAnimationKeys(m_ObjectList[i]);
 			break;
 		case 2:
-			//ExportSkinningMesh(m_ObjectList[i]);
-			ExportSkinningMesh2(m_ObjectList[i]);
+			ExportSkinningMesh(m_ObjectList[i]);
+			//ExportSkinningMesh2(m_ObjectList[i]);
 			ExportMaterial(m_ObjectList[i]);
 			break;
 		case 3:

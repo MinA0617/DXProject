@@ -54,6 +54,7 @@ bool MUnit::Render()
 	g_pImmediateContext->IASetIndexBuffer(I_MeshMgr[ObjID]->m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	g_pImmediateContext->VSSetConstantBuffers(2, 1, &m_pConstantBuffer);
 	g_pImmediateContext->VSSetConstantBuffers(3, 1, &m_Skeleton->m_pBoneBuffer);
+	g_pImmediateContext->VSSetConstantBuffers(4, 1, &m_Skeleton->m_pZeroBuffer);
 	/////////////////////////////////////////////////////////////////////////////////////
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_pImmediateContext->DrawIndexed(I_MeshMgr[ObjID]->m_iIndexCount, 0, 0);

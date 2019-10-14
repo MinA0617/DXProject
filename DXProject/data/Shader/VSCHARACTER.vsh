@@ -36,6 +36,11 @@ cbuffer cb3 : register(b3)
 	float4x4	m_BoneMat[256];
 };
 
+cbuffer cb4 : register(b4)
+{
+	float4x4	m_ZeroBoneMat[256];
+};
+
 float4x4 FetchBoneTransform(uint iBone)
 {
 	float4x4 mret;
@@ -72,8 +77,9 @@ VS3D_OUTPUT VS( VS3D_INPUT input)
 	// ------------------------------
 	for (int i = 0; i < input.NumWeight; i++)
 	{
+		float4x4 ZeroMat = m_ZeroBoneMat[input.ID[i]];
 		float4x4 BoneMat = FetchBoneTransform(input.ID[i]);
-		Output.Position += input.Weight[i] * mul(Pos, (float4x4)BoneMat);
+		Output.Position += input.Weight[i] * mul(mul(Pos, ZeroMat), BoneMat);
 		Output.Normal += input.Weight[i] * mul(Norm, (float3x3)BoneMat);
 	}
 	float3 Incident = normalize(Output.Position.xyz - g_EyePos);

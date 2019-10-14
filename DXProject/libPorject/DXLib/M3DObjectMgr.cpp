@@ -2,42 +2,51 @@
 
 M3DObject * M3DObjectMgr::operator[](M_STR name)
 {
-	ITOR temp = m_ObjList.find(name);
-	if (temp == m_ObjList.end())
+	for (ITOR temp = m_ObjList.begin(); temp != m_ObjList.end(); temp++)
 	{
-		return nullptr;
+		if ((*temp).second->m_name == name)
+		{
+			return (*temp).second;
+		}
 	}
-	else
-	{
-		return (*temp).second;
-	}
+	return nullptr;
 }
 
-bool M3DObjectMgr::Add(M_STR name, M3DObject * data)
+M3DObject * M3DObjectMgr::operator[](int index)
+{
+	ITOR temp = m_ObjList.find(index);
+	if (temp != m_ObjList.end())
+	{
+		return (*temp).second;;
+	}
+	return nullptr;
+}
+
+bool M3DObjectMgr::Add(M3DObject * data)
 {
 	for (ITOR temp = m_ObjList.begin(); temp != m_ObjList.end(); temp++)
 	{
-		if ((*temp).first == name)
+		if ((*temp).second->m_name == data->m_name)
 		{
 			return false;
 		}
 	}
-	m_ObjList.insert(make_pair(name, data));
+	m_ObjList.insert(make_pair(iCount++, data));
 	return true;
 }
 
 bool M3DObjectMgr::Delete(M_STR name)
 {
-	ITOR temp = m_ObjList.find(name);
-	if (temp == m_ObjList.end())
+	for (ITOR temp = m_ObjList.begin(); temp != m_ObjList.end(); temp++)
 	{
-		return false;
+		if ((*temp).second->m_name == name)
+		{
+			delete (*temp).second;
+			m_ObjList.erase((*temp).first);
+			return true;
+		}
 	}
-	else
-	{
-		m_ObjList.erase(name);
-		return true;
-	}
+	return false;
 }
 
 bool M3DObjectMgr::Init()
@@ -87,6 +96,7 @@ bool M3DObjectMgr::Release()
 
 M3DObjectMgr::M3DObjectMgr()
 {
+	iCount = 0;
 }
 
 

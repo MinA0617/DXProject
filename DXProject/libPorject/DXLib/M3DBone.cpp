@@ -52,8 +52,17 @@ void M3DBone::SetLocalScale(D3DXVECTOR3 data)
 
 bool M3DBone::SetZero()
 {
+	Frame();
 	D3DXMatrixTransformation(&ZeroMatrix, NULL, NULL, &m_LocalScale, NULL, &m_LocalRotation, &m_LocalPosition);
+	if (m_pParents != nullptr)
+	{
+		D3DXMATRIX ParentMat;
+		ParentMat = m_pParents->m_ConstantOBJ.matWorld;
+		D3DXMatrixTranspose(&ParentMat, &ParentMat);
+		ZeroMatrix = ZeroMatrix * ParentMat;
+	}
 	D3DXMatrixInverse(&ZeroMatrix, NULL, &ZeroMatrix);
+	D3DXMatrixTranspose(&ZeroMatrix, &ZeroMatrix);
 	return true;
 }
 
@@ -67,14 +76,13 @@ bool M3DBone::Init()
 
 bool M3DBone::Frame()
 {
-	//PreFrame();
 	D3DXMatrixTransformation(&m_ConstantOBJ.matWorld, NULL, NULL, &m_LocalScale, NULL, &m_LocalRotation, &m_LocalPosition);
+
 	if (m_pParents != nullptr)
 	{
 		D3DXMATRIX ParentMat;
 		ParentMat = m_pParents->m_ConstantOBJ.matWorld;
 		D3DXMatrixTranspose(&ParentMat, &ParentMat);
-		//m_ConstantOBJ.matWorld = m_ConstantOBJ.matWorld * ZeroMatrix;
 		m_ConstantOBJ.matWorld = m_ConstantOBJ.matWorld * ParentMat;
 
 		D3DXMatrixDecompose(&m_WorldScale, &m_WorldRotation, &m_WorldPosition, &m_ConstantOBJ.matWorld);
@@ -92,30 +100,11 @@ bool M3DBone::Frame()
 	{
 		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
 	}
+
+	// -------------
+
+	// -------------
 	return true;
-
-
-
-	//D3DXMatrixTransformation(&m_ConstantOBJ.matWorld, NULL, NULL, &m_LocalScale, NULL, &m_LocalRotation, &m_LocalPosition);
-	//D3DXMatrixTranspose(&m_ConstantOBJ.matWorld, &m_ConstantOBJ.matWorld);
-	//if (m_pParents != nullptr)
-	//{
-	//	m_ConstantOBJ.matWorld = m_ConstantOBJ.matWorld * m_pParents->m_ConstantOBJ.matWorld;
-	//	D3DXMatrixDecompose(&m_WorldScale, &m_WorldRotation, &m_WorldPosition, &m_ConstantOBJ.matWorld);
-	//}
-	//else
-	//{
-	//	m_WorldPosition = m_LocalPosition;
-	//	m_WorldRotation = m_LocalRotation;
-	//	m_WorldScale = m_LocalScale;
-	//}
-
-
-	//if (m_pConstantBuffer)
-	//{
-	//	g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
-	//}
-	//return true;
 }
 
 bool M3DBone::Render()
@@ -138,5 +127,37 @@ bool M3DBone::Render()
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 	g_pImmediateContext->DrawIndexed(m_iIndexCount, 0, 0);
 #endif
+	return true;
+}
+
+bool M3DBone::UpdateKey(float time)
+{
+	if (m_TempKeyData.isUse())
+	{
+		if (m_TempKeyData.m_vPositionKeyList.size() != 0)
+		{
+			m_LocalPosition = m_TempKeyData.GetCurPosition(time);
+		}
+		if (m_TempKeyData.m_vRotationKeyList.size() != 0)
+		{
+			m_LocalRotation = m_TempKeyData.GetCurRotation(time);
+		}
+		if (m_TempKeyData.m_vScaleKeyList.size() != 0)
+		{
+			m_LocalScale = m_TempKeyData.GetCurScale(time);
+		}
+	}
+	if (m_KeyData->m_vPositionKeyList.size() != 0)
+	{
+		m_LocalPosition = m_KeyData->GetCurPosition(time);
+	}
+	if (m_KeyData->m_vRotationKeyList.size() != 0)
+	{
+		m_LocalRotation = m_KeyData->GetCurRotation(time);
+	}
+	if (m_KeyData->m_vScaleKeyList.size() != 0)
+	{
+		m_LocalScale = m_KeyData->GetCurScale(time);
+	}
 	return true;
 }

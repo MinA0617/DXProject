@@ -12,6 +12,13 @@ struct KEY_Position
 		data.y = y;
 		data.z = z;
 	}
+	KEY_Position(float t, D3DXVECTOR3 v)
+	{
+		tick = t;
+		data.x = v.x;
+		data.y = v.y;
+		data.z = v.z;
+	}
 
 };
 
@@ -46,5 +53,12 @@ struct KEY_Scale
 		data.x = x;
 		data.y = y;
 		data.z = z;
+	}
+	KEY_Scale(float t, D3DXVECTOR3 v)
+	{
+		tick = t;
+		data.x = v.x;
+		data.y = v.y;
+		data.z = v.z;
 	}
 };

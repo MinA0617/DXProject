@@ -12,17 +12,14 @@ MKeyData::~MKeyData()
 }
 
 
-D3DXVECTOR3 MKeyData::GetCurPosition(float &time)
+D3DXVECTOR3 MKeyData::GetCurPosition(float time)
 {
-	//g_fSeoundPerFrame
-	if (m_vPositionKeyList.size() == 1)
-	{
-		return m_vPositionKeyList[0].data;
-	}
+	if (m_vPositionKeyList.size() == 0) return D3DXVECTOR3(0, 0, 0);
+	if (m_vPositionKeyList.size() == 1)	return m_vPositionKeyList[0].data;
 	float maxtime = m_vPositionKeyList[m_vPositionKeyList.size() - 1].tick;
-	while (time > maxtime)
+	if (time > maxtime)
 	{
-		time -= maxtime;
+		return m_vPositionKeyList[m_vPositionKeyList.size() - 1].data;
 	}
 	for (int i = 1; i < m_vPositionKeyList.size(); i++)
 	{
@@ -42,16 +39,14 @@ D3DXVECTOR3 MKeyData::GetCurPosition(float &time)
 	return D3DXVECTOR3(0, 0, 0);
 }
 
-D3DXQUATERNION MKeyData::GetCurRotation(float &time)
+D3DXQUATERNION MKeyData::GetCurRotation(float time)
 {
-	if (m_vRotationKeyList.size() == 1)
-	{
-		return m_vRotationKeyList[0].data;
-	}
+	if (m_vRotationKeyList.size() == 0) return D3DXQUATERNION(1, 0, 0, 0);
+	if (m_vRotationKeyList.size() == 1)	return m_vRotationKeyList[0].data;
 	float maxtime = m_vRotationKeyList[m_vRotationKeyList.size() - 1].tick;
-	while (time > maxtime)
+	if (time > maxtime)
 	{
-		time -= maxtime;
+		return m_vRotationKeyList[m_vRotationKeyList.size() - 1].data;
 	}
 	D3DXQUATERNION result;
 	D3DXQuaternionIdentity(&result);
@@ -71,17 +66,14 @@ D3DXQUATERNION MKeyData::GetCurRotation(float &time)
 	return D3DXQUATERNION(1, 0, 0, 0);
 }
 
-D3DXVECTOR3 MKeyData::GetCurScale(float &time)
+D3DXVECTOR3 MKeyData::GetCurScale(float time)
 {
-	if (m_vScaleKeyList.size() == 1)
-	{
-		return m_vScaleKeyList[0].data;
-
-	}
+	if (m_vScaleKeyList.size() == 0) return D3DXVECTOR3(1, 1, 1);
+	if (m_vScaleKeyList.size() == 1) return m_vScaleKeyList[0].data;
 	float maxtime = m_vScaleKeyList[m_vScaleKeyList.size() - 1].tick;
-	while (time > maxtime)
+	if (time > maxtime)
 	{
-		time -= maxtime;
+		return m_vPositionKeyList[m_vScaleKeyList.size() - 1].data;
 	}
 	for (int i = 1; i < m_vScaleKeyList.size(); i++)
 	{
@@ -99,6 +91,38 @@ D3DXVECTOR3 MKeyData::GetCurScale(float &time)
 		}
 	}
 	return D3DXVECTOR3(1, 1, 1);
+}
+
+float MKeyData::GetMaxTime()
+{
+	float posmax;
+	float rotmax;
+	float sclmax;
+	if (m_vPositionKeyList.size() <= 1)
+	{
+		posmax = 0;
+	}
+	else
+	{
+		posmax = m_vPositionKeyList[m_vPositionKeyList.size() - 1].tick;
+	}
+	if (m_vRotationKeyList.size() <= 1)
+	{
+		rotmax = 0;
+	}
+	else
+	{
+		rotmax = m_vRotationKeyList[m_vRotationKeyList.size() - 1].tick;
+	}
+	if (m_vScaleKeyList.size() <= 1)
+	{
+		sclmax = 0;
+	}
+	else
+	{
+		sclmax = m_vScaleKeyList[m_vScaleKeyList.size() - 1].tick;
+	}
+	return max(max(posmax, rotmax), sclmax);
 }
 
 bool MKeyData::isUse()

@@ -48,7 +48,7 @@ bool MRPGCamera::Frame()
 
 	m_beforeMousePos = pos;
 
-	m_LookAt = m_pTarget->GetPosition();
+	m_LookAt = m_pTarget->GetLocalPosition();
 
 	D3DXMatrixLookAtLH(&m_matView, &m_LocalPosition, &m_LookAt, &m_Up);
 	D3DXMatrixTranspose(&m_matView, &m_matView);

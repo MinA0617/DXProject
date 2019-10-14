@@ -23,11 +23,8 @@ public:
 	MSample();
 	~MSample();
 public:
-	//M2DObject asd;
-	//MParser2 ps;
-	MSkeleton* skt;
 	MParser ps;
-	M3DObject* target;
+	MSkeleton* target;
 	MLight* light;
 	float y;
 };

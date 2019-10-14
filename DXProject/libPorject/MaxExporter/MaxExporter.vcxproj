@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../lib/maxsdk2019</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\KGCA36\GitDX\DXProject\lib\maxsdk2019</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>

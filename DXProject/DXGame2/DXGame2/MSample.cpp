@@ -11,6 +11,8 @@ MSample::~MSample()
 
 bool  MSample::Init()
 {
+	M_STR asd;
+	M_STR asdsda = asd;
 	I_CameraMgr.CreateFPSCamera_Main();
 
 	m_dxWrite.AddData(L"x", D2D1::ColorF(1, 1, 1, 1.0), MPoint(0, 0));
@@ -23,16 +25,20 @@ bool  MSample::Init()
 	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(560, 0));
 	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(640, 0));
 
-	//ps.Load(L"../../data/obj/CatGirl2.MIN");
-	//ps.Load(L"../../data/obj/0.MIN");
-	ps.Load(L"../../data/obj/4.MIN");
-
+	ps.Load(L"../../data/obj/CatGirl.MIN");
+	ps.Load(L"../../data/obj/_Run.MIN");
+	//temtem = (*I_SkeletonMgr[0]->m_BoneList.find(L"Bone001")).second;
+	//zero = &temtem->ZeroMatrix;
+	//CONSTANT_3DOBJ* sdsd = &temtem->GetConstantOBJ();
+	//local = &sdsd->matWorld;
 	//skt = &(*I_KeyAnimationMgr.m_KeyAniList.find(L"0.MIN")).second->m_TempSkeleton;
 	// I_3DObjectMgr.Add(L"a", skt);
 	//target = I_3DObjectMgr[L"catgirl_Body"];
-	I_SkeletonMgr[0]->m_fAniSpeed = 1;
+	//I_MaterialMgr[target->MaterialID]->m_VertexShaderID = VS3D;
+	target = I_SkeletonMgr[0];
+	target->m_fAniSpeed = 1;
 	light = &(I_LightMgr.m_List);
-
+	//target->Frame();
 	y = 0;
 	return true;
 }
@@ -68,15 +74,12 @@ bool  MSample::Frame()
 
 	if (g_ActionInput.F1 >= KEY_PUSH)
 	{
-		//target = (*skt->m_BoneList.find(L"Box001")).second;
-		I_3DObjectMgr.Frame();
-		I_SkeletonMgr.Frame();
-		//target->Frame();
 
 	}
 	if (g_ActionInput.F2 >= KEY_PUSH)
 	{
-		//target = (*skt->m_BoneList.find(L"Box002")).second;
+		target->BindAni(L"_Run", true, 5.0f);
+		//target = (*skt->m_BoneList.find(L"Box002")).second;sssssssswswsa
 
 	}
 	if (g_ActionInput.F3 >= KEY_PUSH)
@@ -93,7 +96,6 @@ bool  MSample::Frame()
 	}
 	if (g_ActionInput.F7 == KEY_PUSH)
 	{
-		target->UnLinkParents();
 
 	}
 	if (g_ActionInput.F8 == KEY_PUSH)

@@ -42,7 +42,7 @@ bool MFPSCamera::Frame()
 		isCenterMouse = false;
 	}
 
-	D3DXMatrixLookAtLH(&m_matView, &GetPosition(), &(GetPosition() + m_LookAt), &m_Up);
+	D3DXMatrixLookAtLH(&m_matView, &GetLocalPosition(), &(GetLocalPosition() + m_LookAt), &m_Up);
 	D3DXMatrixTranspose(&m_matView, &m_matView);
 
 	m_WorldPosition = m_LocalPosition;

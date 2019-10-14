@@ -90,12 +90,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\KGCA36\DXProject\include;E:\KGCA36\DXProject\include\dxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\KGCA36\GitDX\DXProject\include;E:\KGCA36\GitDX\DXProject\include\dxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\KGCA36\DXProject\lib\Debug\DXLib_0;E:\KGCA36\DXProject\lib\dxsdk;E:\KGCA36\DXProject\lib\fmod;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\KGCA36\GitDX\DXProject\lib\Debug\DXLib_0;E:\KGCA36\GitDX\DXProject\lib\dxsdk;E:\KGCA36\GitDX\DXProject\lib\fmod;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
@@ -125,12 +125,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\KGCA36\DXProject\include;E:\KGCA36\DXProject\include\dxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\KGCA36\GitDX\DXProject\include;E:\KGCA36\GitDX\DXProject\include\dxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>E:\KGCA36\DXProject\lib\Release\DXLib_0;E:\KGCA36\DXProject\lib\dxsdk;E:\KGCA36\DXProject\lib\fmod;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\KGCA36\GitDX\DXProject\lib\Release\DXLib_0;E:\KGCA36\GitDX\DXProject\lib\dxsdk;E:\KGCA36\GitDX\DXProject\lib\fmod</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
