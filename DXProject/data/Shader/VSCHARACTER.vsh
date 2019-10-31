@@ -80,7 +80,7 @@ VS3D_OUTPUT VS( VS3D_INPUT input)
 		float4x4 ZeroMat = m_ZeroBoneMat[input.ID[i]];
 		float4x4 BoneMat = FetchBoneTransform(input.ID[i]);
 		Output.Position += input.Weight[i] * mul(mul(Pos, ZeroMat), BoneMat);
-		Output.Normal += input.Weight[i] * mul(Norm, (float3x3)BoneMat);
+		Output.Normal += input.Weight[i] * mul(mul(Norm, (float3x3)ZeroMat), (float3x3)BoneMat);
 	}
 	float3 Incident = normalize(Output.Position.xyz - g_EyePos);
 	Output.Reflect = normalize(reflect(Incident, input.Normal));

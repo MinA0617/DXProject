@@ -5,17 +5,14 @@ class MSkeletonMgr : public MSingleton<MSkeletonMgr>
 {
 	friend class MSingleton<MSkeletonMgr>;
 private:
-	typedef std::map<int, MSkeleton* >::iterator ITOR;
-	map<int, MSkeleton*>	m_ObjList;
+	typedef std::map<M_STR, MSkeleton* >::iterator ITOR;
+	map<M_STR, MSkeleton*>	m_SktList;
 	int						iCount;
 public:
-	MSkeleton* operator [] (int index);
-	int					Add(MSkeleton* data);
-	bool				Delete(int index);
+	MSkeleton* operator [] (M_STR name);
+	MSkeleton*			Add(MSkeleton* data, M_STR name);
+	bool				Delete(M_STR name);
 public:
-	//virtual bool		Init();
-	virtual bool		Frame();
-	virtual bool		Render();
 	virtual bool		Release();
 private:
 	MSkeletonMgr();

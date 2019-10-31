@@ -13,33 +13,36 @@ MMeshMgr::~MMeshMgr()
 	Release();
 }
 
-MMesh* MMeshMgr::operator [] (int iIndex)
-{
-	MMesh* temp = (*(m_List.find(iIndex))).second;
-	if (m_List.find(iIndex) == m_List.end())
-	{
-		return NULL;
-	}
-	else
-	{
-		return temp;
-	}
-}
-
 bool MMeshMgr::Release()
 {
 	for (auto data : m_List)
 	{
 		data.second->Release();
 		delete data.second;
-
 	}
 	m_List.clear();
 	return true;
 }
 
-DWORD MMeshMgr::Add(MMesh* data)
+MMesh * MMeshMgr::operator[](M_STR name)
 {
-	m_List.insert(std::make_pair(m_iIndexCount, data));
-	return m_iIndexCount++;
+	ITOR data = m_List.find(name);
+	if (data != m_List.end())
+	{
+		return (*data).second;
+	}
+	return nullptr;
+}
+
+MMesh* MMeshMgr::Add(MMesh* data, M_STR name)
+{
+	for (ITOR data = m_List.begin(); data != m_List.end(); data++)
+	{
+		if ((*data).first == name)
+		{
+			return nullptr;
+		}
+	}
+	m_List.insert(std::make_pair(name, data));
+	return data;
 }

@@ -2,57 +2,45 @@
 
 
 
-MSkeleton* MSkeletonMgr::operator[](int index)
+MSkeleton* MSkeletonMgr::operator[](M_STR name)
 {
-	if (m_ObjList.find(index) != m_ObjList.end())
+	ITOR skt = m_SktList.find(name);
+	if (skt == m_SktList.end())
 	{
-		return (*m_ObjList.find(index)).second;
+		return nullptr;
 	}
-	return nullptr;
+	return (*skt).second;
 }
 
-int MSkeletonMgr::Add(MSkeleton* data)
+MSkeleton* MSkeletonMgr::Add(MSkeleton* data, M_STR name)
 {
-	m_ObjList.insert(make_pair(iCount, data));
-	return iCount++;
+	data->m_name = name;
+	if (m_SktList.find(name) != m_SktList.end())
+	{
+		return nullptr;
+	}
+	m_SktList.insert(make_pair(name, data));
+	return data;
 }
 
-bool MSkeletonMgr::Delete(int index)
+bool MSkeletonMgr::Delete(M_STR name)
 {
-	ITOR temp = m_ObjList.find(index);
-	if (temp == m_ObjList.end())
+	ITOR temp = m_SktList.find(name);
+	if (temp == m_SktList.end())
 	{
 		return false;
 	}
 	else
 	{
-		delete (*m_ObjList.find(index)).second;
-		m_ObjList.erase(index);
+		delete (*m_SktList.find(name)).second;
+		m_SktList.erase(name);
 		return true;
 	}
 }
 
-bool MSkeletonMgr::Frame()
-{
-	for (ITOR temp = m_ObjList.begin(); temp != m_ObjList.end(); temp++)
-	{
-		(*temp).second->Frame();
-	}
-	return true;
-}
-
-bool MSkeletonMgr::Render()
-{
-	for (ITOR temp = m_ObjList.begin(); temp != m_ObjList.end(); temp++)
-	{
-		(*temp).second->Render();
-	}
-	return true;
-}
-
 bool MSkeletonMgr::Release()
 {
-	for (ITOR temp = m_ObjList.begin(); temp != m_ObjList.end(); temp++)
+	for (ITOR temp = m_SktList.begin(); temp != m_SktList.end(); temp++)
 	{
 		(*temp).second->Release();
 		delete (*temp).second;

@@ -2,6 +2,11 @@
 
 
 
+void MMaterial::SetOpacity(DWORD level)
+{
+	m_ConstantMatrial.isOpacity = level;
+}
+
 bool MMaterial::Load(M_STR NewFileName, MAPTYPE maptype)
 {
 	switch (maptype)
@@ -89,7 +94,6 @@ bool MMaterial::Init()
 	m_SamplerStateID = MWrapLinear;
 	m_DepthStencilStateID = MDepthEnable;
 
-	m_VertexShaderID = VS3D;
 	m_PixelShaderID = PS3D;
 
 	ZeroMemory(&m_ConstantMatrial, sizeof(m_ConstantMatrial));
@@ -114,8 +118,6 @@ bool MMaterial::Render()
 	I_DxState.BS_Set(m_BlendStateID);
 	I_DxState.SS_Set(m_SamplerStateID);
 	I_DxState.DSS_Set(m_DepthStencilStateID);
-
-	g_pImmediateContext->IASetInputLayout(I_VertexShaderMgr.m_LOList[m_VertexShaderID]);		// ·¹ÀÌ¾Æ¿ô ¼Â
 
 	#pragma region MapBinding
 	if (m_ConstantMatrial.isDiffuse == -1)
@@ -155,7 +157,6 @@ bool MMaterial::Render()
 	}
 	#pragma endregion
 
-	g_pImmediateContext->VSSetShader(I_VertexShaderMgr.m_VSList[m_VertexShaderID], NULL, 0);
 	//m_pImmediateContext->HSSetShader(m_pHullShader, NULL, 0);
 	//m_pImmediateContext->DSSetShader(m_pDomainShader, NULL, 0);
 	//m_pImmediateContext->GSSetShader(m_pGeometryShader, NULL, 0);

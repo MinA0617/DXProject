@@ -17,6 +17,7 @@ cbuffer cb1 : register(b1)
 	matrix	m_matWorld		: packoffset(c0);
 };
 
+
 struct VSSPLINE_INPUT
 {
 	float3 Position			: POSITION;	 // simentci

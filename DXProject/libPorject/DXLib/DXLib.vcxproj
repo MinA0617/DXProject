@@ -222,6 +222,9 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="M2DObject.cpp" />
     <ClCompile Include="M2DScreen.cpp" />
     <ClCompile Include="M3DBone.cpp" />
+    <ClCompile Include="MFiled.cpp" />
+    <ClCompile Include="M3DHeightMap.cpp" />
+    <ClCompile Include="MBoundingBox.cpp" />
     <ClCompile Include="MKeyAnimation.cpp" />
     <ClCompile Include="MKeyAnimationMgr.cpp" />
     <ClCompile Include="MKeyData.cpp" />
@@ -231,7 +234,6 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="M3DObject.cpp" />
     <ClCompile Include="M3DObjectMgr.cpp" />
     <ClCompile Include="M3DSpline.cpp" />
-    <ClCompile Include="MBoundingbox.cpp" />
     <ClCompile Include="MCamera.cpp" />
     <ClCompile Include="MCameraMgr.cpp" />
     <ClCompile Include="MCore.cpp" />
@@ -241,18 +243,17 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="MDirectLight.cpp" />
     <ClCompile Include="MDxState.cpp" />
     <ClCompile Include="MDXWirte.cpp" />
-    <ClCompile Include="MFiledObj.cpp" />
     <ClCompile Include="MFPSCamera.cpp" />
     <ClCompile Include="MFreeCamera.cpp" />
     <ClCompile Include="MFrustum.cpp" />
     <ClCompile Include="MGrid.cpp" />
-    <ClCompile Include="MGroup.cpp" />
     <ClCompile Include="MInput.cpp" />
     <ClCompile Include="MLight.cpp" />
     <ClCompile Include="MLightMgr.cpp" />
     <ClCompile Include="MMesh.cpp" />
     <ClCompile Include="MObject.cpp" />
     <ClCompile Include="MMeshMgr.cpp" />
+    <ClCompile Include="MTree.cpp" />
     <ClCompile Include="MOmniLight.cpp" />
     <ClCompile Include="MParser.cpp" />
     <ClCompile Include="MRenderTarget.cpp" />
@@ -260,6 +261,7 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="MRPGCamera.cpp" />
     <ClCompile Include="MSkeleton.cpp" />
     <ClCompile Include="MSkeletonMgr.cpp" />
+    <ClCompile Include="MSkinMesh.cpp" />
     <ClCompile Include="MSkyLight.cpp" />
     <ClCompile Include="MSpotLight.cpp" />
     <ClCompile Include="MTargetCamera.cpp" />
@@ -268,7 +270,8 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="MTexture.cpp" />
     <ClCompile Include="MTextureMgr.cpp" />
     <ClCompile Include="MTimer.cpp" />
-    <ClCompile Include="MUnit.cpp" />
+    <ClCompile Include="MSkinModel.cpp" />
+    <ClCompile Include="MUint.cpp" />
     <ClCompile Include="MWindow.cpp" />
     <ClCompile Include="PixelShaderMgr.cpp" />
     <ClCompile Include="VertexShaderMgr.cpp" />
@@ -276,7 +279,11 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
   <ItemGroup>
     <ClInclude Include="M2DObject.h" />
     <ClInclude Include="M2DScreen.h" />
+    <ClInclude Include="M3DBasic.h" />
     <ClInclude Include="M3DBone.h" />
+    <ClInclude Include="MFiled.h" />
+    <ClInclude Include="M3DHeightMap.h" />
+    <ClInclude Include="MBoundingBox.h" />
     <ClInclude Include="MKeyAnimation.h" />
     <ClInclude Include="MKeyAnimationMgr.h" />
     <ClInclude Include="MKeyData.h" />
@@ -288,7 +295,6 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClInclude Include="M3DSpline.h" />
     <ClInclude Include="MAngle.h" />
     <ClInclude Include="MAnimateStd.h" />
-    <ClInclude Include="MBoundingbox.h" />
     <ClInclude Include="MCamera.h" />
     <ClInclude Include="MCameraMgr.h" />
     <ClInclude Include="MCollision.h" />
@@ -298,18 +304,17 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClInclude Include="MDirectLight.h" />
     <ClInclude Include="MDxState.h" />
     <ClInclude Include="MDXWirte.h" />
-    <ClInclude Include="MFiledObj.h" />
     <ClInclude Include="MFPSCamera.h" />
     <ClInclude Include="MFreeCamera.h" />
     <ClInclude Include="MFrustum.h" />
     <ClInclude Include="MGrid.h" />
-    <ClInclude Include="MGroup.h" />
     <ClInclude Include="MInput.h" />
     <ClInclude Include="MLight.h" />
     <ClInclude Include="MLightMgr.h" />
     <ClInclude Include="MMesh.h" />
     <ClInclude Include="MObject.h" />
     <ClInclude Include="MMeshMgr.h" />
+    <ClInclude Include="MTree.h" />
     <ClInclude Include="MOmniLight.h" />
     <ClInclude Include="MParser.h" />
     <ClInclude Include="MRenderTarget.h" />
@@ -317,6 +322,7 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClInclude Include="MRPGCamera.h" />
     <ClInclude Include="MSkeleton.h" />
     <ClInclude Include="MSkeletonMgr.h" />
+    <ClInclude Include="MSkinMesh.h" />
     <ClInclude Include="MSkyLight.h" />
     <ClInclude Include="MSpotLight.h" />
     <ClInclude Include="MTargetCamera.h" />
@@ -326,7 +332,8 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClInclude Include="MTexture.h" />
     <ClInclude Include="MTextureMgr.h" />
     <ClInclude Include="MTimer.h" />
-    <ClInclude Include="MUnit.h" />
+    <ClInclude Include="MSkinModel.h" />
+    <ClInclude Include="MUint.h" />
     <ClInclude Include="MWindow.h" />
     <ClInclude Include="PixelShaderMgr.h" />
     <ClInclude Include="resource.h" />

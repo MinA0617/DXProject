@@ -21,18 +21,18 @@ D3DXVECTOR3 MKeyData::GetCurPosition(float time)
 	{
 		return m_vPositionKeyList[m_vPositionKeyList.size() - 1].data;
 	}
-	for (int i = 1; i < m_vPositionKeyList.size(); i++)
+	for (int i = 0; i < m_vPositionKeyList.size(); i++)
 	{
-		if (m_vPositionKeyList[i].tick >= time)
+		if (m_vPositionKeyList[i + 1].tick >= time)
 		{
-			D3DXVECTOR3 next = m_vPositionKeyList[i].data;
-			D3DXVECTOR3 cur = m_vPositionKeyList[i - 1].data;
-			float length = m_vPositionKeyList[i].tick - m_vPositionKeyList[i - 1].tick;
-			float curtime = time - m_vPositionKeyList[i - 1].tick;
+			KEY_Position cur = m_vPositionKeyList[i];
+			KEY_Position next = m_vPositionKeyList[i + 1];
+			float length = next.tick - cur.tick;
+			float curtime = time - cur.tick;
 			float a = curtime / length;
-			float x = (cur.x * (1 - a)) + (next.x * a);
-			float y = (cur.y * (1 - a)) + (next.y * a);
-			float z = (cur.z * (1 - a)) + (next.z * a);
+			float x = (cur.data.x * (1 - a)) + (next.data.x * a);
+			float y = (cur.data.y * (1 - a)) + (next.data.y * a);
+			float z = (cur.data.z * (1 - a)) + (next.data.z * a);
 			return D3DXVECTOR3(x, y, z);
 		}
 	}
@@ -50,16 +50,16 @@ D3DXQUATERNION MKeyData::GetCurRotation(float time)
 	}
 	D3DXQUATERNION result;
 	D3DXQuaternionIdentity(&result);
-	for (int i = 1; i < m_vRotationKeyList.size(); i++)
+	for (int i = 0; i < m_vRotationKeyList.size(); i++)
 	{
-		if (m_vRotationKeyList[i].tick >= time)
+		if (m_vRotationKeyList[i + 1].tick >= time)
 		{
-			KEY_Rotation next = m_vRotationKeyList[i];
-			KEY_Rotation Slerp = m_vRotationKeyList[i - 1];
-			float length = next.tick - Slerp.tick;
-			float curtime = time - Slerp.tick;
+			KEY_Rotation cur = m_vRotationKeyList[i];
+			KEY_Rotation next = m_vRotationKeyList[i + 1];
+			float length = next.tick - cur.tick;
+			float curtime = time - cur.tick;
 			float t = (curtime / length);
-			D3DXQuaternionSlerp(&result, &Slerp.data, &next.data, t);
+			D3DXQuaternionSlerp(&result, &cur.data, &next.data, t);
 			return result;
 		}
 	}
@@ -75,18 +75,18 @@ D3DXVECTOR3 MKeyData::GetCurScale(float time)
 	{
 		return m_vPositionKeyList[m_vScaleKeyList.size() - 1].data;
 	}
-	for (int i = 1; i < m_vScaleKeyList.size(); i++)
+	for (int i = 0; i < m_vScaleKeyList.size(); i++)
 	{
-		if (m_vScaleKeyList[i].tick >= time)
+		if (m_vScaleKeyList[i + 1].tick >= time)
 		{
-			D3DXVECTOR3 next = m_vScaleKeyList[i].data;
-			D3DXVECTOR3 cur = m_vScaleKeyList[i - 1].data;
-			float length = m_vScaleKeyList[i].tick - m_vScaleKeyList[i - 1].tick;
-			float curtime = time - m_vScaleKeyList[i - 1].tick;
+			KEY_Scale cur = m_vScaleKeyList[i];
+			KEY_Scale next = m_vScaleKeyList[i + 1];
+			float length = next.tick - cur.tick;
+			float curtime = time - cur.tick;
 			float a = curtime / length;
-			float x = (cur.x * (1 - a)) + (next.x * a);
-			float y = (cur.y * (1 - a)) + (next.y * a);
-			float z = (cur.z * (1 - a)) + (next.z * a);
+			float x = (cur.data.x * (1 - a)) + (next.data.x * a);
+			float y = (cur.data.y * (1 - a)) + (next.data.y * a);
+			float z = (cur.data.z * (1 - a)) + (next.data.z * a);
 			return D3DXVECTOR3(x, y, z);
 		}
 	}

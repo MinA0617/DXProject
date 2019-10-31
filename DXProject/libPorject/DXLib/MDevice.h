@@ -2,10 +2,13 @@
 #include "MCameraMgr.h"
 #include "M3DObjectMgr.h"
 #include "MRenderTargetMgr.h"
+#include "MDXWirte.h"
 
 class MDevice : public MSingleton<MDevice>
 {
 	friend class MSingleton<MDevice>;
+public:
+	MDXWirte	m_dxWrite;
 public:
 	D3D_DRIVER_TYPE				m_DirverType;			//// 디바이스타입 <하드웨어가속, 워프, 레퍼런스 등등>
 	DXGI_SWAP_CHAIN_DESC		m_SwapChainDesc;		//// 스왑체인 정보

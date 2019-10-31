@@ -13,8 +13,6 @@ M3DSpline::~M3DSpline()
 
 bool M3DSpline::Init()
 {
-
-	I_MaterialMgr[MaterialID]->m_VertexShaderID = VSSPLINE;
 	I_MaterialMgr[MaterialID]->m_PixelShaderID = PSSPLINE;
 
 	return true;
@@ -39,6 +37,9 @@ bool M3DSpline::Render()
 	///// 스테이트 매니져로 블랜드셋팅을 받아오기 ////
 
 	I_MaterialMgr[MaterialID]->Render();
+
+	g_pImmediateContext->IASetInputLayout(I_VertexShaderMgr.m_LOList[VSSPLINE]);		// 레이아웃 셋
+	g_pImmediateContext->VSSetShader(I_VertexShaderMgr.m_VSList[VSSPLINE], NULL, 0);
 
 	UINT stride = sizeof(SPLINE_VERTEX);		//// 보폭(카운트할 사이즈 크기)
 	UINT offset = 0;					//// 시작 위치

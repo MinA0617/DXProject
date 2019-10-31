@@ -89,7 +89,10 @@ void MinWriter::ExportParent(INode * pNode)
 	INode* parent = pNode->GetParentNode();
 	if (parent->IsRootNode() == false)
 	{
-		_ftprintf(m_pStream, L"PARENT %s\n", parent->GetName());
+		//_ftprintf(m_pStream, L"PARENT %s\n", parent->GetName());
+		_ftprintf(m_pStream, L"PARENT ");
+		ExportName(parent->GetName());
+		_ftprintf(m_pStream, L"\n");
 	}
 	else
 	{
@@ -102,6 +105,7 @@ void MinWriter::ExportMatrix(INode * pNode)
 	Matrix3 pivot = pNode->GetNodeTM(0) * Inverse(pNode->GetParentTM(0));
 	Point3 pos;
 	Quat rot;
+	Point3 scl;
 
 	AffineParts ap;
 	decomp_affine(pivot, &ap);
@@ -111,10 +115,14 @@ void MinWriter::ExportMatrix(INode * pNode)
 	AngAxis temprot(pivot);
 	SwapFloat(temprot.axis.y, temprot.axis.z);
 	rot = Quat(temprot);
+
+	scl = ap.k;
+	SwapFloat(scl.y, scl.z);
+
 	// 스케일은 나중에 하는걸로
 	_ftprintf(m_pStream, L"World_Position %10.4f %10.4f %10.4f\n", pos.x, pos.y, pos.z);
 	_ftprintf(m_pStream, L"World_Rotation %10.4f %10.4f %10.4f %10.4f\n", rot.x, rot.y, rot.z, rot.w);
-	//_ftprintf(m_pStream, L"World_Scale %10.4f %10.4f %10.4f\n", scl.x, scl.y, scl.z);
+	_ftprintf(m_pStream, L"World_Scale %10.4f %10.4f %10.4f\n", scl.x, scl.y, scl.z);
 }
 
 void MinWriter::ExportGeometry(INode * pNode)
@@ -318,6 +326,28 @@ void MinWriter::ExportMesh(INode * pNode)
 	if (deleteit) delete tri;
 }
 
+void MinWriter::ExportBoundingbox(INode * pNode)
+{
+	Matrix3 tm = pNode->GetNodeTM(0);
+	bool deleteit = false;
+	TriObject* tri = GetTriObjectFromNode(pNode, 0, deleteit);
+	if (tri == nullptr)
+	{
+		return;
+	}
+	Mesh* mesh = &tri->GetMesh();
+	mesh->buildBoundingBox();
+	Box3 box = mesh->getBoundingBox();
+	Point3 min = box.pmin; //*Inverse(tm);
+	Point3 max = box.pmax; //*Inverse(tm);
+	SwapFloat(min.y, min.z);
+	SwapFloat(max.y, max.z);
+	_ftprintf(m_pStream, L"BOUNDING_BOX\n");
+	_ftprintf(m_pStream, L"%10.4f %10.4f %10.4f", min.x, min.y, min.z);
+	_ftprintf(m_pStream, L"%10.4f %10.4f %10.4f", max.x, max.y, max.z);
+	_ftprintf(m_pStream, L"\n");
+}
+
 Modifier* MinWriter::FindModifyer(INode * pNode, Class_ID classID)
 {
 	Object* ObjectPtr = pNode->GetObjectRef();
@@ -509,7 +539,7 @@ void MinWriter::ExportSkinningMesh(INode * pNode)
 		TList.resize(mesh->numTVerts);
 		for (int i = 0; i < mesh->numVerts; i++)
 		{
-			Point3 V = mesh->verts[i];
+			Point3 V = mesh->verts[i] * tm;
 			SwapFloat(V.y, V.z);
 			VList[i] = V;
 		}
@@ -602,7 +632,8 @@ void MinWriter::ExportSkinningMesh(INode * pNode)
 			_ftprintf(m_pStream, L"%d ", m_VertexList[i].bp.m_NumWeight);
 			for (int j = 0; j < m_VertexList[i].bp.m_NumWeight; j++)
 			{
-				_ftprintf(m_pStream, L"%s %10.4f ", m_VertexList[i].bp.m_ID[j], m_VertexList[i].bp.m_Weight[j]);
+				ExportName(m_VertexList[i].bp.m_ID[j]);
+				_ftprintf(m_pStream, L" %10.4f ", m_VertexList[i].bp.m_Weight[j]);
 			}
 			_ftprintf(m_pStream, L"\n");
 		}
@@ -1001,6 +1032,151 @@ void MinWriter::ExportAnimationKeys(INode * pNode)
 	_ftprintf(m_pStream, L"ANIMATION_END\n");
 }
 
+void MinWriter::ExportAnimationKeys2(INode * pNode)
+{
+	// 스케일은 나중에 추가
+	float step = 800;
+	_ftprintf(m_pStream, L"ANIMATION_KEY\n");
+	Control* pC = pNode->GetTMController()->GetPositionController();
+	Control* rC = pNode->GetTMController()->GetRotationController();
+	Control* sC = pNode->GetTMController()->GetScaleController();
+	int iNumPos = pC->NumKeys();
+	int iNumRot = rC->NumKeys();
+	int iNumScl = sC->NumKeys();
+	float TickPerSecond = 4800.00f;
+	TimeValue start = m_pMax->GetAnimRange().Start();
+	TimeValue end = m_pMax->GetAnimRange().End();
+	vector<Point3>	poslist;
+	vector<int>		postime;
+	vector<Quat>	rotlist;
+	vector<int>		rottime;
+	vector<Point3>	scllist;
+	vector<int>		scltime;
+	{
+		// ------------ 스타트 키 추가 ------------
+		Matrix3 CurTm = pNode->GetNodeTM(start)  * Inverse(pNode->GetParentTM(start));
+		AffineParts ap;
+		decomp_affine(CurTm, &ap);
+		// ----------------------------------------
+		Point3 pos = ap.t;
+		SwapFloat(pos.y, pos.z);
+		poslist.push_back(pos);
+		postime.push_back(start);
+		// ----------------------------------------
+		AngAxis temprot(CurTm);
+		SwapFloat(temprot.axis.y, temprot.axis.z);
+		Quat rot(temprot);
+		rotlist.push_back(rot);
+		rottime.push_back(start);
+		// ----------------------------------------
+		Point3 scl = ap.k;
+		SwapFloat(scl.y, scl.z);
+		scllist.push_back(scl);
+		scltime.push_back(start);
+
+	}
+	// ------------ 키 정보 추가 ------------
+	for (int i = start + step;; i = i + step)
+	{
+		if (i >= end)
+		{
+			Matrix3 CurTm = pNode->GetNodeTM(end) * Inverse(pNode->GetParentTM(end));
+			AffineParts ap;
+			decomp_affine(CurTm, &ap);
+			if (iNumPos > 1)
+			{
+				Point3 pos = ap.t;
+				SwapFloat(pos.y, pos.z);
+				if (!poslist[poslist.size() - 1].Equals(pos))
+				{
+					poslist.push_back(pos);
+					postime.push_back(end);
+				}
+			}
+			if (iNumRot > 1)
+			{
+				AngAxis temprot(CurTm);
+				SwapFloat(temprot.axis.y, temprot.axis.z);
+				Quat rot(temprot);
+				if (!rotlist[rotlist.size() - 1].Equals(rot))
+				{
+					rotlist.push_back(rot);
+					rottime.push_back(end);
+				}
+			}
+			if (iNumScl > 1)
+			{
+				Point3 scl = ap.k;
+				SwapFloat(scl.y, scl.z);
+				if (!scllist[scllist.size() - 1].Equals(scl))
+				{
+					scllist.push_back(scl);
+					scltime.push_back(end);
+				}
+			}
+			break;
+		}
+		Matrix3 CurTm = pNode->GetNodeTM(i) * Inverse(pNode->GetParentTM(i));
+		AffineParts ap;
+		decomp_affine(CurTm, &ap);
+		if (iNumPos > 1)
+		{
+			Point3 pos = ap.t;
+			SwapFloat(pos.y, pos.z);
+			if (!poslist[poslist.size() - 1].Equals(pos))
+			{
+				poslist.push_back(pos);
+				postime.push_back(i);
+			}
+		}
+		if (iNumRot > 1)
+		{
+			AngAxis temprot(CurTm);
+			SwapFloat(temprot.axis.y, temprot.axis.z);
+			Quat rot(temprot);
+			if (!rotlist[rotlist.size() - 1].Equals(rot))
+			{
+				rotlist.push_back(rot);
+				rottime.push_back(i);
+			}
+		}
+		if (iNumScl > 1)
+		{
+			Point3 scl = ap.k;
+			SwapFloat(scl.y, scl.z);
+			if (!scllist[scllist.size() - 1].Equals(scl))
+			{
+				scllist.push_back(scl);
+				scltime.push_back(i);
+			}
+		}
+	}
+	// ------------ 정보 추출 ------------
+	iNumPos = poslist.size();
+	iNumRot = rotlist.size();
+	iNumScl = scllist.size();
+	_ftprintf(m_pStream, L"POSITION_KEY_COUNT %d\n", iNumPos);
+	for (int i = 0; i < iNumPos; i++)
+	{
+		_ftprintf(m_pStream, L"%10.4f ", postime[i] / TickPerSecond);
+		_ftprintf(m_pStream, L"%10.4f %10.4f %10.4f\n", poslist[i].x, poslist[i].y, poslist[i].z);
+	}
+	_ftprintf(m_pStream, L"ROTATION_KEY_COUNT %d\n", iNumRot);
+	for (int i = 0; i < iNumRot; i++)
+	{
+		_ftprintf(m_pStream, L"%10.4f ", rottime[i] / TickPerSecond);
+		_ftprintf(m_pStream, L"%10.4f %10.4f %10.4f %10.4f\n", rotlist[i].x, rotlist[i].y, rotlist[i].z, rotlist[i].w);
+	}
+	_ftprintf(m_pStream, L"SCALE_KEY_COUNT %d\n", iNumScl);
+	for (int i = 0; i < iNumScl; i++)
+	{
+		_ftprintf(m_pStream, L"%10.4f ", scltime[i] / TickPerSecond);
+		_ftprintf(m_pStream, L"%10.4f %10.4f %10.4f\n", scllist[i].x, scllist[i].y, scllist[i].z);
+	}
+	_ftprintf(m_pStream, L"ANIMATION_END\n");
+}
+
+
 void MinWriter::GetTexture(Mtl * pMtl)
 {
 	int iNumMap = pMtl->NumSubTexmaps();
@@ -1104,7 +1280,9 @@ bool MinWriter::Export()
 			break;
 		}
 		_ftprintf(m_pStream, L"OBJECT_NAME ");
-		_ftprintf(m_pStream, L"%s\n", m_ObjectList[i]->GetName());
+		//_ftprintf(m_pStream, L"%s\n", m_ObjectList[i]->GetName());
+		ExportName(m_ObjectList[i]->GetName());
+		_ftprintf(m_pStream, L"\n");
 		ExportParent(m_ObjectList[i]);
 		ExportMatrix(m_ObjectList[i]);
 		switch (iType)
@@ -1112,15 +1290,14 @@ bool MinWriter::Export()
 		case 1:
 			ExportMesh(m_ObjectList[i]);
 			ExportMaterial(m_ObjectList[i]);
-			ExportAnimationKeys(m_ObjectList[i]);
+			ExportBoundingbox(m_ObjectList[i]);
 			break;
 		case 2:
 			ExportSkinningMesh(m_ObjectList[i]);
-			//ExportSkinningMesh2(m_ObjectList[i]);
 			ExportMaterial(m_ObjectList[i]);
 			break;
 		case 3:
-			ExportAnimationKeys(m_ObjectList[i]);
+			ExportAnimationKeys2(m_ObjectList[i]);
 			break;
 		default:
 			break;
@@ -1131,6 +1308,24 @@ bool MinWriter::Export()
 	fclose(m_pStream);
 	MessageBox(GetActiveWindow(), m_filename.c_str(), _T("성공!"), MB_OK); // 확인 메세지 상자
 	return true;
+}
+
+void MinWriter::ExportName(const MCHAR* name)
+{
+	//MCHAR* name = const_cast<MCHAR*>(pNode->GetName());
+	wstring buffer;
+	buffer.append(name);
+	for (int i = 0; i < buffer.length(); i++)
+	{
+		if (buffer[i] == 32)
+		{
+			_ftprintf(m_pStream, L"_");
+		}
+		else
+		{
+			_ftprintf(m_pStream, L"%c", buffer[i]);
+		}
+	}
 }
 
 MinWriter::MinWriter()

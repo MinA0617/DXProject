@@ -40,7 +40,7 @@ bool MRenderTargetMgr::Frame()
 
 bool MRenderTargetMgr::PreRender()
 {
-	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, D3DXVECTOR4(0.7, 0.2, 0.5, 1));
+	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, D3DXVECTOR4(1, 1, 1, 1));
 	g_pImmediateContext->ClearDepthStencilView(g_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	return false;
 }

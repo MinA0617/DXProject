@@ -5,7 +5,6 @@
 #include "MTimer.h"
 #include "MInput.h"
 #include "MSoundMgr.h"
-#include "MDXWirte.h"
 #include "MCreate.h"
 
 
@@ -15,8 +14,6 @@ public:
 	MCore();
 	virtual ~MCore();
 	bool	 m_bDebug;
-public:
-	MDXWirte	m_dxWrite;
 private:
 	virtual bool Init();
 	virtual bool Frame();

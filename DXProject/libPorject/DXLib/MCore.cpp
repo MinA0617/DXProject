@@ -34,7 +34,6 @@ bool MCore::MCoreInit()
 {
 	I_Device.Init();
 	I_Timer.Init();
-	m_dxWrite.Init();
 	I_Input.Init();
 	I_MSoundMgr.Init();
 
@@ -46,7 +45,6 @@ bool MCore::MCoreFrame()
 	I_Timer.Frame();
 	I_Input.Frame();
 	I_MSoundMgr.Frame();
-	m_dxWrite.Frame();
 
 	return Frame();
 }
@@ -70,7 +68,6 @@ bool MCore::MCoreRelease()
 	I_Device.Release();
 	I_Timer.Release();
 	I_Input.Release();
-	m_dxWrite.Release();
 	I_MSoundMgr.Release();
 	return Release();
 }
@@ -101,7 +98,6 @@ bool MCore::PostRender()
 		DebugRender();
 	}
 	I_Device.PostRender();
-	m_dxWrite.Render();
 	return true;
 }
 

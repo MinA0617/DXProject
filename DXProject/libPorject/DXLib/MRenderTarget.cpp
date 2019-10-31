@@ -61,7 +61,7 @@ bool MRenderTarget::Begin()
 	g_pImmediateContext->RSGetViewports(&m_iViewports, &m_OldViewPort);
 	g_pImmediateContext->OMGetRenderTargets(1, &m_pOldRenderTargetView, &m_pOldDepthStencilView);
 
-	g_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView, D3DXVECTOR4(0.1, 0.1, 0.1, 1));
+	g_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView, D3DXVECTOR4(1, 1, 1, 1));
 	g_pImmediateContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	ID3D11RenderTargetView* temp = NULL;
 	ID3D11DepthStencilView* temp2 = NULL;

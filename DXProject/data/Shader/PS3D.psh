@@ -206,15 +206,15 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 	}
 	if (m_isReflection == -1)
 	{
-		lastcolor.r = 1;
+		//lastcolor.r = 1;
 	}
 	if (m_isRefraction == -1)
 	{
-		lastcolor.g = 1;
+		//lastcolor.g = 1;
 	}
 	if (m_isEnvironment == -1)
 	{
-		lastcolor.b = 1;
+		//lastcolor.b = 1;
 	}
 	if (m_isOpacity == -1)
 	{
@@ -222,7 +222,7 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 	}
 	else
 	{
-		lastcolor.a = m_isOpacity / 255;
+		lastcolor.w = m_isOpacity / 255.00;
 	}
 	return lastcolor;
 }

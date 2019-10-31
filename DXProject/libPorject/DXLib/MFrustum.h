@@ -1,5 +1,6 @@
 #pragma once
-#include "MBoundingbox.h"
+#include "MStd.h"
+#include "MBoundingBox.h"
 
 struct MPlane
 {
@@ -16,8 +17,10 @@ public:
 	D3DXVECTOR3		m_vFrustum[5];
 	D3DXMATRIX      m_matView;
 	D3DXMATRIX      m_matProj;
+	bool			CheckPlane(MPlane plane, MBoundingBox* box);
+	bool			CheckOBB(MBoundingBox* box);
 public:
-	void  CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj);
+	void			CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj);
 public:
 	MFrustum();
 	~MFrustum();

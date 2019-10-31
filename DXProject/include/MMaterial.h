@@ -9,7 +9,9 @@ enum MAPTYPE {NOTFOUND, DIFFUSE, NORMAL, SPECULAR, OPACITY, REFLECTION, REFRACTI
 
 class MMaterial
 {
-public:
+	friend class M2DObject;
+	friend class M3DObject;
+private:
 	CONSTANT_Matrial	m_ConstantMatrial;
 	DWORD				Diffuse;
 	DWORD				Normal;
@@ -22,9 +24,10 @@ public:
 	BlendState			m_BlendStateID;
 	SamplerState		m_SamplerStateID;
 	DepthStencilState	m_DepthStencilStateID;
-public:
-	VertexShader		m_VertexShaderID;
 	PixelShader			m_PixelShaderID;
+public:
+	void				SetOpacity(DWORD level);
+	//bool				SetOpacity(M_STR filename);
 public:
 	ID3D11Buffer*		m_pConstantBuffer;
 	bool				Load(M_STR NewFileName, MAPTYPE maptype);

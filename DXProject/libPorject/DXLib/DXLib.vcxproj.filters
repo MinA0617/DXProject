@@ -43,15 +43,6 @@
     <ClCompile Include="MCamera.cpp">
       <Filter>Object\3DObject\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="MFiledObj.cpp">
-      <Filter>Object\3DObject\3DModel</Filter>
-    </ClCompile>
-    <ClCompile Include="MGroup.cpp">
-      <Filter>Object\3DObject\3DModel</Filter>
-    </ClCompile>
-    <ClCompile Include="MUnit.cpp">
-      <Filter>Object\3DObject\3DModel</Filter>
-    </ClCompile>
     <ClCompile Include="M3DModel.cpp">
       <Filter>Object\3DObject\3DModel</Filter>
     </ClCompile>
@@ -84,9 +75,6 @@
     </ClCompile>
     <ClCompile Include="MParser.cpp">
       <Filter>File</Filter>
-    </ClCompile>
-    <ClCompile Include="MBoundingbox.cpp">
-      <Filter>Object\3DObject\3DHelper</Filter>
     </ClCompile>
     <ClCompile Include="MFrustum.cpp">
       <Filter>Object\3DObject\Camera</Filter>
@@ -160,6 +148,27 @@
     <ClCompile Include="MSkeletonMgr.cpp">
       <Filter>Object\3DObject\3DHelper</Filter>
     </ClCompile>
+    <ClCompile Include="MSkinModel.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="MUint.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="MSkinMesh.cpp">
+      <Filter>Object\Resource\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="MTree.cpp">
+      <Filter>Object\3DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MBoundingBox.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DHeightMap.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="MFiled.cpp">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MWindow.h">
@@ -213,15 +222,6 @@
     <ClInclude Include="MCamera.h">
       <Filter>Object\3DObject\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="MFiledObj.h">
-      <Filter>Object\3DObject\3DModel</Filter>
-    </ClInclude>
-    <ClInclude Include="MGroup.h">
-      <Filter>Object\3DObject\3DModel</Filter>
-    </ClInclude>
-    <ClInclude Include="MUnit.h">
-      <Filter>Object\3DObject\3DModel</Filter>
-    </ClInclude>
     <ClInclude Include="M3DModel.h">
       <Filter>Object\3DObject\3DModel</Filter>
     </ClInclude>
@@ -263,9 +263,6 @@
     </ClInclude>
     <ClInclude Include="MParser.h">
       <Filter>File</Filter>
-    </ClInclude>
-    <ClInclude Include="MBoundingbox.h">
-      <Filter>Object\3DObject\3DHelper</Filter>
     </ClInclude>
     <ClInclude Include="MFrustum.h">
       <Filter>Object\3DObject\Camera</Filter>
@@ -336,6 +333,30 @@
     <ClInclude Include="MSkeletonMgr.h">
       <Filter>Object\3DObject\3DHelper</Filter>
     </ClInclude>
+    <ClInclude Include="MSkinModel.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="MUint.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="MSkinMesh.h">
+      <Filter>Object\Resource\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="MTree.h">
+      <Filter>Object\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MBoundingBox.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DBasic.h">
+      <Filter>Object\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DHeightMap.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="MFiled.h">
+      <Filter>Object\3DObject\3DHelper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sound">
@@ -350,23 +371,8 @@
     <Filter Include="Object">
       <UniqueIdentifier>{9ea75d2a-33a3-4d9f-8fd1-9dcfe33e15d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\3DObject">
-      <UniqueIdentifier>{1b20aa3f-1a89-43b2-a89b-ae7c36c626a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\3DObject\Camera">
-      <UniqueIdentifier>{c045f108-216c-4421-a04f-29baadccb90b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\3DObject\3DModel">
-      <UniqueIdentifier>{07b2d636-6d30-40be-85e6-b0ed005e6998}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\2DObject">
       <UniqueIdentifier>{2e66be8c-b66d-4b5b-872b-ff37279f7709}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\3DObject\3DSpline">
-      <UniqueIdentifier>{7ad8fa19-d52d-4840-bd3a-dda2d0a7cecc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\3DObject\3DHelper">
-      <UniqueIdentifier>{ef29e056-b676-44fc-81aa-4ff626f785d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Create">
       <UniqueIdentifier>{e1f25579-88ef-467e-8e1c-b13082c02dea}</UniqueIdentifier>
@@ -383,9 +389,6 @@
     <Filter Include="File">
       <UniqueIdentifier>{66bf20ed-ebdc-4925-87b0-ea016e81f082}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\3DObject\Light">
-      <UniqueIdentifier>{3c30a29b-0079-4662-9dd0-c172a2378077}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{656a1593-601c-4f23-80c3-8ce168a8ed01}</UniqueIdentifier>
     </Filter>
@@ -394,6 +397,24 @@
     </Filter>
     <Filter Include="Object\Animation">
       <UniqueIdentifier>{f9b1b2fd-9b37-4f86-bc49-48fc35667391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject">
+      <UniqueIdentifier>{1b20aa3f-1a89-43b2-a89b-ae7c36c626a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\Camera">
+      <UniqueIdentifier>{c045f108-216c-4421-a04f-29baadccb90b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\3DModel">
+      <UniqueIdentifier>{07b2d636-6d30-40be-85e6-b0ed005e6998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\3DSpline">
+      <UniqueIdentifier>{7ad8fa19-d52d-4840-bd3a-dda2d0a7cecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\3DHelper">
+      <UniqueIdentifier>{ef29e056-b676-44fc-81aa-4ff626f785d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3DObject\Light">
+      <UniqueIdentifier>{3c30a29b-0079-4662-9dd0-c172a2378077}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -11,35 +11,73 @@ MSample::~MSample()
 
 bool  MSample::Init()
 {
+	{
+		MTree temp;
+		temp.Build(300, 550, 700, 10);
+		temp.Release();
+	}
+
 	M_STR asd;
 	M_STR asdsda = asd;
 	I_CameraMgr.CreateFPSCamera_Main();
+	I_Device.m_dxWrite.AddData(L"x", D2D1::ColorF(1, 1, 1, 1.0), MPoint(0, 0));
+	I_Device.m_dxWrite.AddData(L"y", D2D1::ColorF(1, 1, 1, 1.0), MPoint(80, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(160, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(240, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(320, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(400, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(480, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(560, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(640, 0));
 
-	m_dxWrite.AddData(L"x", D2D1::ColorF(1, 1, 1, 1.0), MPoint(0, 0));
-	m_dxWrite.AddData(L"y", D2D1::ColorF(1, 1, 1, 1.0), MPoint(80, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(160, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(240, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(320, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(400, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(480, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(560, 0));
-	m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(640, 0));
-
-	ps.Load(L"../../data/obj/CatGirl.MIN");
-	ps.Load(L"../../data/obj/_Run.MIN");
-	//temtem = (*I_SkeletonMgr[0]->m_BoneList.find(L"Bone001")).second;
-	//zero = &temtem->ZeroMatrix;
-	//CONSTANT_3DOBJ* sdsd = &temtem->GetConstantOBJ();
-	//local = &sdsd->matWorld;
-	//skt = &(*I_KeyAnimationMgr.m_KeyAniList.find(L"0.MIN")).second->m_TempSkeleton;
-	// I_3DObjectMgr.Add(L"a", skt);
-	//target = I_3DObjectMgr[L"catgirl_Body"];
-	//I_MaterialMgr[target->MaterialID]->m_VertexShaderID = VS3D;
-	target = I_SkeletonMgr[0];
-	target->m_fAniSpeed = 1;
+	ps.Load_HM(L"../../data/image/Map512.png", 5);
+	MFiled* filed = I_3DObjectMgr.CreateFiled(L"Map512");
+	filed->ground->SetColor(D3DXVECTOR3(0.5, 0.5, 0.5));
+	if(0)
+	{
+		ps.Load(L"../../data/obj/Catgirl_T.MIN");
+		ps.Load(L"../../data/obj/Catgirl_Wait.MIN");
+		ps.Load(L"../../data/obj/Catgirl_Walk.MIN");
+		ps.Load(L"../../data/obj/Catgirl_Run.MIN");
+		ps.Load(L"../../data/obj/Catgirl_Attack.MIN");
+		ps.Load(L"../../data/obj/Catgirl_Armor.MIN", true, false, I_SkeletonMgr[L"Catgirl_T"]);
+		M_STR namelist[7];
+		namelist[0] = L"Catgirl_Eyes";
+		namelist[1] = L"Catgirl_Head";
+		namelist[2] = L"Catgirl_Hair";
+		namelist[3] = L"Catgirl_UpperBody"; // L"Armor1";
+		namelist[4] = L"Catgirl_LowerBody";
+		namelist[5] = L"Catgirl_Hands";
+		namelist[6] = L"Catgirl_Feet";
+		// EYES, HEAD, HAIR, UPPERBODY, LOWERBODY, HANDS, FEET
+		MUnit* temp = I_3DObjectMgr.CreateUnit(L"aa", L"Catgirl_T", namelist, _countof(namelist));
+		ps.Load_BB(L"../../data/obj/Catgirl_BB.MIN", temp);
+		//target = I_3DObjectMgr[L"catgirl_Body"];
+		//I_MaterialMgr[target->MaterialID]->m_VertexShaderID = VS3D;
+		//target = I_SkeletonMgr[0];
+		unit = temp;
+	}
+	ps.Load(L"../../data/obj/box.MIN");
+	M_STR namelist[12];
+	namelist[0] = L"Box001";
+	namelist[1] = L"Box002";
+	namelist[2] = L"Box003";
+	namelist[3] = L"Box004";
+	namelist[4] = L"Box005";
+	namelist[5] = L"Box006";
+	namelist[6] = L"Box007";
+	namelist[7] = L"Box008";
+	namelist[8] = L"Box009";
+	namelist[9] = L"Box010";
+	namelist[10] = L"Box011";
+	namelist[11] = L"Box012";
+	y = I_3DObjectMgr.AddInWorld(namelist, 2);
 	light = &(I_LightMgr.m_List);
-	//target->Frame();
-	y = 0;
+
+	box1 = I_3DObjectMgr.findObject(y);
+	box2 = I_3DObjectMgr.findObject(y + 1);
+
+	//target = I_3DObjectMgr.findObject(hm);
 	return true;
 }
 
@@ -56,7 +94,7 @@ bool  MSample::Frame()
 	light->m_ConstantLigth.m_fOutner = 1500;
 	light->m_ConstantLigth.m_fOffset = 100;
 	light->m_ConstantLigth.m_Color = D3DXVECTOR3(1, 1, 1);
-	light->m_ConstantLigth.m_iFlag = OMNI;
+	light->m_ConstantLigth.m_iFlag = SKY;
 	light->Frame();
 	//// 회전은 행렬에서 가져오기
 	//// 스케일, 포지션은 실수값
@@ -72,15 +110,31 @@ bool  MSample::Frame()
 	//temp >> data;
 	//m_dxWrite.UpdateData(3, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(240, 0));
 
+	if (MCollision::OBBtoOBB(box1->m_BoxList[0], box2->m_BoxList[0]))
+	{
+		int a1 = 0;
+		box1->GetMatarial()->SetOpacity(150);
+		box2->GetMatarial()->SetOpacity(150);
+		box1->Render();
+		//box1->ModifyLocalScale(D3DXVECTOR3(-0.001, -0.001, -0.001));
+		//box2->ModifyLocalScale(D3DXVECTOR3(-0.001, -0.001, -0.001));
+	}
+	else
+	{
+		box1->GetMatarial()->SetOpacity(255);
+		box2->GetMatarial()->SetOpacity(255);
+	}
+
 	if (g_ActionInput.F1 >= KEY_PUSH)
 	{
-
+		target = I_3DObjectMgr.findObject(0);
+		//target->Change(UPPERBODY, L"Armor1");
 	}
 	if (g_ActionInput.F2 >= KEY_PUSH)
 	{
-		target->BindAni(L"_Run", true, 5.0f);
-		//target = (*skt->m_BoneList.find(L"Box002")).second;sssssssswswsa
-
+		target = I_3DObjectMgr.findObject(1);
+		//target->Change(UPPERBODY, L"Catgirl_UpperBody");
+		//target->skt->BindAni(L"Catgirl_Wait", false, 0.15);
 	}
 	if (g_ActionInput.F3 >= KEY_PUSH)
 	{
@@ -92,15 +146,15 @@ bool  MSample::Frame()
 	}
 	if (g_ActionInput.F6 == KEY_PUSH)
 	{
-
+		unit->skt->BindAni(L"Catgirl_Attack", true, 0.15);
 	}
 	if (g_ActionInput.F7 == KEY_PUSH)
 	{
-
+		unit->skt->BindAni(L"Catgirl_Walk", true, 0.15);
 	}
 	if (g_ActionInput.F8 == KEY_PUSH)
 	{
-
+		unit->skt->BindAni(L"Catgirl_Run", true, 0.15);
 	}
 	if (g_ActionInput.S >= KEY_PUSH)
 	{
@@ -122,103 +176,103 @@ bool  MSample::Frame()
 	{
 		I_CameraMgr.m_MainCamera->isRotition = !I_CameraMgr.m_MainCamera->isRotition;
 	}
-	//if (g_ActionInput.UP >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalPosition(D3DXVECTOR3(0, 0, 0.1));
-	//	//D3DXVECTOR3 temp;
-	//	//D3DXVec3Normalize(&temp, &D3DXVECTOR3(0, -1, 1));
-	//	//light->m_ConstantLigth.m_Direction = temp;
-	//}
-	//if (g_ActionInput.DOWN>= KEY_PUSH)
-	//{
-	//	target->ModifyLocalPosition(D3DXVECTOR3(0, 0, -0.1));
-	//	//D3DXVECTOR3 temp;
-	//	//D3DXVec3Normalize(&temp, &D3DXVECTOR3(0, -1, -1));
-	//	//light->m_ConstantLigth.m_Direction = temp;
-	//}
-	//if (g_ActionInput.RIGHT >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalPosition(D3DXVECTOR3(0.1, 0, 0));
-	//	D3DXVECTOR3 ttemp;
-	//	D3DXVec3Normalize(&ttemp, &D3DXVECTOR3(-1, -1, 0));
-	//	light->m_ConstantLigth.m_Direction = ttemp;
-	//}
-	//if (g_ActionInput.LEFT >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalPosition(D3DXVECTOR3(-0.1, 0, 0));
-	//	D3DXVECTOR3 ttemp;
-	//	D3DXVec3Normalize(&ttemp, &D3DXVECTOR3(1, -1, 0));
-	//	light->m_ConstantLigth.m_Direction = ttemp;
-	//}
-	//if (g_ActionInput.Z >= KEY_PUSH)
-	//{
-	//	//target->ModifyLocalPosition(D3DXVECTOR3(0, 0.1, 0));
-	//}
-	//if (g_ActionInput.X >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalPosition(D3DXVECTOR3(0, -0.1, 0));
-	//}
-	//if (g_ActionInput.Num1 >= KEY_PUSH)
-	//{
-	//	D3DXQUATERNION temp;
-	//	D3DXQuaternionRotationYawPitchRoll(&temp, 0, 0, 0.01);
-	//	target->ModifyLocalRotation(temp);
-	//}
-	//if (g_ActionInput.Num2 >= KEY_PUSH)
-	//{
-	//	D3DXQUATERNION temp;
-	//	D3DXQuaternionRotationYawPitchRoll(&temp, 0, 0, -0.01);
-	//	target->ModifyLocalRotation(temp);
-	//}
-	//if (g_ActionInput.Num3 >= KEY_PUSH)
-	//{
-	//	D3DXQUATERNION temp;
-	//	D3DXQuaternionRotationYawPitchRoll(&temp, 0, 0.01, 0);
-	//	target->ModifyLocalRotation(temp);
-	//}
-	//if (g_ActionInput.Num4 >= KEY_PUSH)
-	//{
-	//	D3DXQUATERNION temp;
-	//	D3DXQuaternionRotationYawPitchRoll(&temp, 0, -0.01, 0);
-	//	target->ModifyLocalRotation(temp);
-	//}
-	//if (g_ActionInput.Num5 >= KEY_PUSH)
-	//{
-	//	D3DXQUATERNION temp;
-	//	D3DXQuaternionRotationYawPitchRoll(&temp, 0.01, 0, 0);
-	//	target->ModifyLocalRotation(temp);
-	//}
-	//if (g_ActionInput.Num6 >= KEY_PUSH)
-	//{
-	//	D3DXQUATERNION temp;
-	//	D3DXQuaternionRotationYawPitchRoll(&temp, -0.01, 0, 0);
-	//	target->ModifyLocalRotation(temp);
-	//}
+	if (g_ActionInput.UP >= KEY_PUSH)
+	{
+		target->ModifyLocalPosition(D3DXVECTOR3(0, 0, 0.1));
+		//D3DXVECTOR3 temp;
+		//D3DXVec3Normalize(&temp, &D3DXVECTOR3(0, -1, 1));
+		//light->m_ConstantLigth.m_Direction = temp;
+	}
+	if (g_ActionInput.DOWN>= KEY_PUSH)
+	{
+		target->ModifyLocalPosition(D3DXVECTOR3(0, 0, -0.1));
+		//D3DXVECTOR3 temp;
+		//D3DXVec3Normalize(&temp, &D3DXVECTOR3(0, -1, -1));
+		//light->m_ConstantLigth.m_Direction = temp;
+	}
+	if (g_ActionInput.RIGHT >= KEY_PUSH)
+	{
+		target->ModifyLocalPosition(D3DXVECTOR3(0.1, 0, 0));
+		D3DXVECTOR3 ttemp;
+		D3DXVec3Normalize(&ttemp, &D3DXVECTOR3(-1, -1, 0));
+		light->m_ConstantLigth.m_Direction = ttemp;
+	}
+	if (g_ActionInput.LEFT >= KEY_PUSH)
+	{
+		target->ModifyLocalPosition(D3DXVECTOR3(-0.1, 0, 0));
+		D3DXVECTOR3 ttemp;
+		D3DXVec3Normalize(&ttemp, &D3DXVECTOR3(1, -1, 0));
+		light->m_ConstantLigth.m_Direction = ttemp;
+	}
+	if (g_ActionInput.Z >= KEY_PUSH)
+	{
+		//target->ModifyLocalPosition(D3DXVECTOR3(0, 0.1, 0));
+	}
+	if (g_ActionInput.X >= KEY_PUSH)
+	{
+		target->ModifyLocalPosition(D3DXVECTOR3(0, -0.1, 0));
+	}
+	if (g_ActionInput.Num1 >= KEY_PUSH)
+	{
+		D3DXQUATERNION temp;
+		D3DXQuaternionRotationYawPitchRoll(&temp, 0, 0.001, 0);
+		target->ModifyLocalRotation(temp);
+	}
+	if (g_ActionInput.Num2 >= KEY_PUSH)
+	{
+		D3DXQUATERNION temp;
+		D3DXQuaternionRotationYawPitchRoll(&temp, 0, 0, 0.001);
+		target->ModifyLocalRotation(temp);
+	}
+	if (g_ActionInput.Num3 >= KEY_PUSH)
+	{
+		D3DXQUATERNION temp;
+		D3DXQuaternionRotationYawPitchRoll(&temp, 0.001, 0, 0);
+		target->ModifyLocalRotation(temp);
+	}
+	if (g_ActionInput.Num4 >= KEY_PUSH)
+	{
+		D3DXQUATERNION temp;
+		D3DXQuaternionRotationYawPitchRoll(&temp, 0, -0.001, 0);
+		target->ModifyLocalRotation(temp);
+	}
+	if (g_ActionInput.Num5 >= KEY_PUSH)
+	{
+		D3DXQUATERNION temp;
+		D3DXQuaternionRotationYawPitchRoll(&temp, 0, 0, -0.001);
+		target->ModifyLocalRotation(temp);
+	}
+	if (g_ActionInput.Num6 >= KEY_PUSH)
+	{
+		D3DXQUATERNION temp;
+		D3DXQuaternionRotationYawPitchRoll(&temp, -0.001, 0, 0);
+		target->ModifyLocalRotation(temp);
+	}
 
-	//if (g_ActionInput.Insert >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalScale(D3DXVECTOR3(0.001, 0, 0));
-	//}
-	//if (g_ActionInput.Home >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalScale(D3DXVECTOR3(0, 0.001, 0));
-	//}
-	//if (g_ActionInput.PgUp >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalScale(D3DXVECTOR3(0, 0, 0.001));
-	//}
-	//if (g_ActionInput.Delete >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalScale(D3DXVECTOR3(-0.001, 0, 0));
-	//}
-	//if (g_ActionInput.End >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalScale(D3DXVECTOR3(0, -0.001, 0));
-	//}
-	//if (g_ActionInput.PgDn >= KEY_PUSH)
-	//{
-	//	target->ModifyLocalScale(D3DXVECTOR3(0, 0, -0.001));
-	//}
+	if (g_ActionInput.Insert >= KEY_PUSH)
+	{
+		target->ModifyLocalScale(D3DXVECTOR3(0.001, 0, 0));
+	}
+	if (g_ActionInput.Home >= KEY_PUSH)
+	{
+		target->ModifyLocalScale(D3DXVECTOR3(0, 0.001, 0));
+	}
+	if (g_ActionInput.PgUp >= KEY_PUSH)
+	{
+		target->ModifyLocalScale(D3DXVECTOR3(0, 0, 0.001));
+	}
+	if (g_ActionInput.Delete >= KEY_PUSH)
+	{
+		target->ModifyLocalScale(D3DXVECTOR3(-0.001, 0, 0));
+	}
+	if (g_ActionInput.End >= KEY_PUSH)
+	{
+		target->ModifyLocalScale(D3DXVECTOR3(0, -0.001, 0));
+	}
+	if (g_ActionInput.PgDn >= KEY_PUSH)
+	{
+		target->ModifyLocalScale(D3DXVECTOR3(0, 0, -0.001));
+	}
 	return true;
 }
 

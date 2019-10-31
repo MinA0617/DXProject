@@ -13,7 +13,6 @@ MGrid::~MGrid()
 
 bool MGrid::Init()
 {
-	I_MaterialMgr[MaterialID]->m_VertexShaderID = VSSPLINE;
 	I_MaterialMgr[MaterialID]->m_PixelShaderID = PSSPLINE;
 
 	SetGrid(1000, 50);

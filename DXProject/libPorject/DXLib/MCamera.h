@@ -3,7 +3,7 @@
 class MCamera : public M3DObject
 {
 	friend class MCameraMgr;
-protected:
+public:
 	D3DXMATRIX			m_matWorld;
 	D3DXMATRIX			m_matView;
 	D3DXMATRIX			m_matProj;

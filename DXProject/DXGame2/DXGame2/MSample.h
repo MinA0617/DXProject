@@ -2,6 +2,9 @@
 #include "MCore.h"
 #include "MParser.h"
 #include "MLight.h"
+#include "MTree.h"
+#include "MCollision.h"
+#include "MBBParser.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
 #pragma comment (lib, "DXLib_D")
@@ -24,8 +27,12 @@ public:
 	~MSample();
 public:
 	MParser ps;
-	MSkeleton* target;
+	MUnit* unit;
 	MLight* light;
+	//M3DModel* target;
+	M3DObject* target;
+	M3DModel* box1;
+	M3DModel* box2;
 	float y;
 };
 

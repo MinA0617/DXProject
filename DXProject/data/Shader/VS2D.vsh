@@ -46,7 +46,7 @@ VS2D_OUTPUT VS( VS2D_INPUT input)
 	Output.Position.x += PositionX;
 	Output.Position.y += PositionY;
 	Output.Position.x /= width/2;
-	Output.Position.y /= height/2;
+	Output.Position.y /= height/2; 
 	Output.Position.z = input.Position.z;
 	Output.Position.w = 1.0;
 

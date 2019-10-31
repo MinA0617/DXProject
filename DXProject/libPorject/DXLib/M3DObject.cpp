@@ -1,5 +1,6 @@
 #include "M3DObject.h"
-
+#include "M3DObjectMgr.h"
+//M3DObject*	g_pWorld =I_3DObjectMgr.m_pWorld;
 
 
 M3DObject::M3DObject()
@@ -27,6 +28,11 @@ M3DObject::M3DObject()
 
 M3DObject::~M3DObject()
 {
+	for (auto temp : m_BoxList)
+	{
+		delete temp;
+	}
+	m_BoxList.clear();
 }
 
 bool M3DObject::Init()
@@ -41,6 +47,10 @@ bool M3DObject::Release()
 
 bool M3DObject::Frame()
 {
+	for (M3DObject* data : m_pChildList)
+	{
+		data->Frame();
+	}
 	return true;
 }
 
@@ -66,7 +76,7 @@ bool M3DObject::PreFrame()
 		m_WorldRotation = m_LocalRotation;
 		m_WorldScale = m_LocalScale;
 	}
-
+	UpdateBox();
 	D3DXMatrixTranspose(&m_ConstantOBJ.matWorld, &m_ConstantOBJ.matWorld);
 	if (m_pConstantBuffer)
 	{
@@ -79,6 +89,7 @@ void M3DObject::LinkParents(M3DObject* Parents)
 {
 	if (Parents == this) return;
 	m_pParents = Parents;
+	Parents->m_pChildList.push_back(this);
 	return;
 	/////////////////////////
 	if (Parents == this) return;
@@ -103,7 +114,15 @@ void M3DObject::LinkParents(M3DObject* Parents)
 
 void M3DObject::UnLinkParents()
 {
-	m_pParents = nullptr;
+	for (list<M3DObject*>::iterator data = m_pParents->m_pChildList.begin(); data != m_pParents->m_pChildList.end(); data++)
+	{
+		if ((*data) == this)
+		{
+			m_pParents->m_pChildList.erase(data);
+			m_pParents = nullptr;
+			return;
+		}
+	}
 	return;
 	/////////////////////////
 	if (m_pParents != nullptr)
@@ -124,6 +143,10 @@ void M3DObject::UnLinkParents()
 
 bool M3DObject::Render()
 {
+	for (M3DObject* data : m_pChildList)
+	{
+		data->Render();
+	}
 	return true;
 }
 
@@ -165,10 +188,46 @@ void M3DObject::SetColor(D3DXVECTOR3 data)
 	GetMatarial()->m_ConstantMatrial.ObjectColor = data;
 }
 
+void M3DObject::UpdateBox()
+{
+	for (auto temp : m_BoxList)
+	{
+		temp->Updata();
+	}
+}
 
 M3DObject * M3DObject::GetParents()
 {
 	return m_pParents;
+}
+
+void M3DObject::Copy(M3DObject * target)
+{
+	if (target == nullptr)
+	{
+		return;
+	}
+	// ---------------------------------
+	// 상속관계와 현재 쓰이지 않는 인헤이티는 카피안함
+	// ---------------------------------
+	Init();
+	m_name = target->m_name;
+	m_pObj = target->m_pObj;
+	MaterialID = target->MaterialID;
+	m_LocalPosition = target->GetLocalPosition();
+	m_LocalRotation = target->GetLocalRotation();
+	m_LocalScale = target->GetLocalScale();
+	int i = 0;
+	for (auto temp : target->m_BoxList)
+	{
+		MBoundingBox* box = new MBoundingBox;
+		box->Init();
+		box->Copy(target->m_BoxList[i]);
+		box->m_pTarget = this;
+		m_BoxList.push_back(box);
+		i++;
+	}
+	CreateConstantBuffer();
 }
 
 D3DXVECTOR3 M3DObject::GetLocalPosition()
@@ -212,20 +271,23 @@ CONSTANT_3DOBJ M3DObject::GetConstantOBJ()
 
 bool M3DObject::CreateConstantBuffer()
 {
-	D3D11_BUFFER_DESC BufferDesc;
-	HRESULT CreateBufferResult;
-	D3D11_SUBRESOURCE_DATA SubresourceData;
+	if (!m_pConstantBuffer)
+	{
+		D3D11_BUFFER_DESC BufferDesc;
+		HRESULT CreateBufferResult;
+		D3D11_SUBRESOURCE_DATA SubresourceData;
 
-	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
-	BufferDesc.ByteWidth = sizeof(CONSTANT_3DOBJ);
-	BufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	BufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
+		BufferDesc.ByteWidth = sizeof(CONSTANT_3DOBJ);
+		BufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		BufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
-	ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
-	SubresourceData.pSysMem = &m_ConstantOBJ;
+		ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
+		SubresourceData.pSysMem = &m_ConstantOBJ;
 
-	if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pConstantBuffer))) return false;
-	return true;
+		if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pConstantBuffer))) return false;
+		return true;
+	}
 }
 
 bool M3DObject::IsHasParents()

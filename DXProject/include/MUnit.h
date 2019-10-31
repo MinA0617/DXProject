@@ -10,6 +10,7 @@ public:
 	vector<CVERTEX>		m_OldData;
 public:
 	bool		SetRCVertex(vector<MVERTEX>& mv, vector<SKINDATA>& ms);
+	bool		SetSkeletonAndCreateData(MSkeleton* skt);
 	bool		Init() override;
 	bool		Frame() override;
 	bool		Render() override;

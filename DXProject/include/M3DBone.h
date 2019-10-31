@@ -32,10 +32,7 @@ public:
 	virtual bool		Frame() override;
 	virtual bool		Render() override;
 public:
-	ID3D11Buffer*		m_pVertexBuffer;
-	ID3D11Buffer*		m_pIndexBuffer;
-	DWORD				m_iVertexCount;
-	DWORD				m_iIndexCount;
+	VertexShader		m_VertexShaderID;
 public:
 	M3DBone();
 	~M3DBone();

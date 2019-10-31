@@ -4,6 +4,7 @@
 
 M2DObject::M2DObject()
 {
+	m_VertexShaderID = VS2D;
 }
 
 M2DObject::~M2DObject()
@@ -16,7 +17,6 @@ bool M2DObject::Init()
 	m_pIndexBuffer = NULL;
 	m_pConstantBuffer = NULL;
 
-	I_MaterialMgr[MaterialID]->m_VertexShaderID = VS2D;
 	I_MaterialMgr[MaterialID]->m_PixelShaderID = PS2D;
 
 	m_ScreenPosition.x = 0;
@@ -52,7 +52,8 @@ bool M2DObject::Render()
 {
 	///// 스테이트 매니져로 블랜드셋팅을 받아오기 ////
 	I_MaterialMgr[MaterialID]->Render();
-
+	g_pImmediateContext->IASetInputLayout(I_VertexShaderMgr.m_LOList[m_VertexShaderID]);		// 레이아웃 셋
+	g_pImmediateContext->VSSetShader(I_VertexShaderMgr.m_VSList[m_VertexShaderID], NULL, 0);
 	UINT stride = sizeof(SVERTEX);		//// 보폭(카운트할 사이즈 크기)
 	UINT offset = 0;					//// 시작 위치
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);

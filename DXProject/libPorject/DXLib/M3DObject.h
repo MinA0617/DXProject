@@ -2,13 +2,17 @@
 #include "MObject.h"
 #include "MMeshMgr.h"
 #include "MKeyData.h"
+#include "MBoundingBox.h"
 
 class M3DObject : public MObject
 {
+	friend class MBoundingBox;
 public:
-	DWORD				ObjID; // 오브젝트매니져용 ID값 없을경우 0
+	//DWORD				ObjID; // 오브젝트매니져용 ID값 없을경우 0
+	MMesh*				m_pObj;
 public:
 	CONSTANT_3DOBJ		m_ConstantOBJ;
+	vector<MBoundingBox*>	m_BoxList;
 	//MKeyData*			m_KeyData;
 	//virtual bool		UpdateKey(float time);
 	//--------------------------------------------------
@@ -23,12 +27,14 @@ protected:
 	//--------------------------------------------------
 protected:
 	M3DObject*			m_pParents;
+	list<M3DObject*>	m_pChildList;
 public:
 	M3DObject*			GetParents();
 	bool				m_bIsInherityPosition;
 	bool				m_bIsInherityRotation;
 	bool				m_bIsInherityScale;
 public:
+	void				Copy(M3DObject* target);
 	D3DXVECTOR3			GetLocalPosition();
 	D3DXQUATERNION		GetLocalRotation();
 	D3DXVECTOR3			GetLocalScale();
@@ -54,6 +60,7 @@ public:
 	virtual void		ModifyLocalScale(D3DXVECTOR3 data);
 	//--------------------------------------------------
 	virtual void		SetColor(D3DXVECTOR3 data);
+	virtual void		UpdateBox();
 public:
 	virtual bool		Init();
 	virtual bool		Frame();

@@ -43,15 +43,18 @@ public:
 	int					SearchType(INode* pNode);
 	int					mmin(int a, int b) { if (a > b) { return b; } else { return a; } };
 // ---------------------------------------------------------------------------------------------------------------------------
+	bool				Export();
+	void				ExportName(const MCHAR* name);
 	void				ExportParent(INode* pNode);
 	void				ExportMatrix(INode* pNode);
 	void				ExportGeometry(INode* pNode);
 	void				ExportMesh(INode* pNode);
+	void				ExportBoundingbox(INode* pNode);
 	void				ExportSkinningMesh(INode* pNode);
 	void				ExportSkinningMesh2(INode* pNode);
 	void				ExportMaterial(INode* pNode);
 	void				ExportAnimationKeys(INode* pNode);
-	bool				Export();
+	void				ExportAnimationKeys2(INode* pNode);
 public:
 	MinWriter();
 	~MinWriter();

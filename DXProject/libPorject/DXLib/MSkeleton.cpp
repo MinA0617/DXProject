@@ -8,8 +8,8 @@ MSkeleton::MSkeleton()
 	iCount = 0;
 	m_fMaxTime = 0;
 	m_fAniTime = 0;
-	m_fAniSpeed;
-	m_fMaxTime;
+	m_fDelay = 0;
+	m_bIsSlerp = false;
 }
 
 
@@ -47,22 +47,38 @@ bool MSkeleton::CreateBoneBuffer()
 
 bool MSkeleton::BindAni(M_STR name, bool isCancel, float delay)
 {
-	if (m_CurAni == name) return false;
+	// -----------------------------------------------------------------
+	// 1. 캔슬하여 즉시 적용
+	// 2. 캔슬하되 딜레이 적용
+	// 3. 캔슬하지 않고 딜레이적용
+	// 4. 딜레이상태의 경우 캔슬하고 즉시 적용
+	// 5. 딜레이상태의 경우 캔슬하되 딜레이 적용
+	// 6. 딜레이상태의 경우 캔슬하지 않고 딜레이 적용
+	// 6. 다음애니가 입력애니와 같은경우 = 무시
+	// 7. 딜레이상태의 경우 다음애니가 입력애니와 같은경우 = 무시
+	// 8. 다음애니가 입력애니와 다른경우 = 딜레이상태로 전환
+	// 9. 딜레이상태의 경우 다음애니가 입력애니와 다른경우 = 딜레이상태로 전환
+	// -----------------------------------------------------------------
+	if (m_bIsSlerp == false && m_CurAni == name) return false;
 	MKeyAnimation* data = I_KeyAnimationMgr[name];
 	if (data == nullptr) return false;
 	if (isCancel)
 	{
 		if (delay == 0)
 		{
-
 			for (ITOR temp = m_BoneList.begin(); temp != m_BoneList.end(); temp++)
 			{
 				M3DBone* tempbone = (*temp).second;
-				tempbone->m_KeyData = (*data->m_List.find((*temp).second->m_name)).second;
-				tempbone->m_TempKeyData.m_vPositionKeyList.clear();
-				tempbone->m_TempKeyData.m_vRotationKeyList.clear();
-				tempbone->m_TempKeyData.m_vScaleKeyList.clear();
+				if (data->m_List.find((*temp).second->m_name) != data->m_List.end())
+				{
+					tempbone->m_KeyData = (*data->m_List.find((*temp).second->m_name)).second;
+					tempbone->m_TempKeyData.m_vPositionKeyList.clear();
+					tempbone->m_TempKeyData.m_vRotationKeyList.clear();
+					tempbone->m_TempKeyData.m_vScaleKeyList.clear();
+				}
 			}
+			m_fDelay = 0;
+			m_bIsSlerp = false;
 			m_CurAni = name;
 			m_NextAni.clear();
 			m_fAniTime = 0;
@@ -70,37 +86,51 @@ bool MSkeleton::BindAni(M_STR name, bool isCancel, float delay)
 		}
 		else
 		{
-			for (ITOR temp = m_BoneList.begin(); temp != m_BoneList.end(); temp++)
+			if (m_NextAni != name || m_bIsSlerp == false)
 			{
-				M3DBone* tempbone = (*temp).second;
-
-				KEY_Position pos(0.0f, tempbone->GetLocalPosition());
-				KEY_Rotation rot(0.0f, tempbone->GetLocalRotation());
-				KEY_Scale scl(0.0f, tempbone->GetLocalScale());
-
-				KEY_Position pos2(delay, (*data->m_List.find(tempbone->m_name)).second->GetCurPosition(0.0f));
-				KEY_Rotation rot2(delay, (*data->m_List.find(tempbone->m_name)).second->GetCurRotation(0.0f));
-				KEY_Scale scl2(delay, (*data->m_List.find(tempbone->m_name)).second->GetCurScale(0.0f));
-				tempbone->m_TempKeyData.m_vPositionKeyList.push_back(pos);
-				tempbone->m_TempKeyData.m_vPositionKeyList.push_back(pos2);
-				tempbone->m_TempKeyData.m_vRotationKeyList.push_back(rot);
-				tempbone->m_TempKeyData.m_vRotationKeyList.push_back(rot2);
-				tempbone->m_TempKeyData.m_vScaleKeyList.push_back(scl);
-				tempbone->m_TempKeyData.m_vScaleKeyList.push_back(scl2);
+				for (ITOR temp = m_BoneList.begin(); temp != m_BoneList.end(); temp++)
+				{
+					M3DBone* tempbone = (*temp).second;
+					if (m_bIsSlerp)
+					{
+						M3DBone* tempbone = (*temp).second;
+						tempbone->m_TempKeyData.m_vPositionKeyList.clear();
+						tempbone->m_TempKeyData.m_vRotationKeyList.clear();
+						tempbone->m_TempKeyData.m_vScaleKeyList.clear();
+					}
+					KEY_Position pos(0.0f, tempbone->GetLocalPosition());
+					KEY_Rotation rot(0.0f, tempbone->GetLocalRotation());
+					KEY_Scale scl(0.0f, tempbone->GetLocalScale());
+					tempbone->m_TempKeyData.m_vPositionKeyList.push_back(pos);
+					tempbone->m_TempKeyData.m_vRotationKeyList.push_back(rot);
+					tempbone->m_TempKeyData.m_vScaleKeyList.push_back(scl);
+					if (data->m_List.find(tempbone->m_name) != data->m_List.end())
+					{
+						KEY_Position pos2(delay, (*data->m_List.find(tempbone->m_name)).second->GetCurPosition(0.0f));
+						KEY_Rotation rot2(delay, (*data->m_List.find(tempbone->m_name)).second->GetCurRotation(0.0f));
+						KEY_Scale scl2(delay, (*data->m_List.find(tempbone->m_name)).second->GetCurScale(0.0f));
+						tempbone->m_TempKeyData.m_vPositionKeyList.push_back(pos2);
+						tempbone->m_TempKeyData.m_vRotationKeyList.push_back(rot2);
+						tempbone->m_TempKeyData.m_vScaleKeyList.push_back(scl2);
+					}
+				}
+				m_bIsSlerp = true;
+				m_fDelay = 0;
+				m_fAniTime = 0;
+				m_fMaxTime = delay;
+				m_NextAni = name;
 			}
-			m_fAniTime = 0;
-			m_fMaxTime = delay;
-			m_NextAni = name;
 		}
 
 	}
 	else
 	{
 		m_NextAni = name;
+		m_fDelay = delay;
+		m_bIsSlerp = false;
 	}
 	return true;
 }
-
 M3DBone* MSkeleton::NewBone(M_STR name)
 {
 	if (m_pBoneBuffer != NULL)
@@ -121,7 +151,6 @@ M3DBone* MSkeleton::NewBone(M_STR name)
 	m_BoneList.insert(std::make_pair(iCount++, data));
 	return data;
 }
-
 M3DBone * MSkeleton::Find(M_STR name)
 {
 	for (ITOR findnode = m_BoneList.begin(); findnode != m_BoneList.end(); findnode++)
@@ -133,7 +162,6 @@ M3DBone * MSkeleton::Find(M_STR name)
 	}
 	return nullptr;
 }
-
 void MSkeleton::SetZeroMat(M3DBone* data)
 {
 	M_STR name = data->m_name;
@@ -147,7 +175,6 @@ void MSkeleton::SetZeroMat(M3DBone* data)
 	}
 	return;
 }
-
 bool MSkeleton::AddZeroMat(M_STR name, D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scl)
 {
 	if (m_ZeroMat.find(name) == m_ZeroMat.end())
@@ -160,7 +187,6 @@ bool MSkeleton::AddZeroMat(M_STR name, D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DX
 	}
 	return false;
 }
-
 int MSkeleton::NumofBone(M_STR name)
 {
 	for (ITOR data = m_BoneList.begin(); data != m_BoneList.end(); data++)
@@ -193,11 +219,20 @@ bool MSkeleton::Frame()
 	m_fAniTime += g_fSeoundPerFrame * m_fAniSpeed;
 	while (m_fAniTime > m_fMaxTime)
 	{
-		if (m_NextAni.size() != 0)
+		if (m_NextAni.size())
 		{
-			BindAni(m_NextAni);
-			m_fAniTime = 0;
-			break;
+			if (m_fDelay == 0)
+			{
+				BindAni(m_NextAni);
+				m_fAniTime = 0;
+				break;
+			}
+			else
+			{
+				BindAni(m_NextAni, true, m_fDelay);
+				m_fAniTime = 0;
+				break;
+			}
 		}
 		if (m_fMaxTime == 0)
 		{
@@ -222,9 +257,9 @@ bool MSkeleton::Frame()
 bool MSkeleton::Render()
 {
 #if defined(DEBUG) || defined(_DEBUG)
-	for (ITOR data = m_BoneList.begin(); data != m_BoneList.end(); data++)
+	for (auto data : m_pChildList)
 	{
-		(*data).second->Render();
+		data->Render();
 	}
 #endif
 	return true;
@@ -235,7 +270,12 @@ bool MSkeleton::Release()
 	for (ITOR data = m_BoneList.begin(); data != m_BoneList.end(); data++)
 	{
 		(*data).second->Release();
+		delete (*data).second;
 	}
+	//for (auto data : m_pChildList)
+	//{
+	//	data->Release();
+	//}
 	m_BoneList.clear();
 	SAFE_RELEASE(m_pBoneBuffer);
 	SAFE_RELEASE(m_pZeroBuffer);

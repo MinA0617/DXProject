@@ -6,6 +6,7 @@
 class M2DObject : public MObject
 {
 protected:
+	VertexShader		m_VertexShaderID;
 	ID3D11Buffer*		m_pVertexBuffer;	// 오브젝트의 버텍스버퍼
 	ID3D11Buffer*		m_pIndexBuffer;
 protected:

@@ -14,6 +14,8 @@ public:
 	ID3D11Buffer*			m_pZeroBuffer;
 	vector<CONSTANT_BONE>	m_ConstantBone;
 	vector<CONSTANT_BONE>	m_ConstantZero;
+	bool					m_bIsSlerp;
+	float					m_fDelay;
 	float					m_fAniSpeed;
 	float					m_fAniTime;
 	float					m_fMaxTime;
