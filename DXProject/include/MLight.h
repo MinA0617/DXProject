@@ -7,7 +7,7 @@
 // - 순수 가상 클래스입니다.
 // ----------------------------------------------------------------------------------------
 
-enum LightType {SPOT, SKY, DIRECT, OMNI,};
+enum {SPOT, SKY, DIRECT, OMNI,};
 
 struct CONSTANT_LIGHT
 {
@@ -20,7 +20,7 @@ struct CONSTANT_LIGHT
 	float			m_fInner;			// 스팟의 중심에서의 감쇠시작거리
 	float			m_fOutner;			// 스팟의 각도
 	float			m_fOffset;			// 라이트와 물체 사이 거리 감쇠
-	LightType		m_iFlag;			// 속성 플래그 값
+	unsigned int	m_iFlag;			// 속성 플래그 값
 	float			temp;
 };
 

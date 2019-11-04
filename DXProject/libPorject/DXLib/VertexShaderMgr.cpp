@@ -18,9 +18,9 @@ VertexShaderMgr::~VertexShaderMgr()
 bool VertexShaderMgr::Init()
 {
 	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
-#if defined(DEBUG) || defined(_DEBUG)
-	dwShaderFlags |= D3DCOMPILE_DEBUG;
-#endif
+//#if defined(DEBUG) || defined(_DEBUG)
+//	dwShaderFlags |= D3DCOMPILE_DEBUG;
+//#endif
 	HRESULT LoadShaderResult;
 	ID3D10Blob* pVSShader;
 	ID3D10Blob* pErrorMsgs;
@@ -45,7 +45,7 @@ bool VertexShaderMgr::Init()
 #pragma endregion VS2D
 
 #pragma region VS3D
-	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/VS3D.vsh", NULL, NULL, "VS", "vs_5_0", dwShaderFlags, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
+	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/VS3D.vsh", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
 	if (FAILED(LoadShaderResult))
 	{
 		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
@@ -112,6 +112,28 @@ bool VertexShaderMgr::Init()
 	if (FAILED(LoadShaderResult)) return false;
 #pragma endregion VSCHARACTER
 
+
+#pragma region VSFILED
+	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/VS3DFiled.vsh", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
+	if (FAILED(LoadShaderResult))
+	{
+		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
+		return false;
+	}
+	g_pDevice->CreateVertexShader(pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), NULL, &m_VSList[VSFILED]);	// 컴파일된 쉐이더를 생성해 준다
+	const D3D11_INPUT_ELEMENT_DESC layout5[] =
+	{
+		{"POSITION",		0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TEXCOORD",		0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"NORMAL",			0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TANGENTVECTOR",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+	layoutNum = _countof(layout5);
+	LoadShaderResult = g_pDevice->CreateInputLayout(layout5, layoutNum, pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), &m_LOList[VSFILED]);
+	if (pVSShader)pVSShader->Release();
+	if (pErrorMsgs)pErrorMsgs->Release();
+	if (FAILED(LoadShaderResult)) return false;
+#pragma endregion VSFILED
 	return true;
 }
 

@@ -235,17 +235,17 @@ bool MParser::Load(M_STR filename, bool isGeo, bool isBone, MSkeleton* skt)
 	return true;
 }
 
-bool MParser::Load_HM(M_STR filename, float size)
+bool MParser::Load_HM(M_STR filename, float size, bool lod, int minlevel)
 {
 	M3DHeightMap* hm = new M3DHeightMap;
-	if (hm->Create(filename, size) == false)
+	if (hm->Create(filename, size, lod, minlevel) == false)
 	{
 		hm->Release();
 		delete hm;
 		return false;
 	}
 	hm->Init();
-	I_3DObjectMgr.Add(hm);
+	I_3DObjectMgr.CreateFiled(hm);
 	return true;
 }
 

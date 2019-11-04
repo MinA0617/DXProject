@@ -18,9 +18,9 @@ PixelShaderMgr::~PixelShaderMgr()
 bool PixelShaderMgr::Init()
 {
 	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
-#if defined(DEBUG) || defined(_DEBUG)
-	dwShaderFlags |= D3DCOMPILE_DEBUG;
-#endif
+//#if defined(DEBUG) || defined(_DEBUG)
+//	dwShaderFlags |= D3DCOMPILE_DEBUG;
+//#endif
 
 	HRESULT LoadShaderResult;
 	ID3D10Blob* pPSShader;
@@ -67,6 +67,15 @@ bool PixelShaderMgr::Init()
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSBONE]);	// 컴파일된 쉐이더를 생성해 준다
 #pragma endregion PSBONE
 
+#pragma region PSFILED
+	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/PS3DFiled.psh", NULL, NULL, "PS", "ps_5_0", 0, 0, NULL, &pPSShader, &pErrorMsgs, NULL);
+	if (FAILED(LoadShaderResult))
+	{
+		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
+		return false;
+	}
+	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSFILED]);	// 컴파일된 쉐이더를 생성해 준다
+#pragma endregion PSFILED
 	return true;
 }
 

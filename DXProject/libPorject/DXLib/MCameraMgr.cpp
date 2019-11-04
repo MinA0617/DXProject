@@ -35,6 +35,7 @@ bool MCameraMgr::Frame()
 bool MCameraMgr::Render()
 {
 	m_MainCamera->Render();
+	m_pGrobalCameraBuffer = m_MainCamera->m_pConstantBuffer;
 	return true;
 }
 

@@ -1,7 +1,6 @@
 #include "MCamera.h"
 
 
-
 MCamera::MCamera()
 {
 	isRotition = true;
@@ -24,7 +23,7 @@ bool MCamera::Init()
 	D3DXMatrixLookAtLH(&m_matView, &GetLocalPosition(), &m_LookAt, &m_Up);
 
 	//// FOV ¼³Á¤ ////
-	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4, (float)g_rtWindowClient.right / (float)g_rtWindowClient.bottom, 1.0f, 10000.0f);
+	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4, (float)g_rtWindowClient.right / (float)g_rtWindowClient.bottom, 1.0f, MAXDISTANCE);
 
 	D3DXMatrixTranspose(&m_matWorld, &m_matWorld);
 	D3DXMatrixTranspose(&m_matView, &m_matView);
@@ -115,6 +114,7 @@ void MCamera::MoveRight(float valve)
 {
 	D3DXVECTOR3 Right;
 	D3DXVec3Cross(&Right, &m_Up, &m_LookAt);
+	D3DXVec3Normalize(&Right, &Right);
 	m_LocalPosition += Right * valve * g_fSeoundPerFrame;
 }
 
@@ -122,5 +122,6 @@ void MCamera::MoveLeft(float valve)
 {
 	D3DXVECTOR3 Right;
 	D3DXVec3Cross(&Right, &m_Up, &m_LookAt);
+	D3DXVec3Normalize(&Right, &Right);
 	m_LocalPosition -= Right * valve * g_fSeoundPerFrame;
 }

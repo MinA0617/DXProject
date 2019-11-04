@@ -63,7 +63,7 @@ bool MFrustum::CheckPlane(MPlane plane, MBoundingBox* box)
 bool MFrustum::CheckOBB(MBoundingBox* box)
 {
 	if (box == nullptr) return true;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		if (CheckPlane(m_Plane[i], box) == false)
 		{
@@ -92,10 +92,10 @@ void MFrustum::CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj)
 	m_vFrustum[3] = D3DXVECTOR3(1.0f, -1.0f, 1.0f);
 	m_vFrustum[4] = D3DXVECTOR3(-1.0f, -1.0f, 1.0f);
 
-	m_vFrustum[1] = D3DXVECTOR3(-1.0f, 1.0f, 0.999f);
-	m_vFrustum[2] = D3DXVECTOR3(1.0f, 1.0f, 0.999f);
-	m_vFrustum[3] = D3DXVECTOR3(1.0f, -1.0f, 0.999f);
-	m_vFrustum[4] = D3DXVECTOR3(-1.0f, -1.0f, 0.999f);
+	m_vFrustum[1] = D3DXVECTOR3(-1.0f, 1.0f, 1.0f);
+	m_vFrustum[2] = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_vFrustum[3] = D3DXVECTOR3(1.0f, -1.0f, 1.0f);
+	m_vFrustum[4] = D3DXVECTOR3(-1.0f, -1.0f, 1.0f);
 
 	for (int i = 0; i < 5; i++)
 	{

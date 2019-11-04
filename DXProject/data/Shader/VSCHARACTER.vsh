@@ -13,7 +13,13 @@ cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 	float	height;
 };
 
-cbuffer cb1 : register(b1) // constant buffer name : register (empty : num)
+cbuffer cb1 : register(b1)
+{
+	float4x4	m_matWorld		: packoffset(c0);
+	float4  m_ObjectColor	: packoffset(c4);
+};
+
+cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)
 {
 	matrix  g_InvMatrix;
 	float4	g_Lightpos; // 월드 좌표xyz 거리w
@@ -23,12 +29,6 @@ cbuffer cb1 : register(b1) // constant buffer name : register (empty : num)
 	float	g_fOutner;	// 스팟의 외부콘
 	float	g_fOffset; // 원의 거리에 따른 감쇠에서의 오프셋
 	int		g_iFlag;
-};
-
-cbuffer cb2 : register(b2)
-{
-	float4x4	m_matWorld		: packoffset(c0);
-	float4  m_ObjectColor	: packoffset(c4);
 };
 
 cbuffer cb3 : register(b3)

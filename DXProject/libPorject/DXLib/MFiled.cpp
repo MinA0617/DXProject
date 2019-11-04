@@ -2,10 +2,10 @@
 #include "M3DObjectMgr.h"
 
 
-bool MFiled::Set(M_STR name)
+bool MFiled::Set(M_STR name, M3DHeightMap* map)
 {
-	ground = (M3DHeightMap*)I_3DObjectMgr.find(name);
-	if (!ground) return false;
+	m_name = name;
+	ground = map;
 	MBoundingBox* box = new MBoundingBox;
 	box->Init();
 	box->m_pTarget = this;

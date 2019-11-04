@@ -16,6 +16,8 @@ public:
 	bool CreateTargetCamera_Main(M3DObject* target);
 	bool CreateRPGCamera_Main(M3DObject* target);
 public:
+	ID3D11Buffer* m_pGrobalCameraBuffer;
+public:
 	virtual bool Init();
 	virtual bool Frame();
 	virtual bool Render();

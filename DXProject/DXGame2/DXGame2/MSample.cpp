@@ -21,18 +21,16 @@ bool  MSample::Init()
 	M_STR asdsda = asd;
 	I_CameraMgr.CreateFPSCamera_Main();
 	I_Device.m_dxWrite.AddData(L"x", D2D1::ColorF(1, 1, 1, 1.0), MPoint(0, 0));
-	I_Device.m_dxWrite.AddData(L"y", D2D1::ColorF(1, 1, 1, 1.0), MPoint(80, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(160, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(240, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(320, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(400, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(480, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(560, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(640, 0));
+	I_Device.m_dxWrite.AddData(L"y", D2D1::ColorF(1, 1, 1, 1.0), MPoint(50, 0));
+	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(100, 0));
 
-	ps.Load_HM(L"../../data/image/Map512.png", 5);
-	MFiled* filed = I_3DObjectMgr.CreateFiled(L"Map512");
+	//ps.Load_HM(L"../../data/image/jja.bmp", 100);
+	ps.Load_HM(L"../../data/image/Map513.bmp", 20);
+
+	MFiled* filed = I_3DObjectMgr.findFiled(L"Map513");
+	filed->ground->SetLevelOfDetail(100, 3);
 	filed->ground->SetColor(D3DXVECTOR3(0.5, 0.5, 0.5));
+	filed->ground->Load_MAP(L"../../data/image/Map513_Minimap.png", DIFFUSE);
 	if(0)
 	{
 		ps.Load(L"../../data/obj/Catgirl_T.MIN");
@@ -71,20 +69,20 @@ bool  MSample::Init()
 	namelist[9] = L"Box010";
 	namelist[10] = L"Box011";
 	namelist[11] = L"Box012";
-	y = I_3DObjectMgr.AddInWorld(namelist, 2);
+	//y = I_3DObjectMgr.AddInWorld(namelist, 2);
 	light = &(I_LightMgr.m_List);
 
-	box1 = I_3DObjectMgr.findObject(y);
-	box2 = I_3DObjectMgr.findObject(y + 1);
+	//box1 = I_3DObjectMgr.findObject(y);
+	//box2 = I_3DObjectMgr.findObject(y + 1);
 
-	//target = I_3DObjectMgr.findObject(hm);
+	target = I_3DObjectMgr.findObject(y);
 	return true;
 }
 
 bool  MSample::Frame()
 {
 	D3DXVECTOR3 tt;
-	y += 0.001;
+	y += 1 * g_fSeoundPerFrame;
 	D3DXVec3Normalize(&tt, &D3DXVECTOR3(cos(y), -1, sin(y)));
 	light->m_ConstantLigth.m_Direction = tt;
 
@@ -98,11 +96,11 @@ bool  MSample::Frame()
 	light->Frame();
 	//// 회전은 행렬에서 가져오기
 	//// 스케일, 포지션은 실수값
-	//wstringstream temp;
-	//wstring data;
-	//temp << L"FPS" << I_Timer.GetFramePerSecond() << L" posX" << target->GetPosition().x << L" posY" << target->GetPosition().y << L" posZ" << target->GetPosition().z;
-	//temp >> data;
-	//m_dxWrite.UpdateData(0, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(0, 0));
+	wstringstream temp;
+	wstring data;
+	temp << L"FPS_" << I_Timer.GetFramePerSecond();
+	temp >> data;
+	I_Device.m_dxWrite.UpdateData(0, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(0, 0));
 	//temp >> data;
 	//m_dxWrite.UpdateData(1, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(80, 0));
 	//temp >> data;
@@ -110,28 +108,30 @@ bool  MSample::Frame()
 	//temp >> data;
 	//m_dxWrite.UpdateData(3, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(240, 0));
 
-	if (MCollision::OBBtoOBB(box1->m_BoxList[0], box2->m_BoxList[0]))
-	{
-		int a1 = 0;
-		box1->GetMatarial()->SetOpacity(150);
-		box2->GetMatarial()->SetOpacity(150);
-		box1->Render();
-		//box1->ModifyLocalScale(D3DXVECTOR3(-0.001, -0.001, -0.001));
-		//box2->ModifyLocalScale(D3DXVECTOR3(-0.001, -0.001, -0.001));
-	}
-	else
-	{
-		box1->GetMatarial()->SetOpacity(255);
-		box2->GetMatarial()->SetOpacity(255);
-	}
+	//if (MCollision::OBBtoOBB(box1->m_BoxList[0], box2->m_BoxList[0]))
+	//{
+	//	int a1 = 0;
+	//	box1->GetMatarial()->SetOpacity(150);
+	//	box2->GetMatarial()->SetOpacity(150);
+	//	box1->Render();
+	//	//box1->ModifyLocalScale(D3DXVECTOR3(-0.001, -0.001, -0.001));
+	//	//box2->ModifyLocalScale(D3DXVECTOR3(-0.001, -0.001, -0.001));
+	//}
+	//else
+	//{
+	//	box1->GetMatarial()->SetOpacity(255);
+	//	box2->GetMatarial()->SetOpacity(255);
+	//}
 
 	if (g_ActionInput.F1 >= KEY_PUSH)
 	{
+		I_3DObjectMgr.findFiled(L"Map513")->ground->m_bIsLOD = true;
 		target = I_3DObjectMgr.findObject(0);
 		//target->Change(UPPERBODY, L"Armor1");
 	}
 	if (g_ActionInput.F2 >= KEY_PUSH)
 	{
+		I_3DObjectMgr.findFiled(L"Map513")->ground->m_bIsLOD = false;
 		target = I_3DObjectMgr.findObject(1);
 		//target->Change(UPPERBODY, L"Catgirl_UpperBody");
 		//target->skt->BindAni(L"Catgirl_Wait", false, 0.15);

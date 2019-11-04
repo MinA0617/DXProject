@@ -92,6 +92,26 @@ struct float3
 		result.z = z - data.z;
 		return result;
 	};
+	float3 operator + (float3 data)
+	{
+		float3 result;
+		result.x = x + data.x;
+		result.y = y + data.y;
+		result.z = z + data.z;
+		return result;
+	};
+	void operator += (float3 data)
+	{
+		x += data.x;
+		y += data.y;
+		z += data.z;
+	};
+	void operator /= (float num)
+	{
+		x /= num;
+		y /= num;
+		z /= num;
+	};
 	bool operator == (float3 data)
 	{
 		if (x == data.x && y == data.y && z == data.z)
@@ -364,6 +384,7 @@ public:
 
 extern Keyinput					g_ActionInput; // 액션 키 맵
 extern HWND						g_hWnd; // 윈도우 핸들
+extern int						g_iFramePerSecond ;
 extern float					g_fSeoundPerFrame; // 프레임 당 시간
 extern HINSTANCE				g_hInstance; // 윈도우 인스턴스
 extern RECT						g_rtWindowClient;

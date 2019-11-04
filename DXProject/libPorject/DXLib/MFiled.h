@@ -6,7 +6,7 @@ class MFiled : public M3DObject
 public:
 	M3DHeightMap* ground;
 public:
-	bool	Set(M_STR name);
+	bool	Set(M_STR name, M3DHeightMap* map);
 	bool	Init();
 	bool	Frame();
 	bool	Render();

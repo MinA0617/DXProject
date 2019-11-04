@@ -228,6 +228,7 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="MKeyAnimation.cpp" />
     <ClCompile Include="MKeyAnimationMgr.cpp" />
     <ClCompile Include="MKeyData.cpp" />
+    <ClCompile Include="MMapNode.cpp" />
     <ClCompile Include="MMaterial.cpp" />
     <ClCompile Include="MMaterialMgr.cpp" />
     <ClCompile Include="M3DModel.cpp" />
@@ -287,6 +288,7 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClInclude Include="MKeyAnimation.h" />
     <ClInclude Include="MKeyAnimationMgr.h" />
     <ClInclude Include="MKeyData.h" />
+    <ClInclude Include="MMapNode.h" />
     <ClInclude Include="MMaterial.h" />
     <ClInclude Include="MMaterialMgr.h" />
     <ClInclude Include="M3DModel.h" />
@@ -352,6 +354,10 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PS3DFiled.psh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="..\..\data\Shader\PSBONE.psh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -365,6 +371,10 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\..\data\Shader\VS3D.vsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS3DFiled.vsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

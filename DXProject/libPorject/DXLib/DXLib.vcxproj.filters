@@ -169,6 +169,9 @@
     <ClCompile Include="MFiled.cpp">
       <Filter>Object\3DObject\3DHelper</Filter>
     </ClCompile>
+    <ClCompile Include="MMapNode.cpp">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MWindow.h">
@@ -357,6 +360,9 @@
     <ClInclude Include="MFiled.h">
       <Filter>Object\3DObject\3DHelper</Filter>
     </ClInclude>
+    <ClInclude Include="MMapNode.h">
+      <Filter>Object\3DObject\3DModel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sound">
@@ -431,5 +437,7 @@
     <FxCompile Include="..\..\data\Shader\VS3D.vsh" />
     <FxCompile Include="..\..\data\Shader\VSSPLINE.vsh" />
     <FxCompile Include="..\..\data\Shader\VSCHARACTER.vsh" />
+    <FxCompile Include="..\..\data\Shader\PS3DFiled.psh" />
+    <FxCompile Include="..\..\data\Shader\VS3DFiled.vsh" />
   </ItemGroup>
 </Project>

@@ -19,6 +19,18 @@ cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 
 cbuffer cb1 : register(b1) // constant buffer name : register (empty : num)
 {
+	float3	m_ObjectColor;
+	int		m_isDiffuse;
+	int		m_isNormal;
+	int		m_isSpecular;
+	int		m_isOpacity;
+	int		m_isReflection;
+	int		m_isRefraction;
+	int		m_isEnvironment;
+};
+
+cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)
+{
 	matrix  g_InvMatrix;
 	float4	g_Lightpos; // 월드 좌표xyz 거리w
 	float4	g_LightDir; // 방향 xyz, 세기w
@@ -28,18 +40,6 @@ cbuffer cb1 : register(b1) // constant buffer name : register (empty : num)
 	float	g_fOffset; // 원의 거리에 따른 감쇠에서의 오프셋
 	int		g_iFlag;
 	float	c1temd;
-};
-
-cbuffer cb1 : register(b2) // constant buffer name : register (empty : num)
-{
-	float3	m_ObjectColor;
-	int		m_isDiffuse;
-	int		m_isNormal;
-	int		m_isSpecular;
-	int		m_isOpacity;
-	int		m_isReflection;
-	int		m_isRefraction;
-	int		m_isEnvironment;
 };
 
 struct PS3D_INPUT // 444 please
@@ -175,6 +175,11 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 		float4 mutiplier = float4(0.3f, 0.3f, 0.3f, 1.0f) + float4(ComputeLight(data.WorldPosition, data.Normal), 1);
 		lastcolor.xyz = m_ObjectColor * mutiplier.xyz;
 	}
+
+	//----
+	lastcolor.w = 1;
+	return lastcolor;
+	//----
 	if (m_isNormal == -1)
 	{
 		float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);

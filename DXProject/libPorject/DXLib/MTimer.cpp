@@ -1,7 +1,7 @@
 #include "MTimer.h"
 
 float g_fSeoundPerFrame = 0.0f;
-float g_iFramePerSecond = 0.0f;
+int g_iFramePerSecond = 0;
 
 MTimer::MTimer()
 {
@@ -38,6 +38,7 @@ bool MTimer::Frame()
 		m_iFramePerSecond = m_iFramePerSecondElapse;
 		m_iFramePerSecondElapse = 0;
 		m_FramePerSecond = m_CurrentFrameTime;
+		g_iFramePerSecond = m_iFramePerSecond;
 		m_itime++;
 	}
 	else

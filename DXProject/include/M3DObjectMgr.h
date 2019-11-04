@@ -33,7 +33,7 @@ public:
 	bool				Delete(M_STR name);
 public:
 	MUnit*				CreateUnit(M_STR name, M_STR sktname, M_STR* namelist, int namecount);
-	MFiled*				CreateFiled(M_STR name);
+	MFiled*				CreateFiled(M3DHeightMap* map);
 	int					AddInWorld(M_STR* namelist, int namecount = 1);
 	bool				CreateBasicBuffer();
 public:

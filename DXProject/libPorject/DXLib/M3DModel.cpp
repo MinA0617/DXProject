@@ -45,7 +45,7 @@ bool M3DModel::Render()
 {
 	///// 스테이트 매니져로 블랜드셋팅을 받아오기 ////
 	I_MaterialMgr[MaterialID]->Render();
-	g_pImmediateContext->VSSetConstantBuffers(2, 1, &m_pConstantBuffer);
+	g_pImmediateContext->VSSetConstantBuffers(1, 1, &m_pConstantBuffer);
 	m_pObj->Render();
 	for (auto data : m_pChildList)
 	{

@@ -61,8 +61,8 @@ bool MLight::Frame()
 
 bool MLight::Render()
 {
-	g_pImmediateContext->VSSetConstantBuffers(1, 1, &m_pLightConstantBuffer);
-	g_pImmediateContext->PSSetConstantBuffers(1, 1, &m_pLightConstantBuffer);
+	g_pImmediateContext->VSSetConstantBuffers(2, 1, &m_pLightConstantBuffer);
+	g_pImmediateContext->PSSetConstantBuffers(2, 1, &m_pLightConstantBuffer);
 	return true;
 }
 

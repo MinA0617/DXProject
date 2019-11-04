@@ -1,5 +1,5 @@
 #include "MMaterial.h"
-
+#include "MCameraMgr.h"
 
 
 void MMaterial::SetOpacity(DWORD level)
@@ -162,7 +162,8 @@ bool MMaterial::Render()
 	//m_pImmediateContext->GSSetShader(m_pGeometryShader, NULL, 0);
 	g_pImmediateContext->PSSetShader(I_PixelShaderMgr.m_PSList[m_PixelShaderID], NULL, 0);
 
-	g_pImmediateContext->PSSetConstantBuffers(2, 1, &m_pConstantBuffer);
+	g_pImmediateContext->PSSetConstantBuffers(0, 1, &I_CameraMgr.m_pGrobalCameraBuffer);
+	g_pImmediateContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer);
 	return true;
 }
 

@@ -91,15 +91,14 @@ MUnit* M3DObjectMgr::CreateUnit(M_STR name, M_STR sktname, M_STR* namelist, int 
 	return nullptr;
 }
 
-MFiled * M3DObjectMgr::CreateFiled(M_STR name)
+MFiled * M3DObjectMgr::CreateFiled(M3DHeightMap* map)
 {
-	ITORF temp = m_InWorldFiledList.find(name);
+	ITORF temp = m_InWorldFiledList.find(map->m_name);
 	if (temp == m_InWorldFiledList.end())
 	{
-
 		MFiled* filed = new MFiled;
-		filed->Set(name);
-		m_InWorldFiledList.insert(make_pair(name, filed));
+		filed->Set(map->m_name, map);
+		m_InWorldFiledList.insert(make_pair(map->m_name, filed));
 		return filed;
 	}
 	return nullptr;

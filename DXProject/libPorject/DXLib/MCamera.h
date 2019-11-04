@@ -1,5 +1,6 @@
 #pragma once
 #include "M3DObject.h"
+#define MAXDISTANCE 10000.0f
 class MCamera : public M3DObject
 {
 	friend class MCameraMgr;

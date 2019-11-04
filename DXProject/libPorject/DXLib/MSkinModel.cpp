@@ -25,7 +25,7 @@ bool MSkinModel::Frame()
 bool MSkinModel::Render()
 {
 	I_MaterialMgr[MaterialID]->Render();
-	g_pImmediateContext->VSSetConstantBuffers(2, 1, &m_pConstantBuffer);
+	g_pImmediateContext->VSSetConstantBuffers(1, 1, &m_pConstantBuffer);
 	g_pImmediateContext->VSSetConstantBuffers(3, 1, &m_Skeleton->m_pBoneBuffer);
 	g_pImmediateContext->VSSetConstantBuffers(4, 1, &m_Skeleton->m_pZeroBuffer);
 	/////////////////////////////////////////////////////////////////////////////////////
