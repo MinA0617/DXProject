@@ -23,10 +23,7 @@ bool M3DModel::Release()
 		data->Release();
 	}
 #if defined(DEBUG) || defined(_DEBUG)
-	for (auto temp : m_BoxList)
-	{
-		temp->Release();
-	}
+	SAFE_RELEASE(m_Box);
 #endif // DEBUG
 	return true;
 }
@@ -52,10 +49,7 @@ bool M3DModel::Render()
 		data->Render();
 	}
 #if defined(DEBUG) || defined(_DEBUG)
-	for (auto temp : m_BoxList)
-	{
-		temp->Render();
-	}
+	if (m_Box)m_Box->Render();
 #endif // DEBUG
 	return true;
 }

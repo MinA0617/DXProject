@@ -115,6 +115,22 @@ bool MMaterial::Frame()
 bool MMaterial::Render()
 {
 	// 상수버퍼, 쉐이더ID 바인딩
+	if (I_DxState.m_bIsSolid)
+	{
+		if (m_bIsCulling)
+		{
+			I_DxState.RS_Set(MSolidFrame);
+		}
+		else
+		{
+			I_DxState.RS_Set(MNoneCulling);
+		}
+	}
+	else
+	{
+		I_DxState.RS_Set(MWireFrame);
+	}
+
 	I_DxState.BS_Set(m_BlendStateID);
 	I_DxState.SS_Set(m_SamplerStateID);
 	I_DxState.DSS_Set(m_DepthStencilStateID);
@@ -157,9 +173,6 @@ bool MMaterial::Render()
 	}
 	#pragma endregion
 
-	//m_pImmediateContext->HSSetShader(m_pHullShader, NULL, 0);
-	//m_pImmediateContext->DSSetShader(m_pDomainShader, NULL, 0);
-	//m_pImmediateContext->GSSetShader(m_pGeometryShader, NULL, 0);
 	g_pImmediateContext->PSSetShader(I_PixelShaderMgr.m_PSList[m_PixelShaderID], NULL, 0);
 
 	g_pImmediateContext->PSSetConstantBuffers(0, 1, &I_CameraMgr.m_pGrobalCameraBuffer);
@@ -176,6 +189,7 @@ bool MMaterial::Release()
 
 MMaterial::MMaterial()
 {
+	m_bIsCulling = true;
 }
 
 

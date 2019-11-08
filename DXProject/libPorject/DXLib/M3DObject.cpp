@@ -7,6 +7,7 @@ M3DObject::M3DObject()
 {
 	m_pConstantBuffer = NULL;
 	m_pParents = nullptr;
+	m_Box = nullptr;
 
 	ZeroMemory(&m_ConstantOBJ, sizeof(m_ConstantOBJ));
 	D3DXMatrixIdentity(&m_ConstantOBJ.matWorld);
@@ -28,11 +29,8 @@ M3DObject::M3DObject()
 
 M3DObject::~M3DObject()
 {
-	for (auto temp : m_BoxList)
-	{
-		delete temp;
-	}
-	m_BoxList.clear();
+	SAFE_RELEASE(m_Box);
+	SAFE_DELETE(m_Box);
 }
 
 bool M3DObject::Init()
@@ -190,10 +188,7 @@ void M3DObject::SetColor(D3DXVECTOR3 data)
 
 void M3DObject::UpdateBox()
 {
-	for (auto temp : m_BoxList)
-	{
-		temp->Updata();
-	}
+	if (m_Box) m_Box->Updata();
 }
 
 M3DObject * M3DObject::GetParents()
@@ -218,14 +213,12 @@ void M3DObject::Copy(M3DObject * target)
 	m_LocalRotation = target->GetLocalRotation();
 	m_LocalScale = target->GetLocalScale();
 	int i = 0;
-	for (auto temp : target->m_BoxList)
+	if (target->m_Box)
 	{
-		MBoundingBox* box = new MBoundingBox;
-		box->Init();
-		box->Copy(target->m_BoxList[i]);
-		box->m_pTarget = this;
-		m_BoxList.push_back(box);
-		i++;
+		m_Box = new MBoundingBox;
+		m_Box->Init();
+		m_Box->Copy(target->m_Box);
+		m_Box->m_pTarget = this;
 	}
 	CreateConstantBuffer();
 }

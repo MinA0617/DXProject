@@ -12,7 +12,7 @@ public:
 	MMesh*				m_pObj;
 public:
 	CONSTANT_3DOBJ		m_ConstantOBJ;
-	vector<MBoundingBox*>	m_BoxList;
+	MBoundingBox*		m_Box;
 	//MKeyData*			m_KeyData;
 	//virtual bool		UpdateKey(float time);
 	//--------------------------------------------------

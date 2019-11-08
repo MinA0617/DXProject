@@ -30,8 +30,8 @@ MUnit* M3DObjectMgr::findUnit(M_STR name)
 
 MFiled * M3DObjectMgr::findFiled(M_STR name)
 {
-	ITORF data = m_InWorldFiledList.find(name);
-	if (data == m_InWorldFiledList.end())
+	ITORF data = m_FiledList.find(name);
+	if (data == m_FiledList.end())
 	{
 		return nullptr;
 	}
@@ -78,6 +78,21 @@ bool M3DObjectMgr::Delete(M_STR name)
 	return true;
 }
 
+bool M3DObjectMgr::CreateTree()
+{
+	if (m_pTree != nullptr)
+	{
+		m_pTree->Release();
+		delete m_pTree;
+	}
+	if (m_InWorldFiled->ground)
+	{
+		m_pTree = new MTree;
+		m_pTree->BuildHeightMap(m_InWorldFiled->ground);
+	}
+	return false;
+}
+
 MUnit* M3DObjectMgr::CreateUnit(M_STR name, M_STR sktname, M_STR* namelist, int namecount)
 {
 	ITORU temp = m_InWorldUnitList.find(name);
@@ -91,17 +106,60 @@ MUnit* M3DObjectMgr::CreateUnit(M_STR name, M_STR sktname, M_STR* namelist, int 
 	return nullptr;
 }
 
-MFiled * M3DObjectMgr::CreateFiled(M3DHeightMap* map)
+MFiled * M3DObjectMgr::CreateFiled(M3DHeightMap* map, bool isChange)
 {
-	ITORF temp = m_InWorldFiledList.find(map->m_name);
-	if (temp == m_InWorldFiledList.end())
+	ITORF temp = m_FiledList.find(map->m_name);
+	if (temp == m_FiledList.end())
 	{
 		MFiled* filed = new MFiled;
 		filed->Set(map->m_name, map);
-		m_InWorldFiledList.insert(make_pair(map->m_name, filed));
+		m_FiledList.insert(make_pair(map->m_name, filed));
+		if (isChange)
+		{
+			SetFiled(filed->m_name);
+		}
 		return filed;
 	}
 	return nullptr;
+}
+
+MFiled * M3DObjectMgr::CreateFiled(M_STR name, int count, float leafsize, int tilesize, float startlod, bool ischange)
+{
+	ITORF temp = m_FiledList.find(name);
+	if (temp == m_FiledList.end())
+	{
+		M3DHeightMap* hmap = new M3DHeightMap;
+		hmap->m_name = name;
+		if (hmap->Create(name, count, leafsize, tilesize, startlod))
+		{
+			MFiled* filed = new MFiled;
+			filed->Set(name, hmap);
+			m_FiledList.insert(make_pair(name, filed));
+			if (ischange)
+			{
+				SetFiled(filed->m_name);
+			}
+			return filed;
+		}
+		else
+		{
+			hmap->Release();
+			delete hmap;
+			return nullptr;
+		}
+	}
+	return nullptr;
+}
+
+bool M3DObjectMgr::SetFiled(M_STR name)
+{
+	ITORF temp = m_FiledList.find(name);
+	if (temp != m_FiledList.end())
+	{
+		m_InWorldFiled = (*temp).second;
+		CreateTree();
+	}
+	return false;
 }
 
 int M3DObjectMgr::AddInWorld(M_STR* namelist, int namecount)
@@ -206,13 +264,12 @@ bool M3DObjectMgr::Init()
 
 bool M3DObjectMgr::Frame()
 {
-
 	I_CameraMgr.Frame();
 	I_LightMgr.Frame();
-	for (auto data : m_InWorldFiledList)
-	{
-		data.second->Frame();
-	}
+	if(m_pTree)	m_pTree->Frame();
+	
+	if(m_InWorldFiled)	m_InWorldFiled->Frame();
+
 	for (auto data : m_InWorldObjectList)
 	{
 		data.second->Frame();
@@ -228,47 +285,31 @@ bool M3DObjectMgr::Render()
 {
 	I_CameraMgr.Render();
 	I_LightMgr.Render();
+	if(m_pTree) m_pTree->Render();
 
-	//for (int i = 1; i < 5; i++)
-	//{
-	//	M3DModel model;
-	//	model.Copy(find(L"Box001"));
-	//	model.SetLocalPosition(I_CameraMgr.frustum.m_vFrustum[i]);
-	//	//model->SetLocalPosition(D3DXVECTOR3(i * 100, i * 100, i * 100));
-	//	model.Frame();
-	//	model.Render();
-	//	model.Release();
-	//}
-	for (auto data : m_InWorldFiledList)
+	if (0)
 	{
-		for (auto box : data.second->m_BoxList)
+		if (m_InWorldFiled) m_InWorldFiled->Render();
+		for (auto data : m_InWorldObjectList)
 		{
-			if (I_CameraMgr.frustum.CheckOBB(box))
+			if (data.second->m_Box)
 			{
-				data.second->Render();
-				break;
+				if (I_CameraMgr.frustum.CheckOBB(data.second->m_Box))
+				{
+					data.second->Render();
+					break;
+				}
 			}
 		}
-	}
-	for (auto data : m_InWorldObjectList)
-	{
-		for (auto box : data.second->m_BoxList)
+		for (auto data : m_InWorldUnitList)
 		{
-			if (I_CameraMgr.frustum.CheckOBB(box))
+			if (data.second->m_Box)
 			{
-				data.second->Render();
-				break;
-			}
-		}
-	}
-	for (auto data : m_InWorldUnitList)
-	{
-		for (auto box : data.second->m_BoxList)
-		{
-			if (I_CameraMgr.frustum.CheckOBB(box))
-			{
-				data.second->Render();
-				break;
+				if (I_CameraMgr.frustum.CheckOBB(data.second->m_Box))
+				{
+					data.second->Render();
+					break;
+				}
 			}
 		}
 	}
@@ -290,7 +331,7 @@ bool M3DObjectMgr::Release()
 		(*temp).second->Release();
 		delete (*temp).second;
 	}
-	for (auto data : m_InWorldFiledList)
+	for (auto data : m_FiledList)
 	{
 		data.second->Release();
 		delete data.second;
@@ -313,6 +354,8 @@ bool M3DObjectMgr::Release()
 M3DObjectMgr::M3DObjectMgr()
 {
 	m_iObjIndex = 0;
+	m_InWorldFiled = nullptr;
+	m_pTree = nullptr;
 }
 
 

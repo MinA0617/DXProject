@@ -440,4 +440,7 @@
     <FxCompile Include="..\..\data\Shader\PS3DFiled.psh" />
     <FxCompile Include="..\..\data\Shader\VS3DFiled.vsh" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

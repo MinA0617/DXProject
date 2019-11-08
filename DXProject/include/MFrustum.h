@@ -10,6 +10,7 @@ struct MPlane
 	void Normalize();
 };
 
+class MTreeNode;
 class MFrustum
 {
 public:
@@ -19,6 +20,7 @@ public:
 	D3DXMATRIX      m_matProj;
 	bool			CheckPlane(MPlane plane, MBoundingBox* box);
 	bool			CheckOBB(MBoundingBox* box);
+	int				CheckNode(MTreeNode* node);
 public:
 	void			CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj);
 public:

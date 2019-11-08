@@ -41,7 +41,7 @@ protected:
 	bool			SetBBData(M_STR name, MUnit* unit, bool isClear);
 public:
 	bool			Load(M_STR filename, bool isGeo = true, bool isBone = true, MSkeleton* skt = nullptr);
-	bool			Load_HM(M_STR filename, float size, bool lod = true, int minlevel = 5);
+	MFiled*			Load_HM(M_STR filename, float leafsize = 10, float height = 1.0, int minlevel = 64, float lodstartdistance = 1000, bool isChange = true);
 	bool			Load_BB(M_STR filename, MUnit* unit, bool isClear = true);
 public:
 	MParser();

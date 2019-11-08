@@ -16,7 +16,9 @@ public:
 	float			fOldExtent[3];
 	float			fExtent[3];
 	bool			Copy(MBoundingBox* target);
+	bool			BuildForMinMax();
 	bool			Updata();
+	vector<MBoundingBox*> m_ChildList;
 	//----------
 #if defined(DEBUG) || defined(_DEBUG)
 	ID3D11Buffer*		m_pConstantBuffer;

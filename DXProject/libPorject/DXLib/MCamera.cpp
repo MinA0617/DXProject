@@ -3,7 +3,7 @@
 
 MCamera::MCamera()
 {
-	isRotition = true;
+	isRotition = false;
 	yew = 0;
 	pitch = 0;
 }

@@ -19,6 +19,7 @@ private:
 	virtual bool Frame();
 	virtual bool Render();
 	virtual bool Release();
+public:
 	bool MCoreInit();
 	bool MCoreFrame();
 	bool MCoreRender();

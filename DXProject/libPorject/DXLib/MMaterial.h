@@ -21,6 +21,7 @@ private:
 	DWORD				Refraction;
 	DWORD				Environment;
 public:
+	bool				m_bIsCulling;
 	BlendState			m_BlendStateID;
 	SamplerState		m_SamplerStateID;
 	DepthStencilState	m_DepthStencilStateID;

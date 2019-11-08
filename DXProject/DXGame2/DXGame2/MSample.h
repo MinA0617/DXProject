@@ -30,6 +30,7 @@ public:
 	MUnit* unit;
 	MLight* light;
 	//M3DModel* target;
+	MFiled* filed;
 	M3DObject* target;
 	M3DModel* box1;
 	M3DModel* box2;

@@ -1,5 +1,5 @@
 #include "MFrustum.h"
-
+#include "MTree.h"
 bool MPlane::CreatePlane(D3DXVECTOR3 v0, D3DXVECTOR3 v1, D3DXVECTOR3 v2)
 {
 	D3DXVECTOR3 vEdge0 = v1 - v0;
@@ -71,6 +71,47 @@ bool MFrustum::CheckOBB(MBoundingBox* box)
 		}
 	}
 	return true;
+}
+
+int MFrustum::CheckNode(MTreeNode* node)
+{
+	if (node == nullptr) return true;
+	float fPlaneToCenter = 0;
+	float fDistance = 0;
+	D3DXVECTOR3 vDir;
+	D3DXVECTOR3 vNormal;
+	int result = 1;
+	for (int i = 0; i < 4; i++)
+	{
+		vDir = node->m_Box.vAxis[0] * node->m_Box.fExtent[0];
+		vNormal = D3DXVECTOR3(m_Plane[i].fA,
+			m_Plane[i].fB,
+			m_Plane[i].fC);
+
+		fDistance = fabs(D3DXVec3Dot(&vNormal, &vDir));
+		vDir = node->m_Box.vAxis[1] * node->m_Box.fExtent[1];
+		fDistance += fabs(D3DXVec3Dot(&vNormal, &vDir));
+
+
+		vDir = node->m_Box.vAxis[2] * node->m_Box.fExtent[2];
+		fDistance += fabs(D3DXVec3Dot(&vNormal, &vDir));
+
+		fPlaneToCenter =
+			m_Plane[i].fA * node->m_Box.vCenter.x +
+			m_Plane[i].fB * node->m_Box.vCenter.y +
+			m_Plane[i].fC * node->m_Box.vCenter.z +
+			m_Plane[i].fD;
+
+		if (fPlaneToCenter <= fDistance)
+		{
+			result = 0;
+		}
+		if (fPlaneToCenter < -fDistance)
+		{
+			return -1;
+		}
+	}
+	return result;
 }
 
 void MFrustum::CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj)

@@ -55,6 +55,7 @@ using namespace std;
 #define BOOL_CHANGE(temp) temp = !temp
 
 #define SAFE_RELEASE(temp)	if (temp){temp->Release();temp = NULL;}
+#define SAFE_DELETE(temp)	if(temp){delete temp;}
 
 using M_STR = basic_string<TCHAR>;
 //using M_STR = wstring;

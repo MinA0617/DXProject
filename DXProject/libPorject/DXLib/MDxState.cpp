@@ -61,13 +61,19 @@ bool MDxState::Init()
 	ZeroMemory(&rsDesc, sizeof(rsDesc));
 	rsDesc.DepthClipEnable = TRUE;
 	rsDesc.FillMode = D3D11_FILL_WIREFRAME;
-	rsDesc.CullMode = D3D11_CULL_BACK;
+	rsDesc.CullMode = D3D11_CULL_NONE;
 	if (FAILED(hr =	g_pDevice->CreateRasterizerState(&rsDesc, &m_RasterizerState[MWireFrame])))
 	{
 		return false;
 	}
+	rsDesc.CullMode = D3D11_CULL_BACK;
 	rsDesc.FillMode = D3D11_FILL_SOLID;
 	if (FAILED(hr =	g_pDevice->CreateRasterizerState(&rsDesc, &m_RasterizerState[MSolidFrame])))
+	{
+		return false;
+	}
+	rsDesc.CullMode = D3D11_CULL_NONE;
+	if (FAILED(hr = g_pDevice->CreateRasterizerState(&rsDesc, &m_RasterizerState[MNoneCulling])))
 	{
 		return false;
 	}

@@ -1,5 +1,22 @@
 #include "M3DHeightMap.h"
 
+float M3DHeightMap::FindLeafYMax(float i0x, float i0z)
+{
+	int realx = (i0x + ((m_fLeafSize * m_iCount) / 2)) / m_fLeafSize;
+	int realz = (i0z + ((m_fLeafSize * m_iCount) / 2)) / m_fLeafSize;
+	float topy[4];
+	int tindex[4];
+	tindex[0] = realx + (m_iCount * realz);
+	tindex[1] = tindex[0] + 1;
+	tindex[2] = tindex[0] + m_iCount;
+	tindex[3] = tindex[2] + 1;
+	topy[0] = m_VertexList[tindex[0]].p.y;
+	topy[1] = m_VertexList[tindex[1]].p.y;
+	topy[2] = m_VertexList[tindex[2]].p.y;
+	topy[3] = m_VertexList[tindex[3]].p.y;
+	return max(max(topy[0], topy[1]), max(topy[2], topy[3]));
+}
+
 D3DXVECTOR3 M3DHeightMap::ComputeFaceNormal(DWORD i0, DWORD i1, DWORD i2)
 {
 	D3DXVECTOR3 vNormal;
@@ -10,12 +27,6 @@ D3DXVECTOR3 M3DHeightMap::ComputeFaceNormal(DWORD i0, DWORD i1, DWORD i2)
 	D3DXVec3Cross(&vNormal, &vv0, &vv1);
 	D3DXVec3Normalize(&vNormal, &vNormal);
 	return vNormal;
-}
-bool M3DHeightMap::SetLevelOfDetail(float startdistancs, int MinLevel)
-{
-	m_fLodStartDistance = startdistancs;
-	m_iLodMinLevel = MinLevel;
-	return true;
 }
 bool M3DHeightMap::ComputeVertexNormal(DWORD i)
 {
@@ -30,7 +41,8 @@ bool M3DHeightMap::ComputeVertexNormal(DWORD i)
 	m_VertexList[i].n = float3(normal);
 	return true;
 }
-bool M3DHeightMap::ComputeNormal()
+
+bool M3DHeightMap::ComputeFaceNormalAndFaceIndexing()
 {
 	m_VertexFaceIndex.resize(m_VertexList.size());
 	m_FaceNormal.resize(m_IndexList.size() / 3);
@@ -45,29 +57,25 @@ bool M3DHeightMap::ComputeNormal()
 		m_FaceNormal[FaceIndex] = fNormal;
 		FaceIndex++;
 	}
-	for (int i = 0; i < m_VertexList.size(); i++)
-	{
-		ComputeVertexNormal(i);
-		m_VertexList[i].tv = float3(0, 1, 0);
-	}
 	return true;
 }
 bool M3DHeightMap::CreateNode()
 {
-	m_iMaxLevel = log2(m_iXCount - 1);
-	int XSize = m_iXCount - 1;
+	m_iMaxLevel = log2(m_iCount - 1);
+	int XSize = m_iCount - 1;
 	for (int i = 0; i < m_iMaxLevel - m_iLodMinLevel; i++)
 	{
 		XSize /= 2;
 	}
 
-	int Count = (m_iXCount - 1) / XSize;
+	int Count = (m_iCount - 1) / XSize;
 	DWORD flag = 0;
 	for (int i = 0; i < Count; i++)
 	{
 		for (int j = 0; j < Count; j++)
 		{
 			MMapNode* node = new MMapNode;
+			node->m_Box = new MBoundingBox;
 			for (int k = 0; k < m_iLodMinLevel + 1; k++)
 			{
 				vector<DWORD> list;
@@ -76,32 +84,95 @@ bool M3DHeightMap::CreateNode()
 			int myflag = flag + (XSize * j);
 			IndexingNode(node, m_iMaxLevel - m_iLodMinLevel, XSize, myflag);
 
-			float3 pos(0, 0, 0);
-			pos += m_VertexList[myflag].p;
-			pos += m_VertexList[myflag + XSize].p;
-			pos += m_VertexList[myflag + (XSize * m_iXCount)].p;
-			pos += m_VertexList[myflag + (XSize * m_iXCount) + XSize].p;
-			pos /= 4;
+			// 센터값 //
+			float3 pos[4];
+			pos[0] = m_VertexList[myflag].p;
+			pos[1] = m_VertexList[myflag + XSize].p;
+			pos[2] = m_VertexList[myflag + (XSize * m_iCount)].p;
+			pos[3] = m_VertexList[myflag + (XSize * m_iCount) + XSize].p;
+
+			node->m_Box->vMax.x = pos[0].x;
+			node->m_Box->vMax.y = pos[0].y;
+			node->m_Box->vMax.z = pos[0].z;
+			node->m_Box->vMin.x = pos[0].x;
+			node->m_Box->vMin.y = 0;
+			node->m_Box->vMin.z = pos[0].z;
+			for (int i = 1; i < 4; i++)
+			{
+				node->m_Box->vMax.x = max(node->m_Box->vMax.x, pos[i].x);
+				node->m_Box->vMax.y = max(node->m_Box->vMax.y, pos[i].y);
+				node->m_Box->vMax.z = max(node->m_Box->vMax.z, pos[i].z);
+				node->m_Box->vMin.x = min(node->m_Box->vMin.x, pos[i].x);
+				//node->m_Box.vMin.y = min(node->m_Box.vMin.y, pos[i].y);
+				node->m_Box->vMin.z = min(node->m_Box->vMin.z, pos[i].z);
+			}
+			float3 worldpos = pos[0] + pos[1] + pos[2] + pos[3];
+			worldpos /= 4;
 			node->CreateIndexBuffer();
-			node->m_vWorldPos = D3DXVECTOR3(pos.x, pos.y, pos.z);
+			node->m_vWorldPos = D3DXVECTOR3(worldpos.x, worldpos.y, worldpos.z);
 			m_List.push_back(node);
 		}
-		flag += XSize * m_iXCount;
+		flag += XSize * m_iCount;
 	}
-
+	SetNeighborNode();
+	for (auto node : m_List)
+	{
+		node->CreateMidIndexBuffer(m_iCount);
+	}
 	return true;
 }
+
+void M3DHeightMap::SetNeighborNode()
+{
+	m_iMaxLevel = log2(m_iCount - 1);
+	int XSize = m_iCount - 1;
+	for (int i = 0; i < m_iMaxLevel - m_iLodMinLevel; i++)
+	{
+		XSize /= 2;
+	}
+
+	int Count = (m_iCount - 1) / XSize;
+	DWORD flag = 0;
+	for (int i = 0; i < Count; i++)
+	{
+		for (int j = 0; j < Count; j++)
+		{
+			int flag = j + (i * Count);
+			MMapNode* node = m_List[flag];
+			if (i != 0) // 위
+			{
+				node->m_pNeighborNode[UP_] = m_List[flag - Count];
+			}
+			if (j != Count - 1) // 오
+			{
+				node->m_pNeighborNode[RIGHT_] = m_List[flag + 1];
+			}
+			if (i != Count - 1) // 아래
+			{
+				node->m_pNeighborNode[DOWN_] = m_List[flag + Count];
+			}
+			if (j != 0) // 왼
+			{
+				node->m_pNeighborNode[LEFT_] = m_List[flag - 1];
+			}
+		}
+	}
+}
+
+
+
+
 bool M3DHeightMap::IndexingNode(MMapNode* node, int level, int XSize, DWORD flag)
 {
 	if (XSize < 1) return false;
 	int Size = XSize;
 	DWORD index[6];
 	index[0] = flag;
-	index[1] = flag + (m_iXCount * XSize);
+	index[1] = flag + (m_iCount * XSize);
 	index[2] = flag + XSize;
-	index[3] = index[1];
-	index[4] = index[1] + XSize;
-	index[5] = index[2];
+	index[3] = index[1] + XSize;
+	index[4] = index[2];
+	index[5] = index[1];
 	for (int i = 0; i < 6; i++)
 	{
 		int level = log2(XSize);
@@ -109,48 +180,41 @@ bool M3DHeightMap::IndexingNode(MMapNode* node, int level, int XSize, DWORD flag
 	}
 	IndexingNode(node, level - 1, XSize / 2, index[0]);
 	IndexingNode(node, level - 1, XSize / 2, index[0] + XSize / 2);
-	IndexingNode(node, level - 1, XSize / 2, index[0] + (m_iXCount * XSize / 2));
-	IndexingNode(node, level - 1, XSize / 2, index[0] + (m_iXCount * XSize / 2) + XSize / 2);
+	IndexingNode(node, level - 1, XSize / 2, index[0] + (m_iCount * XSize / 2));
+	IndexingNode(node, level - 1, XSize / 2, index[0] + (m_iCount * XSize / 2) + XSize / 2);
 	return true;
 }
 
 void M3DHeightMap::CheckNode(MMapNode * node)
 {
-	/*if (node->m_bIsLeaf)
+	D3DXVECTOR3 Camerapos = I_CameraMgr.m_MainCamera->GetLocalPosition();
+	D3DXVECTOR3 length = Camerapos - node->m_vWorldPos;
+	float distance = D3DXVec3Length(&length);
+	if (distance < m_fLodStartDistance)
 	{
-		node->m_IsRender = true;
+		node->m_dwCurLevel = 0;
 		return;
 	}
-	if (node->m_IsRender)
+	if (distance > MAXDISTANCE)
 	{
-		D3DXVECTOR3 Camerapos = I_CameraMgr.m_MainCamera->GetLocalPosition();
-		D3DXVECTOR3 length = Camerapos - node->m_vWorldPos;
-		float distance = D3DXVec3Length(&length);
-		if (distance < m_fLodStartDistance)
+		node->m_dwCurLevel = node->m_iIndex.size() - 1;
+		return;
+	}
+	float mid = MAXDISTANCE - m_fLodStartDistance;
+	for (int i = 1; i < node->m_iIndex.size(); i++)
+	{
+		//int level = (m_iLodMinLevel - (node->m_iIndex.size() - 1 - i));
+		//float qua = level / (m_iMaxLevel - m_iLodMinLevel + 1.00);
+		float qua = i / (float)(node->m_iIndex.size() - 1.00);
+		float maxdis = m_fLodStartDistance + (qua * mid);
+
+		if (distance < maxdis)
 		{
-			node->m_IsRender = false;
-		}
-		else
-		{
-			float mid = MAXDISTANCE - m_fLodStartDistance;
-			float qua = (node->m_iDepthLevel - m_iLodMinLevel + 1.00) / (m_iMaxLevel + 1.00 - m_iLodMinLevel);
-			float maxdis = m_fLodStartDistance + (qua * mid);
-			if (distance < maxdis)
-			{
-				node->m_IsRender = RENDER;
-				return;
-			}
-		}
-		if (node->m_bIsLeaf)
-		{
-			node->m_IsRender = true;
+			node->m_dwCurLevel = i;
 			return;
 		}
 	}
-	for (int i = 0; i < 4; i++)
-	{
-		CheckNode(node->m_pChildNode[i]);
-	}*/
+	return;
 }
 bool M3DHeightMap::CreateBuffer()
 {
@@ -185,38 +249,36 @@ bool M3DHeightMap::CreateBuffer()
 }
 bool M3DHeightMap::CreateVertex(vector<float>& list)
 {
+	float xminsize = -(m_iCount - 1) * m_fLeafSize / 2;
+	float zminsize = -(m_iCount - 1) * m_fLeafSize / 2;
+
+	int tilecount = (m_iCount - 1) / m_iTileSize;
 	int count = 0;
-	float xminsize = -m_iXCount * m_fLeafSize / 2;
-	float zminsize = -m_iZCount * m_fLeafSize / 2;
 
-	float xcount = m_iXCount;
-	float zcount = m_iZCount;
-
-
-	m_VertexList.reserve(m_iZCount * m_iXCount);
-	for (int i = 0; i < m_iZCount; i++)
+	m_VertexList.reserve(m_iCount * m_iCount);
+	for (int i = 0; i < m_iCount; i++)
 	{
-		for (int j = 0; j < m_iXCount; j++)
+		for (int j = 0; j < m_iCount; j++)
 		{
 			MVERTEX ver;
 			ver.p = float3(xminsize + (j * m_fLeafSize), list[count], zminsize + (i * m_fLeafSize));
-			ver.t = float3(j / xcount, i / zcount, 0);
+			ver.t = float3((j / (float)m_iCount) * tilecount, (i / (float)m_iCount) * tilecount, 0);
 			count++;
 			m_VertexList.push_back(ver);
 		}
 	}
 	int incount = 0;
-	for (int i = 0; i < m_iZCount - 1; i++)
+	for (int i = 0; i < m_iCount - 1; i++)
 	{
-		for (int j = 0; j < m_iXCount - 1; j++)
+		for (int j = 0; j < m_iCount - 1; j++)
 		{
 			DWORD index[6];
 			index[0] = incount;
-			index[1] = incount + m_iXCount;
+			index[1] = incount + m_iCount;
 			index[2] = incount + 1;
 			index[3] = incount + 1;
-			index[4] = incount + m_iXCount;
-			index[5] = incount + m_iXCount + 1;
+			index[4] = incount + m_iCount;
+			index[5] = incount + m_iCount + 1;
 			m_IndexList.push_back(index[0]);
 			m_IndexList.push_back(index[1]);
 			m_IndexList.push_back(index[2]);
@@ -227,14 +289,95 @@ bool M3DHeightMap::CreateVertex(vector<float>& list)
 		}
 		incount++;
 	}
-	ComputeNormal();
+	ComputeFaceNormalAndFaceIndexing();
+	for (int i = 0; i < m_VertexList.size(); i++)
+	{
+		ComputeVertexNormal(i);
+		m_VertexList[i].tv = float3(0, 1, 0);
+	}
 	CreateBuffer();
-	return false;
+	return true;
 }
-bool M3DHeightMap::Create(M_STR filename, float size, bool lod, int minlevel)
+
+bool M3DHeightMap::CreateVertex()
 {
-	if (size == 0) return false;
-	m_fLeafSize = size;
+	int tilecount = (m_iCount - 1) / m_iTileSize;
+	float minsize = -(m_iCount - 1) * m_fLeafSize / 2;
+
+	float count = m_iCount;
+	//int size = 
+
+	m_VertexList.reserve(m_iCount * m_iCount);
+	for (int i = 0; i < m_iCount; i++)
+	{
+		for (int j = 0; j < m_iCount; j++)
+		{
+			MVERTEX ver;
+			ver.p = float3(minsize + (j * m_fLeafSize), 0, minsize + (i * m_fLeafSize));
+			ver.t = float3((j / (float)m_iCount) * tilecount, (i / (float)m_iCount) * tilecount, 0);
+			ver.n = float3(0, 1, 0);
+			count++;
+			m_VertexList.push_back(ver);
+		}
+	}
+	int incount = 0;
+	for (int i = 0; i < m_iCount - 1; i++)
+	{
+		for (int j = 0; j < m_iCount - 1; j++)
+		{
+			DWORD index[6];
+			index[0] = incount;
+			index[1] = incount + m_iCount;
+			index[2] = incount + 1;
+			index[3] = incount + 1;
+			index[4] = incount + m_iCount;
+			index[5] = incount + m_iCount + 1;
+			m_IndexList.push_back(index[0]);
+			m_IndexList.push_back(index[1]);
+			m_IndexList.push_back(index[2]);
+			m_IndexList.push_back(index[3]);
+			m_IndexList.push_back(index[4]);
+			m_IndexList.push_back(index[5]);
+			incount++;
+		}
+		incount++;
+	}
+	ComputeFaceNormalAndFaceIndexing();
+	for (int i = 0; i < m_VertexList.size(); i++)
+	{
+		m_VertexList[i].tv = float3(0, 1, 0);
+	}
+	CreateBuffer();
+	return true;
+}
+bool M3DHeightMap::Check()
+{
+	float fresult = log2(m_iCount - 1);
+	int iresult = fresult;
+	if (fresult != iresult)
+	{
+		return false;
+	}
+	float fresult2 = log2(m_iTileSize);
+	int iresult2 = fresult2;
+	if (fresult2 != iresult2)
+	{
+		return false;
+	}
+	if (iresult < iresult2)
+	{
+		return false;
+	}
+	m_iLodMinLevel = fresult2;
+	return true;
+}
+
+bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tilesize, float lodstartdistance)
+{
+	if (leafsize <= 0) return false;
+	m_fLeafSize = leafsize;
+	m_iTileSize = tilesize;
+	m_fLodStartDistance = lodstartdistance;
 	vector<float>	fList;
 	//ID3D11ShaderResourceView* pTexture = NULL;
 	ID3D11Resource *pTexture = NULL;
@@ -262,23 +405,17 @@ bool M3DHeightMap::Create(M_STR filename, float size, bool lod, int minlevel)
 	D3D11_TEXTURE2D_DESC desc;
 	pTexture2D->GetDesc(&desc);
 
-	if (lod)
+	if (desc.Height != desc.Width)
 	{
-		if (desc.Height != desc.Width)
-		{
-			SAFE_RELEASE(pTexture2D);
-			return false;
-		}
-		float fresult = log2(desc.Height - 1);
-		int iresult = fresult;
-		if (fresult != iresult)
-		{
-			SAFE_RELEASE(pTexture2D);
-			return false;
-		}
-		m_iLodMinLevel = minlevel;
+		SAFE_RELEASE(pTexture2D);
+		return false;
 	}
-
+	m_iCount = desc.Height;
+	if (!Check())
+	{
+		SAFE_RELEASE(pTexture2D);
+		return false;
+	}
 
 	fList.resize(desc.Height*desc.Width);
 	if (pTexture2D)
@@ -295,6 +432,7 @@ bool M3DHeightMap::Create(M_STR filename, float size, bool lod, int minlevel)
 				{
 					UINT colStart = col * 4;
 					UINT uRed = pTexels[rowStart + colStart + 0];
+					uRed *= heigth / 255;
 					fList[row * desc.Width + col] = uRed;	/// DWORD이므로 pitch/4	
 					if (uRed > m_fYmax) m_fYmax = uRed;
 				}
@@ -310,11 +448,22 @@ bool M3DHeightMap::Create(M_STR filename, float size, bool lod, int minlevel)
 	_tsplitpath_s(filename.c_str(), Drive, Dir, Name, Ext);
 	m_name = Name;
 
-	m_iZCount = desc.Height;
-	m_iXCount = desc.Width;
 	SAFE_RELEASE(pTexture2D);
 	CreateVertex(fList);
-	if (lod)CreateNode();
+	CreateNode();
+	return true;
+}
+
+bool M3DHeightMap::Create(M_STR name, int count, float leafsize, int tilesize, float lodstartdistance)
+{
+	if (leafsize <= 0) return false;
+	m_fLeafSize = leafsize;
+	m_iCount = count;
+	m_iTileSize = tilesize;
+	m_fLodStartDistance = lodstartdistance;
+	if (!Check()) return false;
+	CreateVertex();
+	CreateNode();
 	return true;
 }
 
@@ -327,10 +476,11 @@ bool M3DHeightMap::Init()
 bool M3DHeightMap::Frame()
 {
 	PreFrame();
-	//if (m_bIsLOD)
-	//{
-	//	CheckNode(RootNode);
-	//}
+	if (m_bIsLOD)
+	{
+		for(auto node : m_List)
+		CheckNode(node);
+	}
 	return true;
 }
 
@@ -346,18 +496,19 @@ bool M3DHeightMap::Render()
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	if (m_bIsLOD)
-	{
-		for (auto node : m_List)
-		{
-			node->Render();
-		}
-	}
-	else
-	{
-		g_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-		g_pImmediateContext->DrawIndexed(m_IndexList.size(), 0, 0);
-	}
+	//if (m_bIsLOD)
+	//{
+	//	for (auto node : m_List)
+	//	{
+	//		node->Render();
+	//	}
+	//}
+	//else
+	//{
+	//	g_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	//	int count = m_IndexList.size();
+	//	g_pImmediateContext->DrawIndexed(count, 0, 0);
+	//}
 	return true;
 }
 
@@ -376,9 +527,9 @@ bool M3DHeightMap::Release()
 
 M3DHeightMap::M3DHeightMap()
 {
-	m_bIsLOD == false;
 	m_VertexShaderID = VSFILED;
 	GetMatarial()->m_PixelShaderID = PSFILED;
+	GetMatarial()->m_bIsCulling = false;
 }
 
 

@@ -3,37 +3,48 @@
 #include "M3DObject.h"
 #include "MBoundingBox.h"
 #include "MCameraMgr.h"
+#include "M3DHeightMap.h"
 
-struct MNode
+struct MTreeNode
 {
 	MBoundingBox			m_Box;
 	bool					m_isLeaf;
 	UINT					m_iDepth;
-	vector<MNode*>			m_pChild;
+	MMapNode*				m_Tile;
+	vector<MTreeNode*>		m_pChild;
 	vector<M3DObject*>		m_pObj;
+	bool					Render();
+	MTreeNode() { m_Tile = nullptr; };
 };
 
 class MTree
 {
 public:
-	MNode*		m_pRootNode;
+	vector<MTreeNode*> m_RenderNodeList;
+	MTreeNode*	m_pRootNode;
 	float		m_fMinDivideSize;
+	DWORD		m_dwMaxDepth;
+	int			m_NodDepth;
 	bool		isOQ;
 private:
-	bool		BuildTree(MNode* pNode);
-	bool		SubDivide(MNode* pNode);
-	MNode*		CreateNode(float fMinX, float fMinY, float fMinZ, float fMaxX, float fMaxY, float fMaxZ, MNode* pParentNode = nullptr);
+	bool		BuildTree(MTreeNode* pNode);
+	bool		SubDivide(MTreeNode* pNode);
+	MTreeNode*	CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ, MTreeNode* pParentNode = nullptr);
 	bool		DeleteAll();
-	bool		DeleteNode(MNode* pNode);
+	bool		DeleteNode(MTreeNode* pNode);
 	bool		CheckRoot(M3DObject* pObj);
-	bool		CheckNode(MNode pNode, M3DObject * pObj);
-	bool		FindNode(MNode* pNode, M3DObject* pObj);
+	//bool		CheckNode(MTreeNode pNode, M3DObject * pObj);
+	//bool		FindNode(MTreeNode* pNode, M3DObject* pObj);
 public:
 	bool		AddObject(M3DObject* pObj);
-	bool		Build(float fX, float fY, float fZ, float fMinSize = 5.0f);
-	bool		SetCamera(MCamera* camera);
+	bool		Build(float fX, float fZ, float fMinSize = 5.0f);
+	bool		BuildHeightMap(M3DHeightMap* target);
+	bool		SetMaxY(MTreeNode* pNode, M3DHeightMap* target);
+	bool		FindMapNode(MTreeNode* node, M3DHeightMap* target);
+	//bool		SetCamera(MCamera* camera);
+	int			CheckNode(MTreeNode* node);
 public:
-	bool		Init();
+	//bool		Init();
 	bool		Frame();
 	bool		Render();
 	bool		Release();

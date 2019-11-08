@@ -24,13 +24,12 @@ bool MUnit::Create(M_STR name, M_STR sktname, M_STR* namelist, int namecount)
 		M3DBone* newbone = skt->NewBone(oldbone->m_name);
 		if (newbone != nullptr)
 		{
-			for (int i = 0; i < oldbone->m_BoxList.size(); i++)
+			if (oldbone->m_Box)
 			{
-				MBoundingBox* box = new MBoundingBox;
-				box->Init();
-				box->Copy(oldbone->m_BoxList[i]);
-				box->m_pTarget = newbone;
-				m_BoxList.push_back(box);
+				m_Box = new MBoundingBox;
+				m_Box->Init();
+				m_Box->Copy(oldbone->m_Box);
+				m_Box->m_pTarget = newbone;
 			}
 			newbone->m_name = oldbone->m_name;
 			newbone->SetLocalPosition(oldbone->GetLocalPosition());
@@ -72,10 +71,7 @@ bool MUnit::Init()
 bool MUnit::Frame()
 {
 	skt->Frame();
-	for (auto box : m_BoxList)
-	{
-		box->Updata();
-	}
+	if(m_Box)m_Box->Updata();
 	for (int i = 0; i < m_iCount; i++)
 	{
 		obj[i]->Frame();
@@ -86,10 +82,7 @@ bool MUnit::Frame()
 bool MUnit::Render()
 {
 	skt->Render();
-	for (auto box : m_BoxList)
-	{
-		box->Render();
-	}
+	if (m_Box)m_Box->Render();
 	for (int i = 0; i < m_iCount; i++)
 	{
 		obj[i]->Render();
@@ -99,10 +92,8 @@ bool MUnit::Render()
 
 bool MUnit::Release()
 {
-	for (auto box : m_BoxList)
-	{
-		box->Release();
-	}
+	SAFE_RELEASE(m_Box);
+	SAFE_DELETE(m_Box);
 	for (int i = 0; i < m_iCount; i++)
 	{
 		obj[i]->Release();

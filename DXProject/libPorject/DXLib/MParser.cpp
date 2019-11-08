@@ -235,18 +235,24 @@ bool MParser::Load(M_STR filename, bool isGeo, bool isBone, MSkeleton* skt)
 	return true;
 }
 
-bool MParser::Load_HM(M_STR filename, float size, bool lod, int minlevel)
+MFiled* MParser::Load_HM(M_STR filename, float leafsize, float height, int minlevel, float lodstartdistance,bool isChange)
 {
 	M3DHeightMap* hm = new M3DHeightMap;
-	if (hm->Create(filename, size, lod, minlevel) == false)
+	if (hm->Create(filename, leafsize, height, minlevel, lodstartdistance) == false)
 	{
 		hm->Release();
 		delete hm;
-		return false;
+		return nullptr;
 	}
 	hm->Init();
-	I_3DObjectMgr.CreateFiled(hm);
-	return true;
+	MFiled* result = I_3DObjectMgr.CreateFiled(hm, isChange);
+	if(result == nullptr)
+	{
+		hm->Release();
+		delete hm;
+		return nullptr;
+	}
+	return result;
 }
 
 bool MParser::Load_BB(M_STR filename, MUnit* unit, bool isClear)
@@ -299,11 +305,8 @@ bool MParser::SetBBData(M_STR name, MUnit* unit, bool isClear)
 	M3DObject* target = nullptr;
 	if (isClear)
 	{
-		for (auto temp : unit->m_BoxList)
-		{
-			delete temp;
-		}
-		unit->m_BoxList.clear();
+		SAFE_RELEASE(unit->m_Box);
+		SAFE_DELETE(unit->m_Box)
 	}
 	for (ITOR data = m_wordlist.begin(); data != m_wordlist.end(); data++)
 	{
@@ -329,7 +332,8 @@ bool MParser::SetBBData(M_STR name, MUnit* unit, bool isClear)
 			box->fOldExtent[2] = (maxz - minz) / 2;
 			box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
 			box->m_pTarget = target;
-			unit->m_BoxList.push_back(box);
+			target->m_Box = box;
+			unit->m_Box->m_ChildList.push_back(box);
 		}
 	}
 	m_wordlist.clear();
@@ -559,14 +563,13 @@ bool MParser::CreateGeometryData(ITOR &data, M3DModel * target, MKeyAnimation* a
 			float maxx = DataToFloat(data);
 			float maxy = DataToFloat(data);
 			float maxz = DataToFloat(data);
-			MBoundingBox* box = new MBoundingBox;
-			box->Init();
-			box->fOldExtent[0] = (maxx - minx) / 2;
-			box->fOldExtent[1] = (maxy - miny) / 2;
-			box->fOldExtent[2] = (maxz - minz) / 2;
-			box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
-			box->m_pTarget = target;
-			target->m_BoxList.push_back(box);
+			target->m_Box = new MBoundingBox;
+			target->m_Box->Init();
+			target->m_Box->fOldExtent[0] = (maxx - minx) / 2;
+			target->m_Box->fOldExtent[1] = (maxy - miny) / 2;
+			target->m_Box->fOldExtent[2] = (maxz - minz) / 2;
+			target->m_Box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
+			target->m_Box->m_pTarget = target;
 		}
 		if (*data == "MAP_ID")
 		{
@@ -767,14 +770,13 @@ bool MParser::CreateBoneData(M_STR name, ITOR &data, M3DBone* target, MKeyAnimat
 			float maxx = DataToFloat(data);
 			float maxy = DataToFloat(data);
 			float maxz = DataToFloat(data);
-			MBoundingBox* box = new MBoundingBox;
-			box->Init();
-			box->fOldExtent[0] = (maxx - minx) / 2;
-			box->fOldExtent[1] = (maxy - miny) / 2;
-			box->fOldExtent[2] = (maxz - minz) / 2;
-			box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
-			box->m_pTarget = target;
-			target->m_BoxList.push_back(box);
+			target->m_Box = new MBoundingBox;
+			target->m_Box->Init();
+			target->m_Box->fOldExtent[0] = (maxx - minx) / 2;
+			target->m_Box->fOldExtent[1] = (maxy - miny) / 2;
+			target->m_Box->fOldExtent[2] = (maxz - minz) / 2;
+			target->m_Box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
+			target->m_Box->m_pTarget = target;
 		}
 		if (*data == "POSITION_KEY_COUNT")
 		{

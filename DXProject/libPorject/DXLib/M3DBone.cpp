@@ -6,7 +6,6 @@ M3DBone::M3DBone()
 {
 	I_MaterialMgr[MaterialID]->m_PixelShaderID = PSSPLINE;
 	m_VertexShaderID = VSSPLINE;
-	m_BoxList.resize(0);
 }
 
 
@@ -96,7 +95,7 @@ bool M3DBone::Frame()
 		m_WorldScale = m_LocalScale;
 	}
 
-	//UpdateBox();
+	UpdateBox();
 
 	D3DXMatrixTranspose(&m_ConstantOBJ.matWorld, &m_ConstantOBJ.matWorld);
 
@@ -141,7 +140,7 @@ bool M3DBone::Render()
 		{
 			data->Render();
 		}
-	//if (m_BoxList != nullptr) m_BoxList->Render();
+	if (m_Box) m_Box->Render();
 #endif
 	return true;
 }

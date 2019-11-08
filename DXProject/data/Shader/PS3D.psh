@@ -4,6 +4,7 @@ Texture2D g_txDiffuse : register(t0);
 Texture2D g_txNormal : register(t1);
 TextureCube g_txEniv : register(t2);
 Texture2D g_txSpecular : register(t3);
+Texture2D g_txOpacity : register(t4);
 
 SamplerState s0 : register(s0);
 
@@ -156,14 +157,6 @@ float NormalMapping(float3 LightVector, float3 NormalMapPixel)
 
 float4 PS(PS3D_INPUT data) : SV_TARGET
 {
-	//m_isDiffuse;
-	//m_isNormal;
-	//m_isSpecular;
-	//m_isOpacity;
-	//m_isReflection;
-	//m_isRefraction;
-	//m_isEnvironment;
-
 	float4 lastcolor;
 	if (m_isDiffuse == -1)
 	{
@@ -175,11 +168,6 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 		float4 mutiplier = float4(0.3f, 0.3f, 0.3f, 1.0f) + float4(ComputeLight(data.WorldPosition, data.Normal), 1);
 		lastcolor.xyz = m_ObjectColor * mutiplier.xyz;
 	}
-
-	//----
-	lastcolor.w = 1;
-	return lastcolor;
-	//----
 	if (m_isNormal == -1)
 	{
 		float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);
@@ -209,6 +197,15 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 		float4 Enivcolor = g_txEniv.Sample(s0, data.Reflect);
 		lastcolor = lerp(Enivcolor, lastcolor, 0.5);
 	}
+	if (m_isOpacity == -1)
+	{
+		float4 Opactiy = g_txOpacity.Sample(s0, data.UVPos.xy);
+		lastcolor.w = Opactiy.x;
+	}
+	else
+	{
+		lastcolor.w = m_isOpacity / 255.00;
+	}
 	if (m_isReflection == -1)
 	{
 		//lastcolor.r = 1;
@@ -220,14 +217,6 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 	if (m_isEnvironment == -1)
 	{
 		//lastcolor.b = 1;
-	}
-	if (m_isOpacity == -1)
-	{
-
-	}
-	else
-	{
-		lastcolor.w = m_isOpacity / 255.00;
 	}
 	return lastcolor;
 }

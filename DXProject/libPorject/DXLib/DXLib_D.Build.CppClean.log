@@ -15,6 +15,7 @@ e:\kgca36\gitdx\dxproject\libporject\dxlib\mkeydata.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mkeyanimationmgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mkeyanimation.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mboundingbox.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dheightmap.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mfiled.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dbone.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m2dscreen.obj
@@ -56,6 +57,15 @@ e:\kgca36\gitdx\dxproject\libporject\dxlib\mskinmesh.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mskeletonmgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mskeleton.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mrpgcamera.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib_d.lib
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.res
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\cl.command.1.tlog
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\cl.read.1.tlog
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\cl.write.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\lib-link-cvtres.read.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\lib-link-cvtres.write.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\lib.command.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\rc.command.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\rc.read.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\rc.write.1.tlog
+e:\kgca36\gitdx\dxproject\libporject\dxlib\.\dxlib_d.lib

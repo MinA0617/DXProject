@@ -11,26 +11,26 @@ MSample::~MSample()
 
 bool  MSample::Init()
 {
-	{
-		MTree temp;
-		temp.Build(300, 550, 700, 10);
-		temp.Release();
-	}
 
 	M_STR asd;
 	M_STR asdsda = asd;
 	I_CameraMgr.CreateFPSCamera_Main();
-	I_Device.m_dxWrite.AddData(L"x", D2D1::ColorF(1, 1, 1, 1.0), MPoint(0, 0));
-	I_Device.m_dxWrite.AddData(L"y", D2D1::ColorF(1, 1, 1, 1.0), MPoint(50, 0));
-	I_Device.m_dxWrite.AddData(L"z", D2D1::ColorF(1, 1, 1, 1.0), MPoint(100, 0));
+	I_Device.m_dxWrite.AddData(L"카메라이동 : WASD", D2D1::ColorF(0, 0, 0, 1.0), MPoint(0, 0));
+	I_Device.m_dxWrite.AddData(L"오브젝트 선택 : F1, F2", D2D1::ColorF(0, 0, 0, 1.0), MPoint(30, 0));
+	I_Device.m_dxWrite.AddData(L"오브젝트 이동 : 상화좌우zx", D2D1::ColorF(0, 0, 0, 1.0), MPoint(60, 0));
+	I_Device.m_dxWrite.AddData(L"오브젝트 회전 : 숫자패드123456", D2D1::ColorF(0, 0, 0, 1.0), MPoint(90, 0));
+	I_Device.m_dxWrite.AddData(L"오브젝트 스케일 : 인서트딜리트홈엔드페이지업다운키", D2D1::ColorF(0, 0, 0, 1.0), MPoint(120, 0));
 
-	//ps.Load_HM(L"../../data/image/jja.bmp", 100);
-	ps.Load_HM(L"../../data/image/Map513.bmp", 20);
-
-	MFiled* filed = I_3DObjectMgr.findFiled(L"Map513");
-	filed->ground->SetLevelOfDetail(100, 3);
-	filed->ground->SetColor(D3DXVECTOR3(0.5, 0.5, 0.5));
-	filed->ground->Load_MAP(L"../../data/image/Map513_Minimap.png", DIFFUSE);
+	if (0)
+	{
+		//ps.Load_HM(L"../../data/image/jja.bmp", 100);
+		filed = ps.Load_HM(L"../../data/image/Map513.bmp", 10, true, 5);
+		//filed = I_3DObjectMgr.findFiled(L"Map33");
+		filed->ground->SetLevelOfDetail(250);
+		filed->ground->SetColor(D3DXVECTOR3(0.5, 0.5, 0.5));
+		filed->ground->Load_MAP(L"../../data/image/Map513_Minimap.png", DIFFUSE);
+		//filed->ground->m_bIsLOD = true;
+	}
 	if(0)
 	{
 		ps.Load(L"../../data/obj/Catgirl_T.MIN");
@@ -69,11 +69,11 @@ bool  MSample::Init()
 	namelist[9] = L"Box010";
 	namelist[10] = L"Box011";
 	namelist[11] = L"Box012";
-	//y = I_3DObjectMgr.AddInWorld(namelist, 2);
+	y = I_3DObjectMgr.AddInWorld(namelist, 2);
 	light = &(I_LightMgr.m_List);
 
-	//box1 = I_3DObjectMgr.findObject(y);
-	//box2 = I_3DObjectMgr.findObject(y + 1);
+	box1 = I_3DObjectMgr.findObject(y);
+	box2 = I_3DObjectMgr.findObject(y + 1);
 
 	target = I_3DObjectMgr.findObject(y);
 	return true;
@@ -96,11 +96,11 @@ bool  MSample::Frame()
 	light->Frame();
 	//// 회전은 행렬에서 가져오기
 	//// 스케일, 포지션은 실수값
-	wstringstream temp;
-	wstring data;
-	temp << L"FPS_" << I_Timer.GetFramePerSecond();
-	temp >> data;
-	I_Device.m_dxWrite.UpdateData(0, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(0, 0));
+	//wstringstream temp;
+	//wstring data;
+	//temp << L"FPS_" << I_Timer.GetFramePerSecond();
+	//temp >> data;
+	//I_Device.m_dxWrite.UpdateData(0, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(0, 0));
 	//temp >> data;
 	//m_dxWrite.UpdateData(1, data, D2D1::ColorF(0, 0, 0, 1.0), MPoint(80, 0));
 	//temp >> data;
@@ -125,13 +125,13 @@ bool  MSample::Frame()
 
 	if (g_ActionInput.F1 >= KEY_PUSH)
 	{
-		I_3DObjectMgr.findFiled(L"Map513")->ground->m_bIsLOD = true;
+		//filed->ground->m_bIsLOD = true;
 		target = I_3DObjectMgr.findObject(0);
 		//target->Change(UPPERBODY, L"Armor1");
 	}
 	if (g_ActionInput.F2 >= KEY_PUSH)
 	{
-		I_3DObjectMgr.findFiled(L"Map513")->ground->m_bIsLOD = false;
+		//filed->ground->m_bIsLOD = false;
 		target = I_3DObjectMgr.findObject(1);
 		//target->Change(UPPERBODY, L"Catgirl_UpperBody");
 		//target->skt->BindAni(L"Catgirl_Wait", false, 0.15);
@@ -206,7 +206,7 @@ bool  MSample::Frame()
 	}
 	if (g_ActionInput.Z >= KEY_PUSH)
 	{
-		//target->ModifyLocalPosition(D3DXVECTOR3(0, 0.1, 0));
+		target->ModifyLocalPosition(D3DXVECTOR3(0, 0.1, 0));
 	}
 	if (g_ActionInput.X >= KEY_PUSH)
 	{

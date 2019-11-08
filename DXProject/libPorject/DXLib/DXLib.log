@@ -1,5 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
-  MMapNode.cpp
+  MTree.cpp
 e:\kgca36\gitdx\dxproject\include\dxsdk\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': 매크로 재정의
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54723): note: 'DXGI_STATUS_OCCLUDED'의 이전 정의를 참조하십시오.
 e:\kgca36\gitdx\dxproject\include\dxsdk\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': 매크로 재정의
@@ -128,9 +128,10 @@ e:\kgca36\gitdx\dxproject\include\dxsdk\dwrite.h(4988): warning C4005: 'DWRITE_E
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55715): note: 'DWRITE_E_FONTCOLLECTIONOBSOLETE'의 이전 정의를 참조하십시오.
 e:\kgca36\gitdx\dxproject\include\dxsdk\dwrite.h(4993): warning C4005: 'DWRITE_E_ALREADYREGISTERED': 매크로 재정의
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55724): note: 'DWRITE_E_ALREADYREGISTERED'의 이전 정의를 참조하십시오.
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mmapnode.cpp(44): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mmapnode.cpp(54): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mmapnode.cpp(75): warning C4267: '인수': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mtree.h(9): warning C4099: 'MTreeNode': 처음에는 'class'을(를) 사용하여 형식 이름을 표시했는데 이제는 'struct'을(를) 사용하여 표시합니다.
+  e:\kgca36\gitdx\dxproject\libporject\dxlib\mtree.h(8): note: 'MTreeNode' 선언을 참조하십시오.
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mtree.cpp(136): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mtree.cpp(233): warning C4715: 'MTree::CheckNode': 모든 제어 경로에서 값을 반환하지는 않습니다.
   DXLib.vcxproj -> E:\KGCA36\GitDX\DXProject\libPorject\DXLib\.\DXLib_D.lib
   fmod.h
   fmod_codec.h

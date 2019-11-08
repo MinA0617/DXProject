@@ -24,6 +24,15 @@ bool MBoundingBox::Copy(MBoundingBox* target)
 	return true;
 }
 
+bool MBoundingBox::BuildForMinMax()
+{
+	vOldCenter = (vMax + vMin) / 2;
+	fOldExtent[0] = vMax[0] - vMin[0];
+	fOldExtent[1] = vMax[1] - vMin[1];
+	fOldExtent[2] = vMax[2] - vMin[2];
+	return true;
+}
+
 //bool MBoundingBox::Updata(D3DXMATRIX& mat)
 bool MBoundingBox::Updata()
 {
