@@ -48,9 +48,6 @@
     <ClInclude Include="MCtlForm.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="MCreateMapDlg.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="MCreateMapDialog.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -78,9 +75,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="MCtlForm.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MCreateMapDlg.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="MCreateMapDialog.cpp">

@@ -187,7 +187,6 @@
   <ItemGroup>
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MCreateMapDialog.h" />
-    <ClInclude Include="MCreateMapDlg.h" />
     <ClInclude Include="MCtlForm.h" />
     <ClInclude Include="MTool.h" />
     <ClInclude Include="MToolCore.h" />
@@ -201,7 +200,6 @@
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MCreateMapDialog.cpp" />
-    <ClCompile Include="MCreateMapDlg.cpp" />
     <ClCompile Include="MCtlForm.cpp" />
     <ClCompile Include="MTool.cpp" />
     <ClCompile Include="MToolCore.cpp" />

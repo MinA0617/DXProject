@@ -58,11 +58,14 @@ bool MTree::FindMapNode(MTreeNode* node, M3DHeightMap * target)
 {
 	for (auto tile : target->m_List)
 	{
-		if (tile->m_Box->vMax == node->m_Box.vMax&&tile->m_Box->vMin == node->m_Box.vMin)
+		if (tile->m_Box->vMax.x == node->m_Box.vMax.x&&tile->m_Box->vMin.x == node->m_Box.vMin.x)
 		{
-			node->m_Tile = tile;
+			if (tile->m_Box->vMax.z == node->m_Box.vMax.z&&tile->m_Box->vMin.z == node->m_Box.vMin.z)
+			{
+				node->m_Tile = tile;
+				node->m_Box.vMax.y = tile->m_Box->vMax.y;
+			}
 		}
-
 	}
 
 	return true;
@@ -96,7 +99,7 @@ MTreeNode*	MTree::CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ,
 
 	pNode->m_Box.vOldCenter.x = (fMinX + fMaxX) / 2;
 	pNode->m_Box.vOldCenter.y = 0;
-	pNode->m_Box.vCenter.z = (fMinZ + fMaxZ) / 2;
+	pNode->m_Box.vOldCenter.z = (fMinZ + fMaxZ) / 2;
 
 	pNode->m_Box.vAxis[0] = D3DXVECTOR3(1, 0, 0);
 	pNode->m_Box.vAxis[1] = D3DXVECTOR3(0, 1, 0);
@@ -105,6 +108,10 @@ MTreeNode*	MTree::CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ,
 	pNode->m_Box.fOldExtent[0] = (fMaxX - fMinX) / 2;
 	pNode->m_Box.fOldExtent[1] = (fMaxX - fMinX) / 2;
 	pNode->m_Box.fOldExtent[2] = (fMaxX - fMinX) / 2;
+
+	pNode->m_Box.vCenter.x = (fMinX + fMaxX) / 2;
+	pNode->m_Box.vCenter.y = 0;
+	pNode->m_Box.vCenter.z = (fMinZ + fMaxZ) / 2;
 
 	pNode->m_Box.fExtent[0] = pNode->m_Box.fOldExtent[0];
 	pNode->m_Box.fExtent[1] = pNode->m_Box.fOldExtent[1];

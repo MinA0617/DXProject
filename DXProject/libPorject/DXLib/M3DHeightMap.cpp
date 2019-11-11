@@ -1,4 +1,6 @@
 #include "M3DHeightMap.h"
+bool g_bIsLOD;
+
 
 float M3DHeightMap::FindLeafYMax(float i0x, float i0z)
 {
@@ -432,7 +434,7 @@ bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tile
 				{
 					UINT colStart = col * 4;
 					UINT uRed = pTexels[rowStart + colStart + 0];
-					uRed *= heigth / 255;
+					uRed *= heigth / 255.00;
 					fList[row * desc.Width + col] = uRed;	/// DWORDÀÌ¹Ç·Î pitch/4	
 					if (uRed > m_fYmax) m_fYmax = uRed;
 				}
@@ -495,7 +497,7 @@ bool M3DHeightMap::Render()
 	UINT offset = 0;
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
+	g_bIsLOD = m_bIsLOD;
 	//if (m_bIsLOD)
 	//{
 	//	for (auto node : m_List)

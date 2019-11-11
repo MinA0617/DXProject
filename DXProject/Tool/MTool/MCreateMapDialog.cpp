@@ -28,7 +28,7 @@ MCreateMapDialog::MCreateMapDialog(CWnd* pParent /*=nullptr*/)
 	, m_iTileSize(32)
 	, m_fLeafSize(10)
 	, m_ctMapCount(129)
-	, m_ctMapHeight(1)
+	, m_ctMapHeight(100)
 {
 
 }
@@ -41,7 +41,7 @@ void MCreateMapDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_Map_TileSize, m_iTileSize);
-	DDV_MinMaxInt(pDX, m_iTileSize, 1, 1024);
+	DDV_MinMaxInt(pDX, m_iTileSize, 2, 1024);
 	DDX_Text(pDX, IDC_Map_LeafSize, m_fLeafSize);
 	DDV_MinMaxFloat(pDX, m_fLeafSize, 0.01, 9999.00);
 	DDX_Text(pDX, IDC_Map_Count, m_ctMapCount);

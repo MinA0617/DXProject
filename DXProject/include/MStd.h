@@ -383,6 +383,8 @@ public:
 	}
 };
 
+
+
 extern Keyinput					g_ActionInput; // 액션 키 맵
 extern HWND						g_hWnd; // 윈도우 핸들
 extern int						g_iFramePerSecond ;
@@ -395,6 +397,8 @@ extern ID3D11RenderTargetView*	g_pRenderTargetView;
 extern ID3D11DepthStencilView*	g_pDepthStencilView;
 extern D3D11_VIEWPORT			g_ViewPort;
 extern MPoint					g_MousePos; // 마우스 포지션
+
+extern bool						g_bIsLOD;
 
 extern float		g_BGMVol;
 extern float		g_SEVol;

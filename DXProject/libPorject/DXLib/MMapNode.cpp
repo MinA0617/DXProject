@@ -105,22 +105,31 @@ bool MMapNode::CreateIndexBuffer()
 
 bool MMapNode::Render()
 {
-	g_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer[m_dwCurLevel], DXGI_FORMAT_R32_UINT, 0);
-	int count = m_iIndex[m_dwCurLevel].size();
-	g_pImmediateContext->DrawIndexed(count, 0, 0);
-	if (m_dwCurLevel != m_iIndex.size() - 1)
+	if (g_bIsLOD)
 	{
-		for (int i = 0; i < 4; i++)
+		g_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer[m_dwCurLevel], DXGI_FORMAT_R32_UINT, 0);
+		int count = m_iIndex[m_dwCurLevel].size();
+		g_pImmediateContext->DrawIndexed(count, 0, 0);
+		if (m_dwCurLevel != m_iIndex.size() - 1)
 		{
-			if (m_pNeighborNode[i] != nullptr)
+			for (int i = 0; i < 4; i++)
 			{
-				if (m_pNeighborNode[i]->m_dwCurLevel > m_dwCurLevel)
+				if (m_pNeighborNode[i] != nullptr)
 				{
-					g_pImmediateContext->IASetIndexBuffer(m_pMidIndexBuffer[i][m_dwCurLevel], DXGI_FORMAT_R32_UINT, 0);
-					g_pImmediateContext->DrawIndexed(m_iMiddleIndex[i][m_dwCurLevel].size(), 0, 0);
+					if (m_pNeighborNode[i]->m_dwCurLevel > m_dwCurLevel)
+					{
+						g_pImmediateContext->IASetIndexBuffer(m_pMidIndexBuffer[i][m_dwCurLevel], DXGI_FORMAT_R32_UINT, 0);
+						g_pImmediateContext->DrawIndexed(m_iMiddleIndex[i][m_dwCurLevel].size(), 0, 0);
+					}
 				}
 			}
 		}
+	}
+	else
+	{
+		g_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer[0], DXGI_FORMAT_R32_UINT, 0);
+		int count = m_iIndex[0].size();
+		g_pImmediateContext->DrawIndexed(count, 0, 0);
 	}
 	return true;
 }
