@@ -70,6 +70,7 @@ bool MCore::MCoreRelease()
 	I_Input.Release();
 	I_MSoundMgr.Release();
 	return Release();
+
 }
 
 void MCore::MCoreMsgProc(MSG msg)
