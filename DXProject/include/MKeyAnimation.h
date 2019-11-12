@@ -8,6 +8,7 @@ public:
 	map<M_STR, MKeyData*>			m_List;
 	float							m_fMaxTime;
 public:
+	MKeyData*						NewKey(M_STR name);
 	float							GetMaxTime();
 	bool							Init();
 	bool							Release();

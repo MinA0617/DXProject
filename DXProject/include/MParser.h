@@ -17,8 +17,9 @@
 // -------------------------------------------------------------------------------------
 enum PARSINGTYPE { MESH, SKINNING_MESH, ANIMAITION };
 
-class MParser
+class MParser : MSingleton<MParser>
 {
+	friend class MSingleton<MParser>;
 protected:
 	vector<string>	m_wordlist;
 	typedef vector<string>::iterator ITOR;
@@ -31,20 +32,22 @@ protected:
 	float3			FindMin(vector<MVERTEX>	&vertices);
 	float3			FindMax(vector<MVERTEX> &vertices);
 	bool			CreateBuffer(MMesh* Target, vector<MVERTEX>	&vertices, vector<DWORD> &index);
-	//bool			CreateBuffer(MSkinModel* unit);
 	bool			CreateBuffer(MMesh* Target, vector<DWORD> &index);
 	bool			CheckChar(string::iterator data);
-	virtual bool	CreateData(M_STR name, bool isGeo, bool isBone, MSkeleton* skt);
-	bool			CreateGeometryData(ITOR &data, M3DModel* target, MKeyAnimation* ani, M_STR name);
+	bool			CreateGeometryData(ITOR &data, M3DModel* target);
 	bool			CreateSkinningData(ITOR &data, MSkinModel* target, MSkinMesh* mesh);
-	bool			CreateBoneData(M_STR name, ITOR &data, M3DBone* target, MKeyAnimation* KeyAni, MSkeleton* skt);
-	bool			SetBBData(M_STR name, MUnit* unit, bool isClear);
+	bool			SetBBData(M_STR name, MSkeleton* skt, bool isClear);
+	virtual bool	CreateOBJData(M_STR name, MSkeleton* target = nullptr);
+	virtual bool	CreateSKTData(M_STR name);
+	virtual bool	CreateKEYData(M_STR name);
 public:
-	bool			Load(M_STR filename, bool isGeo = true, bool isBone = true, MSkeleton* skt = nullptr);
+	bool			Load(M_STR filename, MSkeleton* target = nullptr);
 	MFiled*			Load_HM(M_STR filename, float leafsize = 10, float height = 1.0, int minlevel = 64, float lodstartdistance = 1000, bool isChange = true);
-	bool			Load_BB(M_STR filename, MUnit* unit, bool isClear = true);
-public:
+	bool			Load_BB(M_STR filename, MSkeleton* skt, bool isClear = true);
+private:
 	MParser();
+public:
 	~MParser();
 };
 
+#define I_Parser MSingleton<MParser>::GetInstance()

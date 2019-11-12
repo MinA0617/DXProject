@@ -16,29 +16,29 @@ bool  MSample::Init()
 	M_STR asdsda = asd;
 	I_CameraMgr.CreateFPSCamera_Main();
 	I_Device.m_dxWrite.AddData(L"카메라이동 : WASD", D2D1::ColorF(0, 0, 0, 1.0), MPoint(0, 0));
-	I_Device.m_dxWrite.AddData(L"오브젝트 선택 : F1, F2", D2D1::ColorF(0, 0, 0, 1.0), MPoint(30, 0));
-	I_Device.m_dxWrite.AddData(L"오브젝트 이동 : 상화좌우zx", D2D1::ColorF(0, 0, 0, 1.0), MPoint(60, 0));
-	I_Device.m_dxWrite.AddData(L"오브젝트 회전 : 숫자패드123456", D2D1::ColorF(0, 0, 0, 1.0), MPoint(90, 0));
-	I_Device.m_dxWrite.AddData(L"오브젝트 스케일 : 인서트딜리트홈엔드페이지업다운키", D2D1::ColorF(0, 0, 0, 1.0), MPoint(120, 0));
+	I_Device.m_dxWrite.AddData(L"아이템 변경 : F1, F2", D2D1::ColorF(0, 0, 0, 1.0), MPoint(30, 0));
+	I_Device.m_dxWrite.AddData(L"애니메이션 변경 F6 ~ F9 : 상화좌우zx", D2D1::ColorF(0, 0, 0, 1.0), MPoint(60, 0));
 
 	if (0)
 	{
 		//ps.Load_HM(L"../../data/image/jja.bmp", 100);
-		filed = ps.Load_HM(L"../../data/image/Map513.bmp", 10, true, 5);
+		filed = I_Parser.Load_HM(L"../../data/image/Map513.bmp", 10, true, 5);
 		//filed = I_3DObjectMgr.findFiled(L"Map33");
-		filed->ground->SetLevelOfDetail(250);
 		filed->ground->SetColor(D3DXVECTOR3(0.5, 0.5, 0.5));
 		filed->ground->Load_MAP(L"../../data/image/Map513_Minimap.png", DIFFUSE);
 		//filed->ground->m_bIsLOD = true;
 	}
-	if(0)
+	if(1)
 	{
-		ps.Load(L"../../data/obj/Catgirl_T.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Wait.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Walk.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Run.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Attack.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Armor.MIN", true, false, I_SkeletonMgr[L"Catgirl_T"]);
+		I_Parser.Load(L"../../data/obj/CatGirl.SKT");
+		I_Parser.Load(L"../../data/obj/CatGirl_Attack.KEY");
+		I_Parser.Load(L"../../data/obj/CatGirl_Run.KEY");
+		I_Parser.Load(L"../../data/obj/CatGirl_Wait.KEY");
+		I_Parser.Load(L"../../data/obj/CatGirl_Walk.KEY");
+		I_Parser.Load(L"../../data/obj/CatGirl.OBJ", I_SkeletonMgr[L"CatGirl"]);
+		I_Parser.Load(L"../../data/obj/CatGirl_Armor.OBJ", I_SkeletonMgr[L"CatGirl"]);
+		I_Parser.Load_BB(L"../../data/obj/Catgirl_BB.OBJ", I_SkeletonMgr[L"CatGirl"]);
+
 		M_STR namelist[7];
 		namelist[0] = L"Catgirl_Eyes";
 		namelist[1] = L"Catgirl_Head";
@@ -48,32 +48,28 @@ bool  MSample::Init()
 		namelist[5] = L"Catgirl_Hands";
 		namelist[6] = L"Catgirl_Feet";
 		// EYES, HEAD, HAIR, UPPERBODY, LOWERBODY, HANDS, FEET
-		MUnit* temp = I_3DObjectMgr.CreateUnit(L"aa", L"Catgirl_T", namelist, _countof(namelist));
-		ps.Load_BB(L"../../data/obj/Catgirl_BB.MIN", temp);
-		//target = I_3DObjectMgr[L"catgirl_Body"];
-		//I_MaterialMgr[target->MaterialID]->m_VertexShaderID = VS3D;
-		//target = I_SkeletonMgr[0];
-		unit = temp;
+		unit = I_3DObjectMgr.CreateUnit(L"aa", L"CatGirl", namelist, _countof(namelist));
+ 		unit->skt->BindAni(L"CatGirl_Wait");
 	}
-	ps.Load(L"../../data/obj/box.MIN");
-	M_STR namelist[12];
-	namelist[0] = L"Box001";
-	namelist[1] = L"Box002";
-	namelist[2] = L"Box003";
-	namelist[3] = L"Box004";
-	namelist[4] = L"Box005";
-	namelist[5] = L"Box006";
-	namelist[6] = L"Box007";
-	namelist[7] = L"Box008";
-	namelist[8] = L"Box009";
-	namelist[9] = L"Box010";
-	namelist[10] = L"Box011";
-	namelist[11] = L"Box012";
-	y = I_3DObjectMgr.AddInWorld(namelist, 2);
+	//ps.Load(L"../../data/obj/box.MIN");
+	//M_STR namelist[12];
+	//namelist[0] = L"Box001";
+	//namelist[1] = L"Box002";
+	//namelist[2] = L"Box003";
+	//namelist[3] = L"Box004";
+	//namelist[4] = L"Box005";
+	//namelist[5] = L"Box006";
+	//namelist[6] = L"Box007";
+	//namelist[7] = L"Box008";
+	//namelist[8] = L"Box009";
+	//namelist[9] = L"Box010";
+	//namelist[10] = L"Box011";
+	//namelist[11] = L"Box012";
+	//y = I_3DObjectMgr.AddInWorld(namelist, 2);
 	light = &(I_LightMgr.m_List);
 
-	box1 = I_3DObjectMgr.findObject(y);
-	box2 = I_3DObjectMgr.findObject(y + 1);
+	//box1 = I_3DObjectMgr.findObject(y);
+	//box2 = I_3DObjectMgr.findObject(y + 1);
 
 	target = I_3DObjectMgr.findObject(y);
 	return true;
@@ -126,15 +122,23 @@ bool  MSample::Frame()
 	if (g_ActionInput.F1 >= KEY_PUSH)
 	{
 		//filed->ground->m_bIsLOD = true;
-		target = I_3DObjectMgr.findObject(0);
-		//target->Change(UPPERBODY, L"Armor1");
+		//target = I_3DObjectMgr.findObject(0);
+		unit->Change(UPPERBODY, L"Armor1");
 	}
 	if (g_ActionInput.F2 >= KEY_PUSH)
 	{
 		//filed->ground->m_bIsLOD = false;
 		target = I_3DObjectMgr.findObject(1);
-		//target->Change(UPPERBODY, L"Catgirl_UpperBody");
+		unit->Change(UPPERBODY, L"Catgirl_UpperBody");
 		//target->skt->BindAni(L"Catgirl_Wait", false, 0.15);
+	}
+	if (g_ActionInput.F1 == KEY_PUSH)
+	{
+		g_isBoxRender = !g_isBoxRender;
+	}
+	if (g_ActionInput.F2 == KEY_PUSH)
+	{
+		g_isPointRender = !g_isPointRender;
 	}
 	if (g_ActionInput.F3 >= KEY_PUSH)
 	{
@@ -146,15 +150,19 @@ bool  MSample::Frame()
 	}
 	if (g_ActionInput.F6 == KEY_PUSH)
 	{
-		unit->skt->BindAni(L"Catgirl_Attack", true, 0.15);
+		unit->skt->BindAni(L"CatGirl_Attack", true, 10);
 	}
 	if (g_ActionInput.F7 == KEY_PUSH)
 	{
-		unit->skt->BindAni(L"Catgirl_Walk", true, 0.15);
+		unit->skt->BindAni(L"CatGirl_Walk", true, 10);
 	}
 	if (g_ActionInput.F8 == KEY_PUSH)
 	{
-		unit->skt->BindAni(L"Catgirl_Run", true, 0.15);
+		unit->skt->BindAni(L"CatGirl_Run", true, 10);
+	}
+	if (g_ActionInput.F9 == KEY_PUSH)
+	{
+		unit->skt->BindAni(L"CatGirl_Wait", false, 10);
 	}
 	if (g_ActionInput.S >= KEY_PUSH)
 	{

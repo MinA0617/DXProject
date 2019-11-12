@@ -1,6 +1,5 @@
 #pragma once
 #include "MMesh.h"
-#include "MSkeleton.h"
 
 class MSkinMesh : public MMesh
 {

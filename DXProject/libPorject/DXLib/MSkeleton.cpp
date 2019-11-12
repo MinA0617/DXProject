@@ -162,31 +162,19 @@ M3DBone * MSkeleton::Find(M_STR name)
 	}
 	return nullptr;
 }
-void MSkeleton::SetZeroMat(M3DBone* data)
+void MSkeleton::SetZeroMat()
 {
-	M_STR name = data->m_name;
-	if (m_ZeroMat.find(name) != m_ZeroMat.end())
+	for (ITOR temp = m_BoneList.begin(); temp != m_BoneList.end(); temp++)
 	{
-		data->ZeroMatrix = (*m_ZeroMat.find(name)).second;
-	}
-	else
-	{
-		data->SetZero();
+		(*temp).second->SetZero();
+		//m_ZeroMat.insert(make_pair((*temp).second->m_name, (*temp).second->ZeroMatrix));
+		CONSTANT_BONE cb;
+		cb.matBoneWorld = (*temp).second->ZeroMatrix;
+		m_ConstantZero.push_back(cb);
 	}
 	return;
 }
-bool MSkeleton::AddZeroMat(M_STR name, D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scl)
-{
-	if (m_ZeroMat.find(name) == m_ZeroMat.end())
-	{
-		D3DXMATRIX temp;
-		D3DXMatrixTransformation(&temp, NULL, NULL, &scl, NULL, &rot, &pos);
-		D3DXMatrixInverse(&temp, NULL, &temp);
-		D3DXMatrixTranspose(&temp, &temp);
-		m_ZeroMat.insert(make_pair(name, temp));
-	}
-	return false;
-}
+
 int MSkeleton::NumofBone(M_STR name)
 {
 	for (ITOR data = m_BoneList.begin(); data != m_BoneList.end(); data++)
@@ -257,9 +245,9 @@ bool MSkeleton::Frame()
 bool MSkeleton::Render()
 {
 #if defined(DEBUG) || defined(_DEBUG)
-	for (auto data : m_pChildList)
+	for (ITOR data = m_BoneList.begin(); data != m_BoneList.end(); data++)
 	{
-		data->Render();
+		(*data).second->Render();
 	}
 #endif
 	return true;
@@ -299,16 +287,17 @@ bool MSkeleton::Set()
 		CONSTANT_BONE temp;
 		temp.matBoneWorld = tempbone->GetConstantOBJ().matWorld;
 		m_ConstantBone.push_back(temp);
-		SetZeroMat(tempbone);
+		tempbone->SetZero();
 		temp.matBoneWorld = tempbone->ZeroMatrix;
 		m_ConstantZero.push_back(temp);
 
 		// Set Maxtime
-		m_fMaxTime = I_KeyAnimationMgr[m_CurAni]->GetMaxTime();
+		m_fMaxTime = 0;// I_KeyAnimationMgr[m_CurAni]->GetMaxTime();
 	}
 	// Create Buffer
+	//SetZeroMat();
 	CreateBoneBuffer();
 	// Clear ZeroMatData
-	m_ZeroMat.clear();
+	//m_ZeroMat.clear();
 	return true;
 }

@@ -29,7 +29,10 @@ M3DObject::M3DObject()
 
 M3DObject::~M3DObject()
 {
+#if defined(DEBUG) || defined(_DEBUG)
 	SAFE_RELEASE(m_Box);
+#endif // DEBUG
+	
 	SAFE_DELETE(m_Box);
 }
 
@@ -216,7 +219,9 @@ void M3DObject::Copy(M3DObject * target)
 	if (target->m_Box)
 	{
 		m_Box = new MBoundingBox;
+#if defined(DEBUG) || defined(_DEBUG)
 		m_Box->Init();
+#endif // DEBUG
 		m_Box->Copy(target->m_Box);
 		m_Box->m_pTarget = this;
 	}

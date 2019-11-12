@@ -147,7 +147,10 @@ bool MMapNode::Release()
 		SAFE_RELEASE(m_pMidIndexBuffer[2][i]);
 		SAFE_RELEASE(m_pMidIndexBuffer[3][i]);
 	}
+#if defined(DEBUG) || defined(_DEBUG)
 	SAFE_RELEASE(m_Box);
+#endif // DEBUG
+	
 	return true;
 }
 

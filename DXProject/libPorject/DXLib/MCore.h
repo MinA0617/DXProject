@@ -6,6 +6,9 @@
 #include "MInput.h"
 #include "MSoundMgr.h"
 #include "MCreate.h"
+#include "MParser.h"
+#include "MLight.h"
+#include "MCollision.h"
 
 
 class MCore : public MWindow

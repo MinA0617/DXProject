@@ -1,6 +1,4 @@
 #include "M3DHeightMap.h"
-bool g_bIsLOD;
-
 
 float M3DHeightMap::FindLeafYMax(float i0x, float i0z)
 {
@@ -478,7 +476,7 @@ bool M3DHeightMap::Init()
 bool M3DHeightMap::Frame()
 {
 	PreFrame();
-	if (m_bIsLOD)
+	if (g_bIsLOD)
 	{
 		for(auto node : m_List)
 		CheckNode(node);
@@ -497,7 +495,6 @@ bool M3DHeightMap::Render()
 	UINT offset = 0;
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	g_bIsLOD = m_bIsLOD;
 	//if (m_bIsLOD)
 	//{
 	//	for (auto node : m_List)

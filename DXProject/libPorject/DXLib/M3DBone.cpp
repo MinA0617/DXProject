@@ -116,7 +116,7 @@ bool M3DBone::Render()
 	// 디버그용 랜더
 	//--------------------------------------------------------
 #if defined(DEBUG) || defined(_DEBUG)
-	if (0)
+	if (g_isPointRender)
 	{
 		if (g_dwIC_Point == 0)
 			return false;
@@ -136,11 +136,14 @@ bool M3DBone::Render()
 
 		g_pImmediateContext->DrawIndexed(g_dwIC_Point, 0, 0);
 	}
-		for (auto data : m_pChildList)
-		{
-			data->Render();
-		}
-	if (m_Box) m_Box->Render();
+	if (g_isBoxRender)
+	{
+		if (m_Box) m_Box->Render();
+	}
+	for (auto data : m_pChildList)
+	{
+		data->Render();
+	}
 #endif
 	return true;
 }

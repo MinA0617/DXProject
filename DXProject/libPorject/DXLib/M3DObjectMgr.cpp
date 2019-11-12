@@ -7,7 +7,6 @@ ID3D11Buffer*		g_pVB_Point;
 ID3D11Buffer*		g_pIB_Point;
 DWORD				g_dwIC_Point;
 
-
 M3DObject * M3DObjectMgr::find(M_STR name)
 {
 	ITOR data = m_List.find(name);
@@ -286,7 +285,10 @@ bool M3DObjectMgr::Render()
 	I_CameraMgr.Render();
 	I_LightMgr.Render();
 	if(m_pTree) m_pTree->Render();
-
+	for (auto data : m_InWorldUnitList)
+	{
+		data.second->Render();
+	}
 	if (0)
 	{
 		if (m_InWorldFiled) m_InWorldFiled->Render();

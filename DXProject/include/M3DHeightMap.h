@@ -19,7 +19,6 @@ public:
 	float					m_fLeafSize;
 	ID3D11Buffer*			m_pVertexBuffer;
 	ID3D11Buffer*			m_pIndexBuffer;
-	bool					m_bIsLOD;
 	int						m_iMaxLevel;
 	float					m_fLodStartDistance;
 	int						m_iLodMinLevel;

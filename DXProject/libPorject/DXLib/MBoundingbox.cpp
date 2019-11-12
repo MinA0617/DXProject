@@ -5,8 +5,6 @@
 #include "M3DObject.h"
 
 
-#if defined(DEBUG) || defined(_DEBUG)
-
 bool MBoundingBox::Copy(MBoundingBox* target)
 {
 	if (target == nullptr) return false;
@@ -81,6 +79,7 @@ bool MBoundingBox::Updata()
 	return false;
 }
 
+#if defined(DEBUG) || defined(_DEBUG)
 bool MBoundingBox::Init()
 {
 	D3D11_BUFFER_DESC BufferDesc;				//// 공용 버퍼 데스크

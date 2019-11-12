@@ -1,5 +1,10 @@
 #include "MCore.h"
 
+bool	g_bIsLOD;
+#if defined(DEBUG) || defined(_DEBUG)
+bool	g_isBoxRender;
+bool	g_isPointRender;
+#endif
 MCore::MCore()
 {
 }

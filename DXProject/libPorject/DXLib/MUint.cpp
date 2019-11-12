@@ -26,10 +26,13 @@ bool MUnit::Create(M_STR name, M_STR sktname, M_STR* namelist, int namecount)
 		{
 			if (oldbone->m_Box)
 			{
-				m_Box = new MBoundingBox;
-				m_Box->Init();
-				m_Box->Copy(oldbone->m_Box);
-				m_Box->m_pTarget = newbone;
+				MBoundingBox* box = new MBoundingBox;
+#if defined(DEBUG) || defined(_DEBUG)
+				box->Init();
+#endif // DEBUG
+				box->Copy(oldbone->m_Box);
+				box->m_pTarget = newbone;
+				newbone->m_Box = box;
 			}
 			newbone->m_name = oldbone->m_name;
 			newbone->SetLocalPosition(oldbone->GetLocalPosition());
@@ -82,7 +85,9 @@ bool MUnit::Frame()
 bool MUnit::Render()
 {
 	skt->Render();
+#if defined(DEBUG) || defined(_DEBUG)
 	if (m_Box)m_Box->Render();
+#endif // DEBUG
 	for (int i = 0; i < m_iCount; i++)
 	{
 		obj[i]->Render();
@@ -92,7 +97,9 @@ bool MUnit::Render()
 
 bool MUnit::Release()
 {
+#if defined(DEBUG) || defined(_DEBUG)
 	SAFE_RELEASE(m_Box);
+#endif // DEBUG
 	SAFE_DELETE(m_Box);
 	for (int i = 0; i < m_iCount; i++)
 	{

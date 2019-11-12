@@ -5,7 +5,7 @@
 class MSkinModel : public M3DModel
 {
 public:
-	MSkeleton*			m_Skeleton;
+	MSkeleton*	m_Skeleton;
 public:
 	void		LinkParents(M3DObject* Parents);
 	void		UnLinkParents();

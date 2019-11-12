@@ -1,267 +1,134 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
-  MCore.cpp
+  MBoundingBox.cpp
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55460): note: 'DXGI_STATUS_OCCLUDED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54723): note: 'DXGI_STATUS_OCCLUDED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55469): note: 'DXGI_STATUS_CLIPPED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54732): note: 'DXGI_STATUS_CLIPPED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(14): warning C4005: 'DXGI_STATUS_NO_REDIRECTION': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55478): note: 'DXGI_STATUS_NO_REDIRECTION'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54741): note: 'DXGI_STATUS_NO_REDIRECTION'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(15): warning C4005: 'DXGI_STATUS_NO_DESKTOP_ACCESS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55487): note: 'DXGI_STATUS_NO_DESKTOP_ACCESS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54750): note: 'DXGI_STATUS_NO_DESKTOP_ACCESS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(16): warning C4005: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55496): note: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54759): note: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(17): warning C4005: 'DXGI_STATUS_MODE_CHANGED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55505): note: 'DXGI_STATUS_MODE_CHANGED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54768): note: 'DXGI_STATUS_MODE_CHANGED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(18): warning C4005: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55514): note: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54777): note: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(21): warning C4005: 'DXGI_ERROR_INVALID_CALL': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55529): note: 'DXGI_ERROR_INVALID_CALL'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54792): note: 'DXGI_ERROR_INVALID_CALL'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(22): warning C4005: 'DXGI_ERROR_NOT_FOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55538): note: 'DXGI_ERROR_NOT_FOUND'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54801): note: 'DXGI_ERROR_NOT_FOUND'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(23): warning C4005: 'DXGI_ERROR_MORE_DATA': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55547): note: 'DXGI_ERROR_MORE_DATA'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54810): note: 'DXGI_ERROR_MORE_DATA'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(24): warning C4005: 'DXGI_ERROR_UNSUPPORTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55556): note: 'DXGI_ERROR_UNSUPPORTED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54819): note: 'DXGI_ERROR_UNSUPPORTED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(25): warning C4005: 'DXGI_ERROR_DEVICE_REMOVED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55565): note: 'DXGI_ERROR_DEVICE_REMOVED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54828): note: 'DXGI_ERROR_DEVICE_REMOVED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(26): warning C4005: 'DXGI_ERROR_DEVICE_HUNG': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55574): note: 'DXGI_ERROR_DEVICE_HUNG'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54837): note: 'DXGI_ERROR_DEVICE_HUNG'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(27): warning C4005: 'DXGI_ERROR_DEVICE_RESET': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55584): note: 'DXGI_ERROR_DEVICE_RESET'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54847): note: 'DXGI_ERROR_DEVICE_RESET'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(28): warning C4005: 'DXGI_ERROR_WAS_STILL_DRAWING': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55593): note: 'DXGI_ERROR_WAS_STILL_DRAWING'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54856): note: 'DXGI_ERROR_WAS_STILL_DRAWING'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(29): warning C4005: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55603): note: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54866): note: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(30): warning C4005: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55612): note: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54875): note: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(31): warning C4005: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55622): note: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54885): note: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(32): warning C4005: 'DXGI_ERROR_NONEXCLUSIVE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55631): note: 'DXGI_ERROR_NONEXCLUSIVE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54894): note: 'DXGI_ERROR_NONEXCLUSIVE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(33): warning C4005: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55640): note: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54903): note: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(34): warning C4005: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55650): note: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54913): note: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(35): warning C4005: 'DXGI_ERROR_REMOTE_OUTOFMEMORY': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55659): note: 'DXGI_ERROR_REMOTE_OUTOFMEMORY'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(54922): note: 'DXGI_ERROR_REMOTE_OUTOFMEMORY'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(917): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55923): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55186): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(918): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55932): note: 'D3D11_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55195): note: 'D3D11_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(919): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55942): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55205): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(920): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55951): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55214): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(608): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55899): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55162): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55908): note: 'D3D10_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55171): note: 'D3D10_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(59): warning C4005: 'D2DERR_WRONG_STATE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55988): note: 'D2DERR_WRONG_STATE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55251): note: 'D2DERR_WRONG_STATE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(64): warning C4005: 'D2DERR_NOT_INITIALIZED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55997): note: 'D2DERR_NOT_INITIALIZED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55260): note: 'D2DERR_NOT_INITIALIZED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(69): warning C4005: 'D2DERR_UNSUPPORTED_OPERATION': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56006): note: 'D2DERR_UNSUPPORTED_OPERATION'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55269): note: 'D2DERR_UNSUPPORTED_OPERATION'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(74): warning C4005: 'D2DERR_SCANNER_FAILED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56015): note: 'D2DERR_SCANNER_FAILED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55278): note: 'D2DERR_SCANNER_FAILED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(79): warning C4005: 'D2DERR_SCREEN_ACCESS_DENIED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56024): note: 'D2DERR_SCREEN_ACCESS_DENIED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55287): note: 'D2DERR_SCREEN_ACCESS_DENIED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(84): warning C4005: 'D2DERR_DISPLAY_STATE_INVALID': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56033): note: 'D2DERR_DISPLAY_STATE_INVALID'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55296): note: 'D2DERR_DISPLAY_STATE_INVALID'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(89): warning C4005: 'D2DERR_ZERO_VECTOR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56042): note: 'D2DERR_ZERO_VECTOR'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55305): note: 'D2DERR_ZERO_VECTOR'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(97): warning C4005: 'D2DERR_INTERNAL_ERROR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56051): note: 'D2DERR_INTERNAL_ERROR'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55314): note: 'D2DERR_INTERNAL_ERROR'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(103): warning C4005: 'D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56060): note: 'D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55323): note: 'D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(108): warning C4005: 'D2DERR_INVALID_CALL': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56069): note: 'D2DERR_INVALID_CALL'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55332): note: 'D2DERR_INVALID_CALL'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(113): warning C4005: 'D2DERR_NO_HARDWARE_DEVICE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56078): note: 'D2DERR_NO_HARDWARE_DEVICE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55341): note: 'D2DERR_NO_HARDWARE_DEVICE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(119): warning C4005: 'D2DERR_RECREATE_TARGET': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56087): note: 'D2DERR_RECREATE_TARGET'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55350): note: 'D2DERR_RECREATE_TARGET'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(124): warning C4005: 'D2DERR_TOO_MANY_SHADER_ELEMENTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56096): note: 'D2DERR_TOO_MANY_SHADER_ELEMENTS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55359): note: 'D2DERR_TOO_MANY_SHADER_ELEMENTS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(129): warning C4005: 'D2DERR_SHADER_COMPILE_FAILED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56105): note: 'D2DERR_SHADER_COMPILE_FAILED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55368): note: 'D2DERR_SHADER_COMPILE_FAILED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(134): warning C4005: 'D2DERR_MAX_TEXTURE_SIZE_EXCEEDED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56114): note: 'D2DERR_MAX_TEXTURE_SIZE_EXCEEDED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55377): note: 'D2DERR_MAX_TEXTURE_SIZE_EXCEEDED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(139): warning C4005: 'D2DERR_UNSUPPORTED_VERSION': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56123): note: 'D2DERR_UNSUPPORTED_VERSION'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55386): note: 'D2DERR_UNSUPPORTED_VERSION'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(144): warning C4005: 'D2DERR_BAD_NUMBER': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56132): note: 'D2DERR_BAD_NUMBER'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55395): note: 'D2DERR_BAD_NUMBER'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(149): warning C4005: 'D2DERR_WRONG_FACTORY': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56141): note: 'D2DERR_WRONG_FACTORY'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55404): note: 'D2DERR_WRONG_FACTORY'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(154): warning C4005: 'D2DERR_LAYER_ALREADY_IN_USE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56150): note: 'D2DERR_LAYER_ALREADY_IN_USE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55413): note: 'D2DERR_LAYER_ALREADY_IN_USE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(159): warning C4005: 'D2DERR_POP_CALL_DID_NOT_MATCH_PUSH': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56159): note: 'D2DERR_POP_CALL_DID_NOT_MATCH_PUSH'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55422): note: 'D2DERR_POP_CALL_DID_NOT_MATCH_PUSH'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(164): warning C4005: 'D2DERR_WRONG_RESOURCE_DOMAIN': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56168): note: 'D2DERR_WRONG_RESOURCE_DOMAIN'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55431): note: 'D2DERR_WRONG_RESOURCE_DOMAIN'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(169): warning C4005: 'D2DERR_PUSH_POP_UNBALANCED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56177): note: 'D2DERR_PUSH_POP_UNBALANCED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55440): note: 'D2DERR_PUSH_POP_UNBALANCED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(174): warning C4005: 'D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56186): note: 'D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55449): note: 'D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(179): warning C4005: 'D2DERR_INCOMPATIBLE_BRUSH_TYPES': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56195): note: 'D2DERR_INCOMPATIBLE_BRUSH_TYPES'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55458): note: 'D2DERR_INCOMPATIBLE_BRUSH_TYPES'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(184): warning C4005: 'D2DERR_WIN32_ERROR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56204): note: 'D2DERR_WIN32_ERROR'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55467): note: 'D2DERR_WIN32_ERROR'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(189): warning C4005: 'D2DERR_TARGET_NOT_GDI_COMPATIBLE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56213): note: 'D2DERR_TARGET_NOT_GDI_COMPATIBLE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55476): note: 'D2DERR_TARGET_NOT_GDI_COMPATIBLE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(194): warning C4005: 'D2DERR_TEXT_EFFECT_IS_WRONG_TYPE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56222): note: 'D2DERR_TEXT_EFFECT_IS_WRONG_TYPE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55485): note: 'D2DERR_TEXT_EFFECT_IS_WRONG_TYPE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(201): warning C4005: 'D2DERR_TEXT_RENDERER_NOT_RELEASED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56231): note: 'D2DERR_TEXT_RENDERER_NOT_RELEASED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55494): note: 'D2DERR_TEXT_RENDERER_NOT_RELEASED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(206): warning C4005: 'D2DERR_EXCEEDS_MAX_BITMAP_SIZE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56240): note: 'D2DERR_EXCEEDS_MAX_BITMAP_SIZE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55503): note: 'D2DERR_EXCEEDS_MAX_BITMAP_SIZE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4962): warning C4005: 'DWRITE_E_FILEFORMAT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56407): note: 'DWRITE_E_FILEFORMAT'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55670): note: 'DWRITE_E_FILEFORMAT'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4967): warning C4005: 'DWRITE_E_UNEXPECTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56416): note: 'DWRITE_E_UNEXPECTED'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55679): note: 'DWRITE_E_UNEXPECTED'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4972): warning C4005: 'DWRITE_E_NOFONT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56425): note: 'DWRITE_E_NOFONT'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55688): note: 'DWRITE_E_NOFONT'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4978): warning C4005: 'DWRITE_E_FILENOTFOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56434): note: 'DWRITE_E_FILENOTFOUND'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55697): note: 'DWRITE_E_FILENOTFOUND'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4983): warning C4005: 'DWRITE_E_FILEACCESS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56443): note: 'DWRITE_E_FILEACCESS'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55706): note: 'DWRITE_E_FILEACCESS'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4988): warning C4005: 'DWRITE_E_FONTCOLLECTIONOBSOLETE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56452): note: 'DWRITE_E_FONTCOLLECTIONOBSOLETE'의 이전 정의를 참조하십시오.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55715): note: 'DWRITE_E_FONTCOLLECTIONOBSOLETE'의 이전 정의를 참조하십시오.
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4993): warning C4005: 'DWRITE_E_ALREADYREGISTERED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56461): note: 'DWRITE_E_ALREADYREGISTERED'의 이전 정의를 참조하십시오.
-  MDXWirte.cpp
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55460): note: 'DXGI_STATUS_OCCLUDED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55469): note: 'DXGI_STATUS_CLIPPED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(14): warning C4005: 'DXGI_STATUS_NO_REDIRECTION': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55478): note: 'DXGI_STATUS_NO_REDIRECTION'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(15): warning C4005: 'DXGI_STATUS_NO_DESKTOP_ACCESS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55487): note: 'DXGI_STATUS_NO_DESKTOP_ACCESS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(16): warning C4005: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55496): note: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(17): warning C4005: 'DXGI_STATUS_MODE_CHANGED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55505): note: 'DXGI_STATUS_MODE_CHANGED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(18): warning C4005: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55514): note: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(21): warning C4005: 'DXGI_ERROR_INVALID_CALL': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55529): note: 'DXGI_ERROR_INVALID_CALL'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(22): warning C4005: 'DXGI_ERROR_NOT_FOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55538): note: 'DXGI_ERROR_NOT_FOUND'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(23): warning C4005: 'DXGI_ERROR_MORE_DATA': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55547): note: 'DXGI_ERROR_MORE_DATA'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(24): warning C4005: 'DXGI_ERROR_UNSUPPORTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55556): note: 'DXGI_ERROR_UNSUPPORTED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(25): warning C4005: 'DXGI_ERROR_DEVICE_REMOVED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55565): note: 'DXGI_ERROR_DEVICE_REMOVED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(26): warning C4005: 'DXGI_ERROR_DEVICE_HUNG': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55574): note: 'DXGI_ERROR_DEVICE_HUNG'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(27): warning C4005: 'DXGI_ERROR_DEVICE_RESET': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55584): note: 'DXGI_ERROR_DEVICE_RESET'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(28): warning C4005: 'DXGI_ERROR_WAS_STILL_DRAWING': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55593): note: 'DXGI_ERROR_WAS_STILL_DRAWING'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(29): warning C4005: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55603): note: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(30): warning C4005: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55612): note: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(31): warning C4005: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55622): note: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(32): warning C4005: 'DXGI_ERROR_NONEXCLUSIVE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55631): note: 'DXGI_ERROR_NONEXCLUSIVE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(33): warning C4005: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55640): note: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(34): warning C4005: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55650): note: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(35): warning C4005: 'DXGI_ERROR_REMOTE_OUTOFMEMORY': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55659): note: 'DXGI_ERROR_REMOTE_OUTOFMEMORY'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(917): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55923): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(918): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55932): note: 'D3D11_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(919): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55942): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(920): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55951): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(608): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55899): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55908): note: 'D3D10_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(59): warning C4005: 'D2DERR_WRONG_STATE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55988): note: 'D2DERR_WRONG_STATE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(64): warning C4005: 'D2DERR_NOT_INITIALIZED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55997): note: 'D2DERR_NOT_INITIALIZED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(69): warning C4005: 'D2DERR_UNSUPPORTED_OPERATION': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56006): note: 'D2DERR_UNSUPPORTED_OPERATION'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(74): warning C4005: 'D2DERR_SCANNER_FAILED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56015): note: 'D2DERR_SCANNER_FAILED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(79): warning C4005: 'D2DERR_SCREEN_ACCESS_DENIED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56024): note: 'D2DERR_SCREEN_ACCESS_DENIED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(84): warning C4005: 'D2DERR_DISPLAY_STATE_INVALID': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56033): note: 'D2DERR_DISPLAY_STATE_INVALID'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(89): warning C4005: 'D2DERR_ZERO_VECTOR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56042): note: 'D2DERR_ZERO_VECTOR'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(97): warning C4005: 'D2DERR_INTERNAL_ERROR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56051): note: 'D2DERR_INTERNAL_ERROR'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(103): warning C4005: 'D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56060): note: 'D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(108): warning C4005: 'D2DERR_INVALID_CALL': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56069): note: 'D2DERR_INVALID_CALL'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(113): warning C4005: 'D2DERR_NO_HARDWARE_DEVICE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56078): note: 'D2DERR_NO_HARDWARE_DEVICE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(119): warning C4005: 'D2DERR_RECREATE_TARGET': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56087): note: 'D2DERR_RECREATE_TARGET'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(124): warning C4005: 'D2DERR_TOO_MANY_SHADER_ELEMENTS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56096): note: 'D2DERR_TOO_MANY_SHADER_ELEMENTS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(129): warning C4005: 'D2DERR_SHADER_COMPILE_FAILED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56105): note: 'D2DERR_SHADER_COMPILE_FAILED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(134): warning C4005: 'D2DERR_MAX_TEXTURE_SIZE_EXCEEDED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56114): note: 'D2DERR_MAX_TEXTURE_SIZE_EXCEEDED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(139): warning C4005: 'D2DERR_UNSUPPORTED_VERSION': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56123): note: 'D2DERR_UNSUPPORTED_VERSION'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(144): warning C4005: 'D2DERR_BAD_NUMBER': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56132): note: 'D2DERR_BAD_NUMBER'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(149): warning C4005: 'D2DERR_WRONG_FACTORY': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56141): note: 'D2DERR_WRONG_FACTORY'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(154): warning C4005: 'D2DERR_LAYER_ALREADY_IN_USE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56150): note: 'D2DERR_LAYER_ALREADY_IN_USE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(159): warning C4005: 'D2DERR_POP_CALL_DID_NOT_MATCH_PUSH': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56159): note: 'D2DERR_POP_CALL_DID_NOT_MATCH_PUSH'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(164): warning C4005: 'D2DERR_WRONG_RESOURCE_DOMAIN': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56168): note: 'D2DERR_WRONG_RESOURCE_DOMAIN'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(169): warning C4005: 'D2DERR_PUSH_POP_UNBALANCED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56177): note: 'D2DERR_PUSH_POP_UNBALANCED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(174): warning C4005: 'D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56186): note: 'D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(179): warning C4005: 'D2DERR_INCOMPATIBLE_BRUSH_TYPES': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56195): note: 'D2DERR_INCOMPATIBLE_BRUSH_TYPES'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(184): warning C4005: 'D2DERR_WIN32_ERROR': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56204): note: 'D2DERR_WIN32_ERROR'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(189): warning C4005: 'D2DERR_TARGET_NOT_GDI_COMPATIBLE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56213): note: 'D2DERR_TARGET_NOT_GDI_COMPATIBLE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(194): warning C4005: 'D2DERR_TEXT_EFFECT_IS_WRONG_TYPE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56222): note: 'D2DERR_TEXT_EFFECT_IS_WRONG_TYPE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(201): warning C4005: 'D2DERR_TEXT_RENDERER_NOT_RELEASED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56231): note: 'D2DERR_TEXT_RENDERER_NOT_RELEASED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\d2derr.h(206): warning C4005: 'D2DERR_EXCEEDS_MAX_BITMAP_SIZE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56240): note: 'D2DERR_EXCEEDS_MAX_BITMAP_SIZE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4962): warning C4005: 'DWRITE_E_FILEFORMAT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56407): note: 'DWRITE_E_FILEFORMAT'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4967): warning C4005: 'DWRITE_E_UNEXPECTED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56416): note: 'DWRITE_E_UNEXPECTED'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4972): warning C4005: 'DWRITE_E_NOFONT': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56425): note: 'DWRITE_E_NOFONT'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4978): warning C4005: 'DWRITE_E_FILENOTFOUND': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56434): note: 'DWRITE_E_FILENOTFOUND'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4983): warning C4005: 'DWRITE_E_FILEACCESS': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56443): note: 'DWRITE_E_FILEACCESS'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4988): warning C4005: 'DWRITE_E_FONTCOLLECTIONOBSOLETE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56452): note: 'DWRITE_E_FONTCOLLECTIONOBSOLETE'의 이전 정의를 참조하십시오.
-c:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4993): warning C4005: 'DWRITE_E_ALREADYREGISTERED': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(56461): note: 'DWRITE_E_ALREADYREGISTERED'의 이전 정의를 참조하십시오.
-e:\kgca36\dxproject\libporject\dxlib\mdxwirte.cpp(67): warning C4267: '=': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\kgca36\dxproject\libporject\dxlib\mdxwirte.cpp(107): warning C4005: 'UNICODE': 매크로 재정의
-  e:\kgca36\dxproject\libporject\dxlib\mdxwirte.cpp: note: 'UNICODE'의 이전 정의를 참조하십시오.
-e:\kgca36\dxproject\libporject\dxlib\mdxwirte.cpp(109): warning C4267: '인수': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  DXLib.vcxproj -> E:\KGCA36\DXProject\libPorject\DXLib\.\DXLib_R.lib
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\winerror.h(55724): note: 'DWRITE_E_ALREADYREGISTERED'의 이전 정의를 참조하십시오.
+  DXLib.vcxproj -> E:\KGCA36\GitDX\DXProject\libPorject\DXLib\.\DXLib_R.lib
   fmod.h
   fmod_codec.h
   fmod_common.h
@@ -269,33 +136,74 @@ e:\kgca36\dxproject\libporject\dxlib\mdxwirte.cpp(109): warning C4267: '인수':
   fmod_dsp_effects.h
   fmod_errors.h
   fmod_output.h
-  M2DObj.h
-  M3DObj.h
+  M2DObject.h
+  M2DScreen.h
+  M3DBasic.h
+  M3DBone.h
+  M3DHeightMap.h
+  M3DLight.h
+  M3DMaterial.h
+  M3DModel.h
+  M3DObject.h
+  M3DObjectMgr.h
+  M3DSpline.h
   MAngle.h
+  MAnimateStd.h
+  MBoundingBox.h
+  MCamera.h
+  MCameraMgr.h
   MCollision.h
   MCore.h
+  MCreate.h
   MDevice.h
+  MDirectLight.h
   MDxState.h
   MDXWirte.h
-  MFiledObj.h
-  MGroup.h
+  MFiled.h
+  MFPSCamera.h
+  MFreeCamera.h
+  MFrustum.h
+  MGrid.h
   MInput.h
+  MKeyAnimation.h
+  MKeyAnimationMgr.h
+  MKeyData.h
+  MLight.h
+  MLightMgr.h
+  MMapNode.h
+  MMaterial.h
+  MMaterialMgr.h
+  MMesh.h
+  MMeshMgr.h
   MObject.h
+  MOmniLight.h
+  MParser.h
+  MRenderTarget.h
+  MRenderTargetMgr.h
+  MRPGCamera.h
+  MSkeleton.h
+  MSkeletonMgr.h
+  MSkinMesh.h
+  MSkinModel.h
+  MSkyLight.h
   MSound.h
   MSoundMgr.h
+  MSpotLight.h
   MStd.h
+  MTargetCamera.h
   MTexture.h
   MTextureMgr.h
   MTimer.h
-  MUnit.h
+  MTree.h
+  MUint.h
   MWindow.h
   PixelShaderMgr.h
   resource.h
   VertexShaderMgr.h
-         30개 파일이 복사되었습니다.
+         71개 파일이 복사되었습니다.
   fmod.hpp
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
-  하위 디렉터리 또는 파일 ../../Release/DXLib_0/이(가) 이미 있습니다.
+  하위 디렉터리 또는 파일 ../../lib/Release/DXLib_0/이(가) 이미 있습니다.
           1개 파일이 복사되었습니다.

@@ -2,6 +2,7 @@
 #include "MStd.h"
 #include "VertexShaderMgr.h"
 
+class MSkeleton;
 class MMesh
 {
 public:
@@ -15,6 +16,8 @@ public:
 	UINT				m_iIndexCount;
 	ID3D11Buffer*		m_pVertexBuffer;
 	ID3D11Buffer*		m_pIndexBuffer;
+public:
+	bool				SetSkeletonAndCreateData(MSkeleton* skt) { return false; };
 public:
 	virtual bool Init();
 	virtual bool Frame();

@@ -398,8 +398,11 @@ extern ID3D11DepthStencilView*	g_pDepthStencilView;
 extern D3D11_VIEWPORT			g_ViewPort;
 extern MPoint					g_MousePos; // 마우스 포지션
 
-extern bool						g_bIsLOD;
-
 extern float		g_BGMVol;
 extern float		g_SEVol;
 
+extern bool							g_bIsLOD;
+#if defined(DEBUG) || defined(_DEBUG)
+extern bool							g_isBoxRender;
+extern bool							g_isPointRender;
+#endif

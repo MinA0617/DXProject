@@ -1,5 +1,5 @@
 #include "MSkinMesh.h"
-
+#include "MSkeleton.h"
 
 
 MSkinMesh::MSkinMesh()
