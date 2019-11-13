@@ -9,7 +9,7 @@
 #include "MParser.h"
 #include "MLight.h"
 #include "MCollision.h"
-
+#include "MSelect.h"
 
 class MCore : public MWindow
 {

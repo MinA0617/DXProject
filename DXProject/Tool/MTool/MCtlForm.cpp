@@ -29,15 +29,12 @@ void MCtlForm::DoDataExchange(CDataExchange * pDX)
 void MCtlForm::OnBnClickedLod()
 {
 	UpdateData(TRUE);
-
-	I_3DObjectMgr.m_InWorldFiled->ground->m_bIsLOD == true;
-
+	g_bIsLOD == true;
 }
 
 void MCtlForm::OnBnClickedSolid()
 {
 	UpdateData(TRUE);
-
 	I_Device.m_RasterizerStateID = MWireFrame;
 }
 

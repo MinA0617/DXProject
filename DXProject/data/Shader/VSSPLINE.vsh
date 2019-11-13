@@ -33,8 +33,6 @@ cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)
 struct VSSPLINE_INPUT
 {
 	float3 Position			: POSITION;	 // simentci
-	float3 Normal			: NORMAL;
-	uint Type				: TYPE;
 };
 
 struct VSSPLINE_OUTPUT // 444 please

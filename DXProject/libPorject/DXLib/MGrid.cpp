@@ -44,21 +44,21 @@ bool MGrid::SetGrid(UINT GridSize, UINT StepSize)
 	//// 위치지정
 	int iSize = (GridSize / StepSize) * StepSize;
 	//// 첫 XY긋기 
-	vertices[0].p = float3(iSize, 0, 0);
-	vertices[1].p = float3(-iSize, 0, 0);
-	vertices[2].p = float3(0, 0, iSize);
-	vertices[3].p = float3(0, 0, -iSize);
+	vertices[0].p = D3DXVECTOR3(iSize, 0, 0);
+	vertices[1].p = D3DXVECTOR3(-iSize, 0, 0);
+	vertices[2].p = D3DXVECTOR3(0, 0, iSize);
+	vertices[3].p = D3DXVECTOR3(0, 0, -iSize);
 	for (int i = 1; i <= (m_iVertexCount - 4) / 8; i++)
 	{
 		int CurStepSize = i * StepSize;
-		vertices[4 + ((i - 1) * 8) + 0].p = float3(iSize, 0, CurStepSize);
-		vertices[4 + ((i - 1) * 8) + 1].p = float3(-iSize, 0, CurStepSize);
-		vertices[4 + ((i - 1) * 8) + 2].p = float3(iSize, 0, -CurStepSize);
-		vertices[4 + ((i - 1) * 8) + 3].p = float3(-iSize, 0, -CurStepSize);
-		vertices[4 + ((i - 1) * 8) + 4].p = float3(CurStepSize, 0, iSize);
-		vertices[4 + ((i - 1) * 8) + 5].p = float3(CurStepSize, 0, -iSize);
-		vertices[4 + ((i - 1) * 8) + 6].p = float3(-CurStepSize, 0, iSize);
-		vertices[4 + ((i - 1) * 8) + 7].p = float3(-CurStepSize, 0, -iSize);
+		vertices[4 + ((i - 1) * 8) + 0].p = D3DXVECTOR3(iSize, 0, CurStepSize);
+		vertices[4 + ((i - 1) * 8) + 1].p = D3DXVECTOR3(-iSize, 0, CurStepSize);
+		vertices[4 + ((i - 1) * 8) + 2].p = D3DXVECTOR3(iSize, 0, -CurStepSize);
+		vertices[4 + ((i - 1) * 8) + 3].p = D3DXVECTOR3(-iSize, 0, -CurStepSize);
+		vertices[4 + ((i - 1) * 8) + 4].p = D3DXVECTOR3(CurStepSize, 0, iSize);
+		vertices[4 + ((i - 1) * 8) + 5].p = D3DXVECTOR3(CurStepSize, 0, -iSize);
+		vertices[4 + ((i - 1) * 8) + 6].p = D3DXVECTOR3(-CurStepSize, 0, iSize);
+		vertices[4 + ((i - 1) * 8) + 7].p = D3DXVECTOR3(-CurStepSize, 0, -iSize);
 	}
 	for (int i = 0; i < m_iIndexCount; i++)
 	{
@@ -66,8 +66,6 @@ bool MGrid::SetGrid(UINT GridSize, UINT StepSize)
 		//vertices[i * 2].type = NULL;
 		//vertices[i * 2 + 1].n = float3(0, 1, 0);
 		//vertices[i * 2 + 1].type = NULL;
-		vertices[i].n = float3(0, 1, 0);
-		vertices[i].type = NULL;
 		index[i] = i;
 	}
 #pragma endregion CreateData

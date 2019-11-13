@@ -77,8 +77,6 @@ bool VertexShaderMgr::Init()
 	const D3D11_INPUT_ELEMENT_DESC layout3[] =
 	{
 		{"POSITION"	, 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{"NORMAL"	, 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{"TYPE"		, 0, DXGI_FORMAT_R32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 	layoutNum = _countof(layout3);
 	LoadShaderResult = g_pDevice->CreateInputLayout(layout3, layoutNum, pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), &m_LOList[VSSPLINE]);
@@ -134,6 +132,27 @@ bool VertexShaderMgr::Init()
 	if (pErrorMsgs)pErrorMsgs->Release();
 	if (FAILED(LoadShaderResult)) return false;
 #pragma endregion VSFILED
+
+#pragma region VSFILED2
+	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/VS3DFiled2.vsh", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
+	if (FAILED(LoadShaderResult))
+	{
+		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
+		return false;
+	}
+	g_pDevice->CreateVertexShader(pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), NULL, &m_VSList[VSFILED2]);	// 컴파일된 쉐이더를 생성해 준다
+	const D3D11_INPUT_ELEMENT_DESC layout6[] =
+	{
+		{"POSITION",		0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"COUNT",			0, DXGI_FORMAT_R32_SINT, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TYPE",			0, DXGI_FORMAT_R32_SINT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+	layoutNum = _countof(layout6);
+	LoadShaderResult = g_pDevice->CreateInputLayout(layout6, layoutNum, pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), &m_LOList[VSFILED2]);
+	if (pVSShader)pVSShader->Release();
+	if (pErrorMsgs)pErrorMsgs->Release();
+	if (FAILED(LoadShaderResult)) return false;
+#pragma endregion VSFILED2
 	return true;
 }
 

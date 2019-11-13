@@ -14,11 +14,12 @@ public:
 	vector<DWORD>			m_IndexList;
 	vector<D3DXVECTOR3>		m_FaceNormal;
 	vector<vector<int>>		m_VertexFaceIndex;
+	ID3D11Texture2D*		m_pHeightTexture;
+	ID3D11Buffer*			m_pVertexBuffer;
+	ID3D11Buffer*			m_pIndexBuffer;
 	int						m_iCount;
 	float					m_fYmax;
 	float					m_fLeafSize;
-	ID3D11Buffer*			m_pVertexBuffer;
-	ID3D11Buffer*			m_pIndexBuffer;
 	int						m_iMaxLevel;
 	float					m_fLodStartDistance;
 	int						m_iLodMinLevel;

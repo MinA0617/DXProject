@@ -31,15 +31,6 @@
     <ClCompile Include="MTextureMgr.cpp">
       <Filter>Object\Resource\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="PixelShaderMgr.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexShaderMgr.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="MDxState.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="MCamera.cpp">
       <Filter>Object\3DObject\Camera</Filter>
     </ClCompile>
@@ -87,15 +78,6 @@
     </ClCompile>
     <ClCompile Include="MCreate.cpp">
       <Filter>Object\Create</Filter>
-    </ClCompile>
-    <ClCompile Include="MRenderTarget.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="MRenderTargetMgr.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="MDXWirte.cpp">
-      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="MDirectLight.cpp">
       <Filter>Object\3DObject\Light</Filter>
@@ -172,6 +154,33 @@
     <ClCompile Include="MMapNode.cpp">
       <Filter>Object\3DObject\3DModel</Filter>
     </ClCompile>
+    <ClCompile Include="MCollision.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="MSelect.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryShaderMgr.cpp">
+      <Filter>Manager\ShaderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShaderMgr.cpp">
+      <Filter>Manager\ShaderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShaderMgr.cpp">
+      <Filter>Manager\ShaderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MDxState.cpp">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MDXWirte.cpp">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MRenderTarget.cpp">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MRenderTargetMgr.cpp">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MWindow.h">
@@ -212,15 +221,6 @@
     </ClInclude>
     <ClInclude Include="MTextureMgr.h">
       <Filter>Object\Resource\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="PixelShaderMgr.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexShaderMgr.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="MDxState.h">
-      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="MCamera.h">
       <Filter>Object\3DObject\Camera</Filter>
@@ -275,15 +275,6 @@
     </ClInclude>
     <ClInclude Include="M2DScreen.h">
       <Filter>Object\2DObject</Filter>
-    </ClInclude>
-    <ClInclude Include="MRenderTargetMgr.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="MRenderTarget.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="MDXWirte.h">
-      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="MSpotLight.h">
       <Filter>Object\3DObject\Light</Filter>
@@ -363,6 +354,30 @@
     <ClInclude Include="MMapNode.h">
       <Filter>Object\3DObject\3DModel</Filter>
     </ClInclude>
+    <ClInclude Include="MSelect.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryShaderMgr.h">
+      <Filter>Manager\ShaderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShaderMgr.h">
+      <Filter>Manager\ShaderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderMgr.h">
+      <Filter>Manager\ShaderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MDxState.h">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MDXWirte.h">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MRenderTarget.h">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MRenderTargetMgr.h">
+      <Filter>Manager\DirectMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sound">
@@ -422,6 +437,15 @@
     <Filter Include="Object\3DObject\Light">
       <UniqueIdentifier>{3c30a29b-0079-4662-9dd0-c172a2378077}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\ShaderMgr">
+      <UniqueIdentifier>{c4ecacd0-d323-4854-b35b-2febddc3a330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\DirectMgr">
+      <UniqueIdentifier>{67479c73-4a89-4920-9601-2fa7bce8becb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\ShaderMgr\Shader">
+      <UniqueIdentifier>{a032cec9-3192-4285-9204-6990dd08382f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DXLib.rc">
@@ -429,16 +453,45 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\..\data\Shader\PS2D.psh" />
-    <FxCompile Include="..\..\data\Shader\PS3D.psh" />
-    <FxCompile Include="..\..\data\Shader\PSBONE.psh" />
-    <FxCompile Include="..\..\data\Shader\PSSPLINE.psh" />
-    <FxCompile Include="..\..\data\Shader\VS2D.vsh" />
-    <FxCompile Include="..\..\data\Shader\VS3D.vsh" />
-    <FxCompile Include="..\..\data\Shader\VSSPLINE.vsh" />
-    <FxCompile Include="..\..\data\Shader\VSCHARACTER.vsh" />
-    <FxCompile Include="..\..\data\Shader\PS3DFiled.psh" />
-    <FxCompile Include="..\..\data\Shader\VS3DFiled.vsh" />
+    <FxCompile Include="..\..\data\Shader\VSSPLINE.vsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PS2D.psh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PS3D.psh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PS3DFiled.psh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PSBONE.psh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PSSPLINE.psh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS2D.vsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS3D.vsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS3DFiled.vsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VSCHARACTER.vsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\PS3DFiled2.psh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\VS3DFiled2.vsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\GS3DFiled2.gsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

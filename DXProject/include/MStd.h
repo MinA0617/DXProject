@@ -58,113 +58,111 @@ using namespace std;
 #define SAFE_DELETE(temp)	if(temp){delete temp;}
 
 using M_STR = basic_string<TCHAR>;
+
 //using M_STR = wstring;
-
-struct float2;
-struct float3;
-
-struct float2
-{
-	union
-	{
-		struct { float x, y; };
-		float v[2];
-	};
-	float2() {};
-	float2(float fx, float fy)
-	{
-		x = fx;
-		y = fy;
-	};
-};
-
-struct float3
-{
-	union
-	{
-		struct { float x, y, z; };
-		float v[3];
-	};
-	float3 operator - (float3 data)
-	{
-		float3 result;
-		result.x = x - data.x;
-		result.y = y - data.y;
-		result.z = z - data.z;
-		return result;
-	};
-	float3 operator + (float3 data)
-	{
-		float3 result;
-		result.x = x + data.x;
-		result.y = y + data.y;
-		result.z = z + data.z;
-		return result;
-	};
-	void operator += (float3 data)
-	{
-		x += data.x;
-		y += data.y;
-		z += data.z;
-	};
-	void operator /= (float num)
-	{
-		x /= num;
-		y /= num;
-		z /= num;
-	};
-	bool operator == (float3 data)
-	{
-		if (x == data.x && y == data.y && z == data.z)
-		{
-			return true;
-		}
-		return false;
-	};
-	bool operator != (float3 data)
-	{
-		if (x == data.x && y == data.y && z == data.z)
-		{
-			return false;
-		}
-		return true;
-	};
-	float3() {};
-	float3(float fx, float fy, float fz)
-	{
-		x = fx;
-		y = fy;
-		z = fz;
-	};
-	float3(D3DXVECTOR3 data)
-	{
-		x = data.x;
-		y = data.y;
-		z = data.z;
-	};
-};
-
-struct float4
-{
-	union
-	{
-		struct { float x, y, z, w; };
-		float v[4];
-	};
-	float4() {};
-	float4(float fx, float fy, float fz, float fw)
-	{
-		x = fx;
-		y = fy;
-		z = fz;
-		w = fw;
-	};
-};
+//struct D3DXVECTOR2;
+//struct D3DXVECTOR3;
+//
+//struct D3DXVECTOR2
+//{
+//	union
+//	{
+//		struct { float x, y; };
+//		float v[2];
+//	};
+//	D3DXVECTOR2() {};
+//	D3DXVECTOR2(float fx, float fy)
+//	{
+//		x = fx;
+//		y = fy;
+//	};
+//};
+//struct D3DXVECTOR3
+//{
+//	union
+//	{
+//		struct { float x, y, z; };
+//		float v[3];
+//	};
+//	D3DXVECTOR3 operator - (D3DXVECTOR3 data)
+//	{
+//		D3DXVECTOR3 result;
+//		result.x = x - data.x;
+//		result.y = y - data.y;
+//		result.z = z - data.z;
+//		return result;
+//	};
+//	D3DXVECTOR3 operator + (D3DXVECTOR3 data)
+//	{
+//		D3DXVECTOR3 result;
+//		result.x = x + data.x;
+//		result.y = y + data.y;
+//		result.z = z + data.z;
+//		return result;
+//	};
+//	void operator += (D3DXVECTOR3 data)
+//	{
+//		x += data.x;
+//		y += data.y;
+//		z += data.z;
+//	};
+//	void operator /= (float num)
+//	{
+//		x /= num;
+//		y /= num;
+//		z /= num;
+//	};
+//	bool operator == (D3DXVECTOR3 data)
+//	{
+//		if (x == data.x && y == data.y && z == data.z)
+//		{
+//			return true;
+//		}
+//		return false;
+//	};
+//	bool operator != (D3DXVECTOR3 data)
+//	{
+//		if (x == data.x && y == data.y && z == data.z)
+//		{
+//			return false;
+//		}
+//		return true;
+//	};
+//	D3DXVECTOR3() {};
+//	D3DXVECTOR3(float fx, float fy, float fz)
+//	{
+//		x = fx;
+//		y = fy;
+//		z = fz;
+//	};
+//	D3DXVECTOR3(D3DXVECTOR3 data)
+//	{
+//		x = data.x;
+//		y = data.y;
+//		z = data.z;
+//	};
+//};
+//struct D3DXVECTOR4
+//{
+//	union
+//	{
+//		struct { float x, y, z, w; };
+//		float v[4];
+//	};
+//	D3DXVECTOR4() {};
+//	D3DXVECTOR4(float fx, float fy, float fz, float fw)
+//	{
+//		x = fx;
+//		y = fy;
+//		z = fz;
+//		w = fw;
+//	};
+//};
 
 struct SVERTEX
 {
-	float3 p;
-	float2 t;
+	D3DXVECTOR3 p;
+	D3DXVECTOR2 t;
 	SVERTEX() {};
 	SVERTEX(float px, float py, float pz, float tu, float tv)
 	{
@@ -178,10 +176,10 @@ struct SVERTEX
 
 struct MVERTEX
 {
-	float3	p;
-	float3	t;
-	float3	n;
-	float3	tv;
+	D3DXVECTOR3	p;
+	D3DXVECTOR3	t;
+	D3DXVECTOR3	n;
+	D3DXVECTOR3	tv;
 };
 
 struct SKINDATA
@@ -200,32 +198,30 @@ struct BonePoint
 
 struct CVERTEX
 {
-	float3	p;
-	float3	t;
-	float3	n;
-	float3	tv;
+	D3DXVECTOR3	p;
+	D3DXVECTOR3	t;
+	D3DXVECTOR3	n;
+	D3DXVECTOR3	tv;
 	BonePoint bp;
 };
 
 
 struct SPLINE_VERTEX
 {
-	float3 p;
-	float3 n;
-	UINT type; // 리니어, 코너, 베지어
+	D3DXVECTOR3 p;
 };
 
-struct OBJIndex
-{
-	DWORD v;
-	DWORD vt;
-	DWORD vn;
-};
-
-struct OBJFace
-{
-	OBJIndex v[3];
-};
+//struct OBJIndex
+//{
+//	DWORD v;
+//	DWORD vt;
+//	DWORD vn;
+//};
+//
+//struct OBJFace
+//{
+//	OBJIndex v[3];
+//};
 
 struct MSize
 {
@@ -235,24 +231,24 @@ struct MSize
 	MSize(int fw, int fh) { w = fw; h = fh; }
 };
 
-struct MPoint
-{
-	float  x;
-	float  y;
-	MPoint operator+ (MPoint data) { MPoint temp; temp.x = x + data.x; temp.y = y + data.y; };
-	void operator+= (MPoint data) { x += data.x; y += data.y; };
-	MPoint() {};
-	MPoint(float fx, float fy) { x = fx; y = fy; }
-};
+//struct D3DXVECTOR2
+//{
+//	float  x;
+//	float  y;
+//	D3DXVECTOR2 operator+ (D3DXVECTOR2 data) { D3DXVECTOR2 temp; temp.x = x + data.x; temp.y = y + data.y; };
+//	void operator+= (D3DXVECTOR2 data) { x += data.x; y += data.y; };
+//	D3DXVECTOR2() {};
+//	D3DXVECTOR2(float fx, float fy) { x = fx; y = fy; }
+//};
 
-struct M3Point
-{
-	float  x;
-	float  y;
-	float  z;
-	M3Point() {};
-	M3Point(float fx, float fy, float fz) { x = fx; y = fy; z = fz; }
-};
+//struct M3Point
+//{
+//	float  x;
+//	float  y;
+//	float  z;
+//	M3Point() {};
+//	M3Point(float fx, float fy, float fz) { x = fx; y = fy; z = fz; }
+//};
 
 struct VS_WORLD_BUFFER
 {
@@ -266,8 +262,8 @@ struct VS_WORLD_BUFFER
 
 struct CONSTANT_2DOBJ
 {
-	MPoint	ScreenPosition;
-	MPoint	ScreenScale;
+	D3DXVECTOR2	ScreenPosition;
+	D3DXVECTOR2	ScreenScale;
 	float	ScreenRotation;
 	float	empty1, empty2, empty3;
 };
@@ -396,7 +392,7 @@ extern ID3D11DeviceContext*		g_pImmediateContext;
 extern ID3D11RenderTargetView*	g_pRenderTargetView;
 extern ID3D11DepthStencilView*	g_pDepthStencilView;
 extern D3D11_VIEWPORT			g_ViewPort;
-extern MPoint					g_MousePos; // 마우스 포지션
+extern D3DXVECTOR2				g_MousePos; // 마우스 포지션
 
 extern float		g_BGMVol;
 extern float		g_SEVol;

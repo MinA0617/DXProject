@@ -57,12 +57,12 @@ M_STR MParser::DataToMSTR(ITOR & data)
 	return mstr;
 }
 
-float3 MParser::FindMin(vector<MVERTEX>& vertices)
+D3DXVECTOR3 MParser::FindMin(vector<MVERTEX>& vertices)
 {
 	int size = vertices.size();
 	if (size == 0)
 	{
-		return float3(0, 0, 0);
+		return D3DXVECTOR3(0, 0, 0);
 	}
 	float x, y, z;
 	x = vertices[0].p.x;
@@ -74,15 +74,15 @@ float3 MParser::FindMin(vector<MVERTEX>& vertices)
 		if (y > vertices[i].p.y) y = vertices[i].p.y;
 		if (z > vertices[i].p.z) z = vertices[i].p.z;
 	}
-	return float3(x, y, z);
+	return D3DXVECTOR3(x, y, z);
 }
 
-float3 MParser::FindMax(vector<MVERTEX>& vertices)
+D3DXVECTOR3 MParser::FindMax(vector<MVERTEX>& vertices)
 {
 	int size = vertices.size();
 	if (size == 0)
 	{
-		return float3(0, 0, 0);
+		return D3DXVECTOR3(0, 0, 0);
 	}
 	float x, y, z;
 	x = vertices[0].p.x;
@@ -94,7 +94,7 @@ float3 MParser::FindMax(vector<MVERTEX>& vertices)
 		if (y < vertices[i].p.y) y = vertices[i].p.y;
 		if (z < vertices[i].p.z) z = vertices[i].p.z;
 	}
-	return float3(x, y, z);
+	return D3DXVECTOR3(x, y, z);
 }
 
 bool MParser::CreateBuffer(MMesh * Target, vector<MVERTEX>& vertices, vector<DWORD>& index)
@@ -206,10 +206,7 @@ bool MParser::Load(M_STR filename, MSkeleton* target)
 	{
 	case 1:
 	{
-		if (target)
-		{
-			CreateOBJData(name, target);
-		}
+		CreateOBJData(name, target);
 		break;
 	}
 	case 2:

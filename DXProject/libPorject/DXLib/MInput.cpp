@@ -1,7 +1,7 @@
 #include "MInput.h"
 
 Keyinput g_ActionInput;
-MPoint g_MousePos;
+D3DXVECTOR2 g_MousePos;
 
 MInput::MInput()
 {
@@ -19,16 +19,7 @@ bool MInput::Init()
 
 bool MInput::Frame()
 {
-	///////////////////마우스 무브////////////////////
-	GetCursorPos(&m_Mousrpos); // 마우스 포지션을 얻고
-	ScreenToClient(g_hWnd, &m_Mousrpos); // 스크린전체가 아닌 화면스크린으로 한정한다.
-
-	//////////////////////////////////////////////////
-
-
 	////////////////////키보드체크////////////////////
-
-
 	g_ActionInput.F1  = KeyCheck(VK_F1 );
 	g_ActionInput.F2  = KeyCheck(VK_F2 );
 	g_ActionInput.F3  = KeyCheck(VK_F3 );
@@ -86,20 +77,31 @@ bool MInput::Frame()
 
 
 	///////////////////마우스 체크////////////////////
-	g_MousePos.x = (m_Mousrpos.x * 1) - g_rtWindowClient.right / 2; // 글로벌 변수에 좌표값을 넣어준다.
+	GetCursorPos(&m_Mousrpos);
+	ScreenToClient(g_hWnd, &m_Mousrpos); 
+	g_MousePos.x = (m_Mousrpos.x * 1) - g_rtWindowClient.right / 2;
 	g_MousePos.y = (m_Mousrpos.y * -1) + g_rtWindowClient.bottom / 2;
 
-	for (int iButton = 0; iButton < 3; iButton++)
+	//for (int iButton = 0; iButton < 3; iButton++)
+	//{
+	//	if (m_dwBeforeMouseState[iButton] == KEY_PUSH)
+	//	{
+	//		if (m_dwMouseState[iButton] == KEY_PUSH)
+	//		{
+	//			m_dwMouseState[iButton] = KEY_HOLD;
+	//		}
+	//	}
+	//	m_dwBeforeMouseState[iButton] = m_dwMouseState[iButton];
+	//}
+
+	for (int i = 0; i < 3; i++)
 	{
-		if (m_dwBeforeMouseState[iButton] == KEY_PUSH)
+		if (m_dwMouseState[i] == KEY_UP)
 		{
-			if (m_dwMouseState[iButton] == KEY_PUSH)
-			{
-				m_dwMouseState[iButton] = KEY_HOLD;
-			}
+			m_dwMouseState[i] = KEY_FREE;
 		}
-		m_dwBeforeMouseState[iButton] = m_dwMouseState[iButton];
 	}
+
 	g_ActionInput.a_LeftClick = m_dwMouseState[0];
 	g_ActionInput.a_RightClick = m_dwMouseState[2];
 	//////////////////////////////////////////////////
@@ -118,23 +120,27 @@ bool MInput::Release()
 
 LRESULT MInput::MsgProc(MSG msg)
 {
-	//////중계받은 메세지에 따라 마우스 배열에 넣어서 사용한다.)
-	m_dwMouseState[0] = KEY_FREE;
-	m_dwMouseState[1] = KEY_FREE;
-	m_dwMouseState[2] = KEY_FREE;
+	//////중계받은 메세지에 따라 마우스 배열에 넣어서 사용한다.
 	switch (msg.message)
 	{
 	case WM_LBUTTONDOWN:
 	{
-		m_dwMouseState[0] = KEY_PUSH;
-	}break;
+		if (m_dwMouseState[0] == KEY_PUSH)
+			m_dwMouseState[0] = KEY_HOLD;
+		else
+			m_dwMouseState[0] = KEY_PUSH;
+	}
+	break;
 	case WM_LBUTTONUP:
 	{
 		m_dwMouseState[0] = KEY_UP;
 	}break;
 	case WM_MBUTTONDOWN:
 	{
-		m_dwMouseState[1] = KEY_PUSH;
+		if (m_dwMouseState[1] == KEY_PUSH)
+			m_dwMouseState[1] = KEY_HOLD;
+		else
+			m_dwMouseState[1] = KEY_PUSH;
 	}break;
 	case WM_MBUTTONUP:
 	{
@@ -142,7 +148,10 @@ LRESULT MInput::MsgProc(MSG msg)
 	}break;
 	case WM_RBUTTONDOWN:
 	{
-		m_dwMouseState[2] = KEY_PUSH;
+		if (m_dwMouseState[2] == KEY_PUSH)
+			m_dwMouseState[2] = KEY_HOLD;
+		else
+			m_dwMouseState[2] = KEY_PUSH;
 	}break;
 	case WM_RBUTTONUP:
 	{

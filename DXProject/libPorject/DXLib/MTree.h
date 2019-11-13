@@ -24,7 +24,7 @@ public:
 	MTreeNode*	m_pRootNode;
 	float		m_fMinDivideSize;
 	DWORD		m_dwMaxDepth;
-	int			m_NodDepth;
+	int			m_DepthLevelOfMapNode; // 맵의 노드가 포함된 댑스 레벨
 	bool		isOQ;
 private:
 	bool		BuildTree(MTreeNode* pNode);

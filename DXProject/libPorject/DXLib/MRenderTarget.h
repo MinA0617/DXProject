@@ -1,6 +1,7 @@
 #pragma once
 #include "MStd.h"
 #include "MDxState.h"
+#include "M2DScreen.h"
 
 class MRenderTarget
 {

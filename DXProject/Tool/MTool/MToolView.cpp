@@ -89,6 +89,20 @@ void CMToolView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 	// TODO: 인쇄 후 정리 작업을 추가합니다.
 }
 
+LRESULT CMToolView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	CMToolApp* pApp = (CMToolApp*)AfxGetApp();
+	HWND hWnd = pApp->m_Tool.m_hWnd;
+	MSG msg;
+	msg.hwnd = hWnd;
+	msg.message = message;
+	msg.wParam = wParam;
+	msg.lParam = lParam;
+	pApp->m_Tool.MCoreMsgProc(msg);
+	return CView::WindowProc(message, wParam, lParam);
+}
+
 void CMToolView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
 	ClientToScreen(&point);

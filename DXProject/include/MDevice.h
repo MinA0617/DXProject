@@ -2,6 +2,7 @@
 #include "MCameraMgr.h"
 #include "M3DObjectMgr.h"
 #include "MRenderTargetMgr.h"
+#include "GeometryShaderMgr.h"
 #include "MDXWirte.h"
 
 class MDevice : public MSingleton<MDevice>

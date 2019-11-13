@@ -6,7 +6,7 @@ class MAngle
 public:
 	MAngle();
 	~MAngle();
-	static float get_angle(MPoint pos1, MPoint pos2)
+	static float get_angle(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2)
 	{
 		//pos1을 시작점으로 pos2의 각도를 구하는 공식
 		float Width = pos2.x - pos1.x;

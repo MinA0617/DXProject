@@ -37,6 +37,7 @@ bool MDevice::Init()
 	if (!I_RenderTargetMgr.Init()) return false;
 	if (!I_VertexShaderMgr.Init()) return false;
 	if (!I_PixelShaderMgr.Init()) return false;
+	//if (!I_GeometryShaderMgr.Init()) return false;
 	if (!I_DxState.Init()) return false;
 	if (!I_3DObjectMgr.Init()) return false;
 	m_dxWrite.Init();
@@ -46,6 +47,7 @@ bool MDevice::Init()
 
 bool MDevice::Release()
 {
+	//I_GeometryShaderMgr.Release();
 	I_VertexShaderMgr.Release();
 	I_PixelShaderMgr.Release();
 	I_DxState.Release();

@@ -15,74 +15,54 @@ bool  MToolCore::Init()
 	filed == nullptr;
 	I_CameraMgr.CreateFPSCamera_Main();
 	light = &(I_LightMgr.m_List);
-
-	if (0)
-	{
-		ps.Load(L"../../data/obj/Catgirl_T.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Wait.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Walk.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Run.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Attack.MIN");
-		ps.Load(L"../../data/obj/Catgirl_Armor.MIN", true, false, I_SkeletonMgr[L"Catgirl_T"]);
-		M_STR namelist[7];
-		namelist[0] = L"Catgirl_Eyes";
-		namelist[1] = L"Catgirl_Head";
-		namelist[2] = L"Catgirl_Hair";
-		namelist[3] = L"Catgirl_UpperBody"; // L"Armor1";
-		namelist[4] = L"Catgirl_LowerBody";
-		namelist[5] = L"Catgirl_Hands";
-		namelist[6] = L"Catgirl_Feet";
-		// EYES, HEAD, HAIR, UPPERBODY, LOWERBODY, HANDS, FEET
-		MUnit* temp = I_3DObjectMgr.CreateUnit(L"aa", L"Catgirl_T", namelist, _countof(namelist));
-		ps.Load_BB(L"../../data/obj/Catgirl_BB.MIN", temp);
-		//target = I_3DObjectMgr[L"catgirl_Body"];
-		//I_MaterialMgr[target->MaterialID]->m_VertexShaderID = VS3D;
-		//target = I_SkeletonMgr[0];
-		unit = temp;
-	}
-	if (0)
-	{
-		ps.Load(L"../../data/obj/box.MIN");
-		M_STR namelist[12];
-		namelist[0] = L"Box001";
-		namelist[1] = L"Box002";
-		namelist[2] = L"Box003";
-		namelist[3] = L"Box004";
-		namelist[4] = L"Box005";
-		namelist[5] = L"Box006";
-		namelist[6] = L"Box007";
-		namelist[7] = L"Box008";
-		namelist[8] = L"Box009";
-		namelist[9] = L"Box010";
-		namelist[10] = L"Box011";
-		namelist[11] = L"Box012";
-		//box1 = I_3DObjectMgr.findObject(y);
-		//box2 = I_3DObjectMgr.findObject(y + 1);
-	}
-	return true;
-}
-
-bool  MToolCore::Frame()
-{
-	D3DXVECTOR3 tt;
-	y += 1 * g_fSeoundPerFrame;
-	D3DXVec3Normalize(&tt, &D3DXVECTOR3(cos(y), -1, sin(y)));
-	light->m_ConstantLigth.m_Direction = tt;
+	light->SetLocalPosition(D3DXVECTOR3(0, 100, 0));
 	light->m_ConstantLigth.m_fMultiplier = 1;
 	light->m_ConstantLigth.m_fDistance = 3000;
 	light->m_ConstantLigth.m_fInner = 1000;
 	light->m_ConstantLigth.m_fOutner = 1500;
 	light->m_ConstantLigth.m_fOffset = 100;
 	light->m_ConstantLigth.m_Color = D3DXVECTOR3(1, 1, 1);
-	light->m_ConstantLigth.m_iFlag = SKY;
-	//light->Frame();
+	light->m_ConstantLigth.m_iFlag = OMNI;
+
+	I_Parser.Load(L"../../data/obj/Box001.OBJ");
+	M_STR name[1];
+	name[0] = L"Box001";
+	I_3DObjectMgr.AddInWorld(name, 1);
+	I_3DObjectMgr.AddInWorld(name, 1);
+	I_3DObjectMgr.AddInWorld(name, 1);
+	I_3DObjectMgr.findObject(1)->SetLocalPosition(D3DXVECTOR3(300, 0, 0));
+	I_3DObjectMgr.findObject(2)->SetLocalPosition(D3DXVECTOR3(0, 0, 300));
+	target = I_3DObjectMgr.findObject(0);
+
+	return true;
+}
+
+bool  MToolCore::Frame()
+{
+	if (g_ActionInput.a_LeftClick >= KEY_PUSH)
+	{
+		D3DXVECTOR3 result;
+		if (MSelect::PickGroundPosition(&result))
+		{
+			target->SetLocalPosition(result);
+		}
+	}
+
+	if(0)
+	{
+		D3DXVECTOR3 tt;
+		y += 1 * g_fSeoundPerFrame;
+		D3DXVec3Normalize(&tt, &D3DXVECTOR3(cos(y), -1, sin(y)));
+		light->m_ConstantLigth.m_Direction = tt;
+	}
+
 	if (g_ActionInput.F1 >= KEY_PUSH)
 	{
-		if(I_3DObjectMgr.m_InWorldFiled) I_3DObjectMgr.m_InWorldFiled->ground->m_bIsLOD = true;
+		if(I_3DObjectMgr.m_InWorldFiled) g_bIsLOD = true;
 	}
 	if (g_ActionInput.F2 >= KEY_PUSH)
 	{
-		if (I_3DObjectMgr.m_InWorldFiled) I_3DObjectMgr.m_InWorldFiled->ground->m_bIsLOD = false;
+		if (I_3DObjectMgr.m_InWorldFiled) g_bIsLOD = false;
 	}
 	if (g_ActionInput.F3 >= KEY_PUSH)
 	{

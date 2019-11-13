@@ -123,8 +123,11 @@ void MCreateMapDialog::OnBnClickedCreate()
 	UpdateData(TRUE);
 	if (I_3DObjectMgr.m_InWorldFiled)
 	{
-		AfxMessageBox(L"이미 생성된 지형이 있습니다. 새로 만드시겠습니까?", MB_OKCANCEL);
-
+		if (IDNO == AfxMessageBox(L"이미 생성된 지형이 있습니다. 새로 만드시겠습니까?", MB_YESNO))
+		{
+			CDialogEx::OnOK();
+			return;
+		}
 	}
 	if (m_bIsNew)
 	{
@@ -145,8 +148,7 @@ void MCreateMapDialog::OnBnClickedCreate()
 	}
 	else
 	{
-		MParser ps;
-		if (ps.Load_HM(m_FileName, m_fLeafSize, m_ctMapHeight, m_iTileSize))
+		if (I_Parser.Load_HM(m_FileName, m_fLeafSize, m_ctMapHeight, m_iTileSize))
 		{
 			AfxMessageBox(L"성공! 불러오기에 성공하였습니다.");
 		}

@@ -20,7 +20,7 @@ bool MTree::Build(float fX, float fZ, float fMinSize)
 
 bool MTree::BuildHeightMap(M3DHeightMap* target)
 {
-	m_NodDepth = target->m_iMaxLevel - target->m_iLodMinLevel;
+	m_DepthLevelOfMapNode = target->m_iMaxLevel - target->m_iLodMinLevel;
 	float size = target->m_fLeafSize;
 	float xsize = size * target->m_iCount - size;
 	float zsize = size * target->m_iCount - size;
@@ -35,7 +35,7 @@ bool MTree::SetMaxY(MTreeNode * pNode, M3DHeightMap * target)
 {
 	if (pNode->m_isLeaf == true)
 	{
-		target->FindLeafYMax(pNode->m_Box.vMin.x, -pNode->m_Box.vMax.z);
+		pNode->m_Box.vMax.y = target->FindLeafYMax(pNode->m_Box.vMin.x, -pNode->m_Box.vMax.z);
 	}
 	else
 	{
@@ -47,7 +47,7 @@ bool MTree::SetMaxY(MTreeNode * pNode, M3DHeightMap * target)
 		}
 		pNode->m_Box.vMax.y = max(max(topy[0], topy[1]), max(topy[2], topy[3]));
 	}
-	if (pNode->m_iDepth == m_NodDepth)
+	if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 	{
 		FindMapNode(pNode, target);
 	}
@@ -63,7 +63,6 @@ bool MTree::FindMapNode(MTreeNode* node, M3DHeightMap * target)
 			if (tile->m_Box->vMax.z == node->m_Box.vMax.z&&tile->m_Box->vMin.z == node->m_Box.vMin.z)
 			{
 				node->m_Tile = tile;
-				node->m_Box.vMax.y = tile->m_Box->vMax.y;
 			}
 		}
 	}
@@ -219,7 +218,7 @@ int MTree::CheckNode(MTreeNode * node)
 	}break;
 	case 0:
 	{
-		if (node->m_iDepth == m_NodDepth)
+		if (node->m_iDepth == m_DepthLevelOfMapNode)
 		{
 			m_RenderNodeList.push_back(node);
 			return true;

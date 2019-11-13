@@ -1,4 +1,4 @@
-#define g_iNumLight  1
+#define g_iNumLight				1
 
 Texture2D g_txDiffuse : register(t0);
 Texture2D g_txNormal : register(t1);

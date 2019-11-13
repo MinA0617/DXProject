@@ -46,8 +46,8 @@ private:
 	HRESULT CreateDeviceResources(IDXGISurface1* pSurface);
 	void	DiscardDeviceResource();
 public:
-	DWORD	AddData(wstring data, D3DCOLORVALUE color, MPoint pos);
-	void	UpdateData(DWORD index, wstring data, D3DCOLORVALUE color, MPoint pos);
+	DWORD	AddData(wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos);
+	void	UpdateData(DWORD index, wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos);
 	void	ClearList();
 public:
 	bool	Init();

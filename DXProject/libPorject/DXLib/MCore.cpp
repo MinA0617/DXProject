@@ -81,11 +81,30 @@ bool MCore::MCoreRelease()
 void MCore::MCoreMsgProc(MSG msg)
 {
 	I_Input.MsgProc(msg);
+	switch (msg.message)
+	{
+	case WM_SIZE:
+	{
+		UINT width = LOWORD(msg.lParam);
+		UINT height = HIWORD(msg.lParam);
+
+		GetWindowRect(m_hWnd, &m_rtWindowBounds);
+		GetClientRect(g_hWnd, &m_rtWindowClient);
+		g_rtWindowClient = m_rtWindowClient;
+		ResizeDevice(width, height);
+
+		m_iWindowWidth = m_rtWindowClient.right - m_rtWindowClient.left;
+		m_iWindowHeight = m_rtWindowClient.bottom - m_rtWindowClient.top;
+	}
+	default:
+		break;
+	}
 }
 
 bool MCore::ResizeDevice(UINT width, UINT height)
 {
 	I_Device.ResizeSwapChain(width, height);
+	I_RenderTargetMgr.Resize();
 	return true;
 }
 

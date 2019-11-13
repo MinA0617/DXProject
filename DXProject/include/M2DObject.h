@@ -10,17 +10,17 @@ protected:
 	ID3D11Buffer*		m_pVertexBuffer;	// 오브젝트의 버텍스버퍼
 	ID3D11Buffer*		m_pIndexBuffer;
 protected:
-	MPoint				m_ScreenPosition;
+	D3DXVECTOR2				m_ScreenPosition;
 	float				m_ScreenRotation;
-	MPoint				m_ScreenScale;
+	D3DXVECTOR2				m_ScreenScale;
 public:
-	void				SetPosition(MPoint pos);
+	void				SetPosition(D3DXVECTOR2 pos);
 	void				SetRotation(float rot);
-	void				SetScale(MPoint scl);
+	void				SetScale(D3DXVECTOR2 scl);
 
-	void				ModifyPosition(MPoint pos);
+	void				ModifyPosition(D3DXVECTOR2 pos);
 	void				ModifyRotation(float rot);
-	void				ModifyScale(MPoint scl);
+	void				ModifyScale(D3DXVECTOR2 scl);
 public:
 	virtual bool		Load(M_STR filename);
 	virtual bool		Create(UINT width, UINT height);

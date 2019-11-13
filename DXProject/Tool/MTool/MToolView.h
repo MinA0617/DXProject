@@ -26,7 +26,7 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-
+	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 // 구현입니다.
 public:
 	virtual ~CMToolView();

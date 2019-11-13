@@ -59,7 +59,7 @@ HRESULT MDXWirte::CreateDeviceIndependentResources()
 	return hr;
 }
 
-DWORD MDXWirte::AddData(wstring data, D3DCOLORVALUE color, MPoint pos)
+DWORD MDXWirte::AddData(wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos)
 {
 	//// 포맷을 받을 수 있도록 변경하기 ////
 	TTextArray newtext;
@@ -72,7 +72,7 @@ DWORD MDXWirte::AddData(wstring data, D3DCOLORVALUE color, MPoint pos)
 	return newtext.index;
 }
 
-void MDXWirte::UpdateData(DWORD index , wstring data, D3DCOLORVALUE color, MPoint pos)
+void MDXWirte::UpdateData(DWORD index , wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos)
 {
 	m_dataList[index].data = data;
 	m_dataList[index].color = color;

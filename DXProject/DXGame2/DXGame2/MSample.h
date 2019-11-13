@@ -9,6 +9,36 @@
 
 #pragma comment (lib, "fmod_vc")
 
+//struct ConstantFiled
+//{
+//	float g_FiledSize;
+//	float g_TileSize;
+//	float g_Heigth;
+//	float temp;
+//};
+//
+//struct filedvecter
+//{
+//	D3DXVECTOR2	Position;
+//	int			DivisionCount;
+//	int			NeighborType;
+//};
+//
+//class Filed : public M3DModel
+//{
+//public:
+//	ConstantFiled   constant;
+//	MTexture		heigth;
+//	ID3D11Buffer*	cb;
+//	ID3D11Buffer*	vb;
+//	virtual bool	Init();
+//	virtual bool	Frame();
+//	virtual bool	Render();
+//	virtual bool	Release();
+//public:
+//	Filed() {};
+//	~Filed() {}
+//};
 
 class MSample : public MCore
 {
@@ -21,6 +51,8 @@ public:
 	MSample();
 	~MSample();
 public:
+	Filed* f;
+
 	MUnit* unit;
 	MLight* light;
 	//M3DModel* target;

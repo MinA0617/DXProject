@@ -172,7 +172,7 @@ bool M2DObject::Create(UINT width, UINT height)
 	return true;
 }
 
-void M2DObject::SetPosition(MPoint pos)
+void M2DObject::SetPosition(D3DXVECTOR2 pos)
 {
 	m_ScreenPosition = pos;
 }
@@ -182,12 +182,12 @@ void M2DObject::SetRotation(float rot)
 	m_ScreenRotation = rot;
 }
 
-void M2DObject::SetScale(MPoint scl)
+void M2DObject::SetScale(D3DXVECTOR2 scl)
 {
 	m_ScreenScale = scl;
 }
 
-void M2DObject::ModifyPosition(MPoint pos)
+void M2DObject::ModifyPosition(D3DXVECTOR2 pos)
 {
 	m_ScreenPosition += pos;
 }
@@ -197,7 +197,7 @@ void M2DObject::ModifyRotation(float rot)
 	m_ScreenRotation += rot;
 }
 
-void M2DObject::ModifyScale(MPoint scl)
+void M2DObject::ModifyScale(D3DXVECTOR2 scl)
 {
 	m_ScreenScale += scl;
 }

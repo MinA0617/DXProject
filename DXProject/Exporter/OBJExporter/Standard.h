@@ -2,22 +2,22 @@
 
 using M_STR = std::basic_string<TCHAR>;
 
-struct float3
+struct D3DXVECTOR3
 {
 	union
 	{
 		struct { float x, y, z; };
 		float v[3];
 	};
-	float3 operator - (float3 data)
+	D3DXVECTOR3 operator - (D3DXVECTOR3 data)
 	{
-		float3 result;
+		D3DXVECTOR3 result;
 		result.x = x - data.x;
 		result.y = y - data.y;
 		result.z = z - data.z;
 		return result;
 	};
-	bool operator == (float3 data)
+	bool operator == (D3DXVECTOR3 data)
 	{
 		if (x == data.x && y == data.y && z == data.z)
 		{
@@ -25,7 +25,7 @@ struct float3
 		}
 		return false;
 	};
-	bool operator != (float3 data)
+	bool operator != (D3DXVECTOR3 data)
 	{
 		if (x == data.x && y == data.y && z == data.z)
 		{
@@ -33,14 +33,14 @@ struct float3
 		}
 		return true;
 	};
-	float3() {};
-	float3(float fx, float fy, float fz)
+	D3DXVECTOR3() {};
+	D3DXVECTOR3(float fx, float fy, float fz)
 	{
 		x = fx;
 		y = fy;
 		z = fz;
 	};
-	float3(Point3 data)
+	D3DXVECTOR3(Point3 data)
 	{
 		x = data.x;
 		y = data.y;
@@ -48,22 +48,22 @@ struct float3
 	};
 };
 
-struct float4
+struct D3DXVECTOR4
 {
 	union
 	{
 		struct { float x, y, z, w; };
 		float v[4];
 	};
-	float4() {};
-	float4(float fx, float fy, float fz, float fw)
+	D3DXVECTOR4() {};
+	D3DXVECTOR4(float fx, float fy, float fz, float fw)
 	{
 		x = fx;
 		y = fy;
 		z = fz;
 		w = fw;
 	};
-	float4(Point4 data)
+	D3DXVECTOR4(Point4 data)
 	{
 		x = data.x;
 		y = data.y;
@@ -88,7 +88,7 @@ struct BonePoint
 {
 	int			m_NumWeight;
 	MCHAR*		m_ID[4];
-	float4		m_Weight;
+	D3DXVECTOR4		m_Weight;
 };
 
 struct BoneData
@@ -99,18 +99,18 @@ struct BoneData
 
 struct MVERTEX
 {
-	float3 p;
-	float3 t;
-	float3 n;
-	float3 tv;
+	D3DXVECTOR3 p;
+	D3DXVECTOR3 t;
+	D3DXVECTOR3 n;
+	D3DXVECTOR3 tv;
 };
 
 struct CVERTEX
 {
-	float3	p;
-	float3	t;
-	float3	n;
-	float3	tv;
+	D3DXVECTOR3	p;
+	D3DXVECTOR3	t;
+	D3DXVECTOR3	n;
+	D3DXVECTOR3	tv;
 	BonePoint bp;
 };
 

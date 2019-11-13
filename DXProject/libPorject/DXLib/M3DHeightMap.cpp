@@ -20,8 +20,8 @@ float M3DHeightMap::FindLeafYMax(float i0x, float i0z)
 D3DXVECTOR3 M3DHeightMap::ComputeFaceNormal(DWORD i0, DWORD i1, DWORD i2)
 {
 	D3DXVECTOR3 vNormal;
-	float3 v0 = m_VertexList[i1].p - m_VertexList[i0].p;
-	float3 v1 = m_VertexList[i2].p - m_VertexList[i0].p;
+	D3DXVECTOR3 v0 = m_VertexList[i1].p - m_VertexList[i0].p;
+	D3DXVECTOR3 v1 = m_VertexList[i2].p - m_VertexList[i0].p;
 	D3DXVECTOR3 vv0(v0.x, v0.y, v0.z);
 	D3DXVECTOR3 vv1(v1.x, v1.y, v1.z);
 	D3DXVec3Cross(&vNormal, &vv0, &vv1);
@@ -38,7 +38,7 @@ bool M3DHeightMap::ComputeVertexNormal(DWORD i)
 		normal += m_FaceNormal[m_VertexFaceIndex[i][j]];
 	}
 	D3DXVec3Normalize(&normal, &normal);
-	m_VertexList[i].n = float3(normal);
+	m_VertexList[i].n = D3DXVECTOR3(normal);
 	return true;
 }
 
@@ -85,7 +85,7 @@ bool M3DHeightMap::CreateNode()
 			IndexingNode(node, m_iMaxLevel - m_iLodMinLevel, XSize, myflag);
 
 			// 센터값 //
-			float3 pos[4];
+			D3DXVECTOR3 pos[4];
 			pos[0] = m_VertexList[myflag].p;
 			pos[1] = m_VertexList[myflag + XSize].p;
 			pos[2] = m_VertexList[myflag + (XSize * m_iCount)].p;
@@ -106,7 +106,7 @@ bool M3DHeightMap::CreateNode()
 				//node->m_Box.vMin.y = min(node->m_Box.vMin.y, pos[i].y);
 				node->m_Box->vMin.z = min(node->m_Box->vMin.z, pos[i].z);
 			}
-			float3 worldpos = pos[0] + pos[1] + pos[2] + pos[3];
+			D3DXVECTOR3 worldpos = pos[0] + pos[1] + pos[2] + pos[3];
 			worldpos /= 4;
 			node->CreateIndexBuffer();
 			node->m_vWorldPos = D3DXVECTOR3(worldpos.x, worldpos.y, worldpos.z);
@@ -261,8 +261,8 @@ bool M3DHeightMap::CreateVertex(vector<float>& list)
 		for (int j = 0; j < m_iCount; j++)
 		{
 			MVERTEX ver;
-			ver.p = float3(xminsize + (j * m_fLeafSize), list[count], zminsize + (i * m_fLeafSize));
-			ver.t = float3((j / (float)m_iCount) * tilecount, (i / (float)m_iCount) * tilecount, 0);
+			ver.p = D3DXVECTOR3(xminsize + (j * m_fLeafSize), list[count], zminsize + (i * m_fLeafSize));
+			ver.t = D3DXVECTOR3((j / (float)m_iCount) * tilecount, (i / (float)m_iCount) * tilecount, 0);
 			count++;
 			m_VertexList.push_back(ver);
 		}
@@ -293,7 +293,7 @@ bool M3DHeightMap::CreateVertex(vector<float>& list)
 	for (int i = 0; i < m_VertexList.size(); i++)
 	{
 		ComputeVertexNormal(i);
-		m_VertexList[i].tv = float3(0, 1, 0);
+		m_VertexList[i].tv = D3DXVECTOR3(0, 1, 0);
 	}
 	CreateBuffer();
 	return true;
@@ -313,9 +313,9 @@ bool M3DHeightMap::CreateVertex()
 		for (int j = 0; j < m_iCount; j++)
 		{
 			MVERTEX ver;
-			ver.p = float3(minsize + (j * m_fLeafSize), 0, minsize + (i * m_fLeafSize));
-			ver.t = float3((j / (float)m_iCount) * tilecount, (i / (float)m_iCount) * tilecount, 0);
-			ver.n = float3(0, 1, 0);
+			ver.p = D3DXVECTOR3(minsize + (j * m_fLeafSize), 0, minsize + (i * m_fLeafSize));
+			ver.t = D3DXVECTOR3((j / (float)m_iCount) * tilecount, (i / (float)m_iCount) * tilecount, 0);
+			ver.n = D3DXVECTOR3(0, 1, 0);
 			count++;
 			m_VertexList.push_back(ver);
 		}
@@ -345,7 +345,7 @@ bool M3DHeightMap::CreateVertex()
 	ComputeFaceNormalAndFaceIndexing();
 	for (int i = 0; i < m_VertexList.size(); i++)
 	{
-		m_VertexList[i].tv = float3(0, 1, 0);
+		m_VertexList[i].tv = D3DXVECTOR3(0, 1, 0);
 	}
 	CreateBuffer();
 	return true;
@@ -381,7 +381,7 @@ bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tile
 	vector<float>	fList;
 	//ID3D11ShaderResourceView* pTexture = NULL;
 	ID3D11Resource *pTexture = NULL;
-	ID3D11Texture2D *pTexture2D = NULL;
+	m_pHeightTexture = NULL;
 	HRESULT TextureLoadResult;
 
 	D3DX11_IMAGE_INFO ImageInfo;
@@ -399,29 +399,29 @@ bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tile
 	//// 디바이스객체, 파일이름, 마테리얼속성, 펌프인터페이스, 텍스쳐리소스, 결과값,
 	TextureLoadResult = D3DX11CreateTextureFromFile(g_pDevice, filename.c_str(), &loadInfo, NULL, &pTexture, NULL);
 	if (FAILED(TextureLoadResult)) return false;
-	TextureLoadResult = pTexture->QueryInterface(__uuidof(ID3D11Texture2D), (LPVOID*)&pTexture2D);
+	TextureLoadResult = pTexture->QueryInterface(__uuidof(ID3D11Texture2D), (LPVOID*)&m_pHeightTexture);
 	if (FAILED(TextureLoadResult)) return false;
 	SAFE_RELEASE(pTexture);
 	D3D11_TEXTURE2D_DESC desc;
-	pTexture2D->GetDesc(&desc);
+	m_pHeightTexture->GetDesc(&desc);
 
 	if (desc.Height != desc.Width)
 	{
-		SAFE_RELEASE(pTexture2D);
+		SAFE_RELEASE(m_pHeightTexture);
 		return false;
 	}
 	m_iCount = desc.Height;
 	if (!Check())
 	{
-		SAFE_RELEASE(pTexture2D);
+		SAFE_RELEASE(m_pHeightTexture);
 		return false;
 	}
 
 	fList.resize(desc.Height*desc.Width);
-	if (pTexture2D)
+	if (m_pHeightTexture)
 	{
 		D3D11_MAPPED_SUBRESOURCE MappedFaceDest;
-		if (SUCCEEDED(g_pImmediateContext->Map((ID3D11Resource*)pTexture2D, D3D11CalcSubresource(0, 0, 1), D3D11_MAP_READ, 0, &MappedFaceDest)))
+		if (SUCCEEDED(g_pImmediateContext->Map((ID3D11Resource*)m_pHeightTexture, D3D11CalcSubresource(0, 0, 1), D3D11_MAP_READ, 0, &MappedFaceDest)))
 		{
 			UCHAR* pTexels = (UCHAR*)MappedFaceDest.pData;
 			//MVERTEX	v;
@@ -437,7 +437,7 @@ bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tile
 					if (uRed > m_fYmax) m_fYmax = uRed;
 				}
 			}
-			g_pImmediateContext->Unmap(pTexture2D, D3D11CalcSubresource(0, 0, 1));
+			g_pImmediateContext->Unmap(m_pHeightTexture, D3D11CalcSubresource(0, 0, 1));
 		}
 	}
 
@@ -448,7 +448,7 @@ bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tile
 	_tsplitpath_s(filename.c_str(), Drive, Dir, Name, Ext);
 	m_name = Name;
 
-	SAFE_RELEASE(pTexture2D);
+	//SAFE_RELEASE(pTexture2D);
 	CreateVertex(fList);
 	CreateNode();
 	return true;
@@ -464,6 +464,21 @@ bool M3DHeightMap::Create(M_STR name, int count, float leafsize, int tilesize, f
 	if (!Check()) return false;
 	CreateVertex();
 	CreateNode();
+
+	HRESULT hr;
+	D3D11_TEXTURE2D_DESC td;
+	ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
+	td.Width = leafsize * count;
+	td.Height = leafsize * count;
+	td.MipLevels = 1;
+	td.SampleDesc.Count = 1;
+	td.SampleDesc.Quality = 0;
+	td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	td.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ;
+	td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	td.ArraySize = 1;
+	hr = g_pDevice->CreateTexture2D(&td, NULL, &m_pHeightTexture);
+
 	return true;
 }
 
@@ -516,6 +531,7 @@ bool M3DHeightMap::Release()
 	SAFE_RELEASE(m_pConstantBuffer);
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
+	SAFE_RELEASE(m_pHeightTexture);
 	for (auto node : m_List)
 	{
 		node->Release();
@@ -526,6 +542,7 @@ bool M3DHeightMap::Release()
 
 M3DHeightMap::M3DHeightMap()
 {
+	m_pHeightTexture = NULL;
 	m_VertexShaderID = VSFILED;
 	GetMatarial()->m_PixelShaderID = PSFILED;
 	GetMatarial()->m_bIsCulling = false;

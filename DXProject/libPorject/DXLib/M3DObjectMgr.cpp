@@ -181,14 +181,14 @@ bool M3DObjectMgr::CreateBasicBuffer()
 {
 	SPLINE_VERTEX ver[8];
 	ZeroMemory(&ver, sizeof(SPLINE_VERTEX) * 8);
-	ver[0].p = float3(1, 1, -1);
-	ver[1].p = float3(-1, 1, -1);
-	ver[2].p = float3(-1, -1, -1);
-	ver[3].p = float3(1, -1, -1);
-	ver[4].p = float3(1, 1, 1);
-	ver[5].p = float3(-1, 1, 1);
-	ver[6].p = float3(-1, -1, 1);
-	ver[7].p = float3(1, -1, 1);
+	ver[0].p = D3DXVECTOR3(1, 1, -1);
+	ver[1].p = D3DXVECTOR3(-1, 1, -1);
+	ver[2].p = D3DXVECTOR3(-1, -1, -1);
+	ver[3].p = D3DXVECTOR3(1, -1, -1);
+	ver[4].p = D3DXVECTOR3(1, 1, 1);
+	ver[5].p = D3DXVECTOR3(-1, 1, 1);
+	ver[6].p = D3DXVECTOR3(-1, -1, 1);
+	ver[7].p = D3DXVECTOR3(1, -1, 1);
 
 	DWORD bindex[24] = { 0,1,1,2,2,3,3,0,4,5,5,6,6,7,7,4,0,4,1,5,2,6,3,7 };
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,12 +218,12 @@ bool M3DObjectMgr::CreateBasicBuffer()
 
 	SPLINE_VERTEX data[6];
 	ZeroMemory(&data, sizeof(SPLINE_VERTEX) * 6);
-	data[0].p = float3(1, 0, 0);
-	data[1].p = float3(-1, 0, 0);
-	data[2].p = float3(0, 1, 0);
-	data[3].p = float3(0, -1, 0);
-	data[4].p = float3(0, 0, 1);
-	data[5].p = float3(0, 0, -1);
+	data[0].p = D3DXVECTOR3(1, 0, 0);
+	data[1].p = D3DXVECTOR3(-1, 0, 0);
+	data[2].p = D3DXVECTOR3(0, 1, 0);
+	data[3].p = D3DXVECTOR3(0, -1, 0);
+	data[4].p = D3DXVECTOR3(0, 0, 1);
+	data[5].p = D3DXVECTOR3(0, 0, -1);
 	DWORD sindex[6];
 	for (int i = 0; i < 6; i++)
 	{
@@ -289,9 +289,8 @@ bool M3DObjectMgr::Render()
 	{
 		data.second->Render();
 	}
-	if (0)
+	if (1)
 	{
-		if (m_InWorldFiled) m_InWorldFiled->Render();
 		for (auto data : m_InWorldObjectList)
 		{
 			if (data.second->m_Box)
@@ -299,7 +298,6 @@ bool M3DObjectMgr::Render()
 				if (I_CameraMgr.frustum.CheckOBB(data.second->m_Box))
 				{
 					data.second->Render();
-					break;
 				}
 			}
 		}
@@ -310,7 +308,6 @@ bool M3DObjectMgr::Render()
 				if (I_CameraMgr.frustum.CheckOBB(data.second->m_Box))
 				{
 					data.second->Render();
-					break;
 				}
 			}
 		}
@@ -348,8 +345,8 @@ bool M3DObjectMgr::Release()
 		data.second->Release();
 		delete data.second;
 	}
-	m_List.clear();
-	m_InWorldUnitList.clear();
+	SAFE_RELEASE(m_pTree);
+	SAFE_DELETE(m_pTree);
 	return true;
 }
 

@@ -57,6 +57,8 @@ e:\kgca36\gitdx\dxproject\libporject\dxlib\mskinmesh.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mskeletonmgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mskeleton.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mrpgcamera.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mcollision.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mselect.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib_d.lib
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.res
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\cl.command.1.tlog

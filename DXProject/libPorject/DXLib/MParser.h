@@ -29,8 +29,8 @@ protected:
 	MAPTYPE			DataToMAPTYPE(ITOR &data);
 	//string		DataToSTR(ITOR &data);
 	M_STR			DataToMSTR(ITOR &data);
-	float3			FindMin(vector<MVERTEX>	&vertices);
-	float3			FindMax(vector<MVERTEX> &vertices);
+	D3DXVECTOR3			FindMin(vector<MVERTEX>	&vertices);
+	D3DXVECTOR3			FindMax(vector<MVERTEX> &vertices);
 	bool			CreateBuffer(MMesh* Target, vector<MVERTEX>	&vertices, vector<DWORD> &index);
 	bool			CreateBuffer(MMesh* Target, vector<DWORD> &index);
 	bool			CheckChar(string::iterator data);
