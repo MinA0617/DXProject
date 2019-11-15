@@ -1,6 +1,33 @@
 #include "MMapNode.h"
 #include "M3DHeightMap.h"
 
+bool MMapNode::UpdateConstantBuffer()
+{
+	g_pImmediateContext->UpdateSubresource(m_pConstantBuffer,0, 0, &m_ConstantMap, 0, 0);
+	return true;
+}
+
+bool MMapNode::SetTexture(MTexture * tex, MAPTYPE type, UINT id)
+{
+	if (id > MAX_MAP_COUNT) return false;
+	switch (type)
+	{
+	case DIFFUSE:
+	{
+		m_pDiffuseMap[(int)id] = tex;
+		return true;
+	}break;
+	case NORMAL:
+	{
+		m_pNormalMap[(int)id] = tex;
+		return true;
+	}break;
+	default:
+		break;
+	}
+	return false;
+}
+
 bool MMapNode::CreateMidIndexBuffer(int XCount)
 {
 	for (int i = 1; i < m_iIndex.size(); i++)
@@ -101,10 +128,22 @@ bool MMapNode::CreateIndexBuffer()
 	return true;
 }
 
-
-
 bool MMapNode::Render()
 {
+	for (int i = 0; i < MAX_MAP_COUNT; i++)
+	{
+		if (m_pDiffuseMap[i])
+		{
+			ID3D11ShaderResourceView* temp = m_pDiffuseMap[i]->GetTexture();
+			g_pImmediateContext->PSSetShaderResources(1 + (2 * i), 1, &temp);
+		}
+		if (m_pNormalMap[i])
+		{
+			ID3D11ShaderResourceView* temp = m_pNormalMap[i]->GetTexture();
+			g_pImmediateContext->PSSetShaderResources(2 + (2 * i), 1, &temp);
+		}
+	}
+	g_pImmediateContext->PSSetConstantBuffers(1, 1, &m_pConstantBuffer);
 	if (g_bIsLOD)
 	{
 		g_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer[m_dwCurLevel], DXGI_FORMAT_R32_UINT, 0);
@@ -156,14 +195,29 @@ bool MMapNode::Release()
 
 MMapNode::MMapNode()
 {
+	for (int i = 0; i < MAX_MAP_COUNT; i++)
+	{
+		m_pDiffuseMap[i] = nullptr;
+		m_pNormalMap[i] = nullptr;
+	}
 	m_dwCurLevel = 1;
 	for (int i = 0; i < 4; i++)
 	{
 		m_pNeighborNode[i] = nullptr;
 	}
+	D3D11_BUFFER_DESC BufferDesc;
+	HRESULT CreateBufferResult;
+	D3D11_SUBRESOURCE_DATA SubresourceData;
+	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
+	BufferDesc.ByteWidth = sizeof(CONSTANT_MAPNODE);
+	BufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	BufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
+	SubresourceData.pSysMem = &m_ConstantMap;
+	CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pConstantBuffer);
 }
 
 MMapNode::~MMapNode()
 {
-
+	SAFE_RELEASE(m_pConstantBuffer);
 }

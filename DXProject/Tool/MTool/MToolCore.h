@@ -8,11 +8,17 @@
 #endif
 
 #pragma comment (lib, "fmod_vc")
-
+#include "MPushPull.h"
+#include "MCanvas.h"
 
 class MToolCore : public MCore
 {
 public:
+	// Modifyer
+	MPushPull	pushpull;
+	MCanvas		canvas;
+public:
+	// Object
 	MLight* light;
 	MFiled* filed;
 	M3DObject* target;

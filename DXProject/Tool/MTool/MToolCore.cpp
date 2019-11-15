@@ -24,28 +24,54 @@ bool  MToolCore::Init()
 	light->m_ConstantLigth.m_Color = D3DXVECTOR3(1, 1, 1);
 	light->m_ConstantLigth.m_iFlag = OMNI;
 
-	I_Parser.Load(L"../../data/obj/Box001.OBJ");
-	M_STR name[1];
-	name[0] = L"Box001";
-	I_3DObjectMgr.AddInWorld(name, 1);
-	I_3DObjectMgr.AddInWorld(name, 1);
-	I_3DObjectMgr.AddInWorld(name, 1);
-	I_3DObjectMgr.findObject(1)->SetLocalPosition(D3DXVECTOR3(300, 0, 0));
-	I_3DObjectMgr.findObject(2)->SetLocalPosition(D3DXVECTOR3(0, 0, 300));
-	target = I_3DObjectMgr.findObject(0);
-
+	if (0)
+	{
+		I_Parser.Load(L"../../data/obj/Box001.OBJ");
+		M_STR name[1];
+		name[0] = L"Box001";
+		I_3DObjectMgr.AddInWorld(name, 1);
+		I_3DObjectMgr.AddInWorld(name, 1);
+		I_3DObjectMgr.AddInWorld(name, 1);
+		I_3DObjectMgr.findObject(1)->SetLocalPosition(D3DXVECTOR3(300, 0, 0));
+		I_3DObjectMgr.findObject(2)->SetLocalPosition(D3DXVECTOR3(0, 0, 300));
+		target = I_3DObjectMgr.findObject(0);
+	}
 	return true;
 }
 
 bool  MToolCore::Frame()
 {
+	if (g_ActionInput.F9 >= KEY_PUSH)
+	{
+		M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+		if (hm->CreateAlphaTexture(2048))
+		{
+			hm->Load_MAP(L"../../data/image/Icon_NewFile.bmp");
+			hm->Load_MAP(L"../../data/image/asd.bmp");
+			for (auto temp : hm->m_List)
+			{
+				hm->SetTexture(temp, 0, DIFFUSE, 0);
+				hm->SetTexture(temp, 1, DIFFUSE, 1);
+			}
+		}
+	}
 	if (g_ActionInput.a_LeftClick >= KEY_PUSH)
 	{
-		D3DXVECTOR3 result;
-		if (MSelect::PickGroundPosition(&result))
-		{
-			target->SetLocalPosition(result);
-		}
+		pushpull.PushPull();
+		//D3DXVECTOR3 result;
+		////if (MSelect::PickGroundPosition(&result))
+		////{
+		////	target->SetLocalPosition(result);
+		////}
+	}
+	if (g_ActionInput.a_RightClick >= KEY_PUSH)
+	{
+		canvas.Brushing(0);
+		//D3DXVECTOR3 result;
+		////if (MSelect::PickGroundPosition(&result))
+		////{
+		////	target->SetLocalPosition(result);
+		////}
 	}
 
 	if(0)

@@ -1,5 +1,26 @@
 #include "M3DHeightMap.h"
 
+bool M3DHeightMap::SetTexture(MMapNode * node, UINT textid, MAPTYPE type, UINT layerid)
+{
+	if (textid >= m_TextureList.size()) return false;
+	switch (type)
+	{
+	case DIFFUSE:
+		node->m_ConstantMap.m_isDiffuse[(int)layerid] = -1;
+		node->SetTexture(I_TextureMgr[m_TextureList[textid]], type, layerid);
+		node->UpdateConstantBuffer();
+		break;
+	case NORMAL:
+		node->m_ConstantMap.m_isNormal[(int)layerid] = -1;
+		node->SetTexture(I_TextureMgr[m_TextureList[textid]], type, layerid);
+		node->UpdateConstantBuffer();
+		break;
+	default:
+		break;
+	}
+	return true;
+}
+
 float M3DHeightMap::FindLeafYMax(float i0x, float i0z)
 {
 	int realx = (i0x + ((m_fLeafSize * m_iCount) / 2)) / m_fLeafSize;
@@ -46,6 +67,7 @@ bool M3DHeightMap::ComputeFaceNormalAndFaceIndexing()
 {
 	m_VertexFaceIndex.resize(m_VertexList.size());
 	m_FaceNormal.resize(m_IndexList.size() / 3);
+	//m_FaceVertexIndex.resize(m_IndexList.size() / 3);
 	int iSize = m_IndexList.size();
 	int FaceIndex = 0;
 	for (int i = 0; i < iSize; i = i =i+3)
@@ -55,6 +77,9 @@ bool M3DHeightMap::ComputeFaceNormalAndFaceIndexing()
 		m_VertexFaceIndex[m_IndexList[i + 1]].push_back(FaceIndex);
 		m_VertexFaceIndex[m_IndexList[i + 2]].push_back(FaceIndex);
 		m_FaceNormal[FaceIndex] = fNormal;
+		//m_FaceVertexIndex[FaceIndex][0] = m_IndexList[i];
+		//m_FaceVertexIndex[FaceIndex][1] = m_IndexList[i + 1];
+		//m_FaceVertexIndex[FaceIndex][2] = m_IndexList[i + 2];
 		FaceIndex++;
 	}
 	return true;
@@ -110,6 +135,15 @@ bool M3DHeightMap::CreateNode()
 			worldpos /= 4;
 			node->CreateIndexBuffer();
 			node->m_vWorldPos = D3DXVECTOR3(worldpos.x, worldpos.y, worldpos.z);
+
+			node->m_ConstantMap.m_ObjectColor = D3DXVECTOR3(0.7, 0.7, 0.7);
+			node->m_ConstantMap.m_isAlpha = 0;
+			node->m_ConstantMap.m_isDiffuse[0] = 0;
+			node->m_ConstantMap.m_isDiffuse[1] = 0;
+			node->m_ConstantMap.m_isNormal[0] = 0;
+			node->m_ConstantMap.m_isNormal[1] = 0;
+			node->m_ConstantMap.m_WorldSize = D3DXVECTOR2(m_iCount * m_fLeafSize, m_iCount * m_fLeafSize);
+
 			m_List.push_back(node);
 		}
 		flag += XSize * m_iCount;
@@ -214,6 +248,8 @@ void M3DHeightMap::CheckNode(MMapNode * node)
 			return;
 		}
 	}
+
+
 	return;
 }
 bool M3DHeightMap::CreateBuffer()
@@ -372,6 +408,54 @@ bool M3DHeightMap::Check()
 	return true;
 }
 
+bool M3DHeightMap::Load_MAP(M_STR filename, MAPTYPE type)
+{
+	// type 무시
+	DWORD id = 	I_TextureMgr.Load(filename);
+	if (!id) return false;
+	m_TextureList.push_back(id);
+	return true;
+}
+
+bool M3DHeightMap::CreateAlphaTexture(int xsize, int ysize)
+{
+	if (m_pAlphaTexture != NULL) return false;
+	ID3D11Texture2D* texture = NULL;
+	HRESULT hr;
+	D3D11_TEXTURE2D_DESC td;
+	ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
+	td.Width = xsize;
+	if (ysize == -1) { td.Height = xsize; }
+	else { td.Height = ysize; }
+	td.SampleDesc.Count = 1;
+	td.SampleDesc.Quality = 0;
+	td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	td.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	td.ArraySize = 1;
+	hr = g_pDevice->CreateTexture2D(&td, NULL, &texture);
+	if (FAILED(hr))
+	{
+		SAFE_RELEASE(texture);
+		return false;
+	}
+	//D3D11_SHADER_RESOURCE_VIEW_DESC tdt;
+	hr = g_pDevice->CreateShaderResourceView(texture, NULL, &m_pAlphaTexture);
+	//hr = D3DX11CreateShaderResourceViewFromResource(g_pDevice, NULL, (LPCWSTR)texture, NULL, NULL, &m_pAlphaTexture, NULL);
+	if (FAILED(hr))
+	{
+		SAFE_RELEASE(texture);
+		return false;
+	}
+	SAFE_RELEASE(texture);
+	for (int i = 0; i < m_List.size(); i++)
+	{
+		m_List[i]->m_ConstantMap.m_isAlpha = -1;
+		m_List[i]->UpdateConstantBuffer();
+	}
+	return true;
+}
+
 bool M3DHeightMap::Create(M_STR filename, float leafsize, float heigth, int tilesize, float lodstartdistance)
 {
 	if (leafsize <= 0) return false;
@@ -468,8 +552,8 @@ bool M3DHeightMap::Create(M_STR name, int count, float leafsize, int tilesize, f
 	HRESULT hr;
 	D3D11_TEXTURE2D_DESC td;
 	ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
-	td.Width = leafsize * count;
-	td.Height = leafsize * count;
+	td.Width = tilesize * count;
+	td.Height = tilesize * count;
 	td.MipLevels = 1;
 	td.SampleDesc.Count = 1;
 	td.SampleDesc.Quality = 0;
@@ -501,15 +585,35 @@ bool M3DHeightMap::Frame()
 
 bool M3DHeightMap::Render()
 {
-	I_MaterialMgr[MaterialID]->Render();
-	g_pImmediateContext->VSSetConstantBuffers(0, 1, &I_CameraMgr.m_pGrobalCameraBuffer);
-	g_pImmediateContext->VSSetConstantBuffers(1, 1, &m_pConstantBuffer);
+	if (I_DxState.m_bIsSolid)
+	{
+		I_DxState.RS_Set(MNoneCulling);
+
+	}
+	else
+	{
+		I_DxState.RS_Set(MWireFrame);
+	}
+	I_DxState.BS_Set(MAlphaBlend);
+	I_DxState.SS_Set(MWrapLinear);
+	I_DxState.DSS_Set(MDepthEnable);
+
+	if(m_pAlphaTexture) g_pImmediateContext->PSSetShaderResources(0, 1, &m_pAlphaTexture);
+
+	g_pImmediateContext->PSSetShader(I_PixelShaderMgr.m_PSList[PSFILED], NULL, 0);
+
+	g_pImmediateContext->PSSetConstantBuffers(0, 1, &I_CameraMgr.m_pGrobalCameraBuffer);
+
+	//I_MaterialMgr[MaterialID]->Render();
+	//g_pImmediateContext->VSSetConstantBuffers(0, 1, &I_CameraMgr.m_pGrobalCameraBuffer);
 	g_pImmediateContext->IASetInputLayout(I_VertexShaderMgr.m_LOList[m_VertexShaderID]);		// 레이아웃 셋
 	g_pImmediateContext->VSSetShader(I_VertexShaderMgr.m_VSList[m_VertexShaderID], NULL, 0);
 	UINT stride = sizeof(MVERTEX);		//// 보폭(카운트할 사이즈 크기)
 	UINT offset = 0;
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
 	//if (m_bIsLOD)
 	//{
 	//	for (auto node : m_List)
@@ -532,6 +636,7 @@ bool M3DHeightMap::Release()
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
 	SAFE_RELEASE(m_pHeightTexture);
+	SAFE_RELEASE(m_pAlphaTexture);
 	for (auto node : m_List)
 	{
 		node->Release();
@@ -542,6 +647,7 @@ bool M3DHeightMap::Release()
 
 M3DHeightMap::M3DHeightMap()
 {
+	m_pAlphaTexture = NULL;
 	m_pHeightTexture = NULL;
 	m_VertexShaderID = VSFILED;
 	GetMatarial()->m_PixelShaderID = PSFILED;

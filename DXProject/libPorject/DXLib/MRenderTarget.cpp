@@ -1,5 +1,5 @@
 #include "MRenderTarget.h"
-
+#include "MCameraMgr.h"
 MRenderTarget::MRenderTarget()
 {
 	m_RasterizerStateID = MSolidFrame;
@@ -68,6 +68,8 @@ bool MRenderTarget::Begin()
 	g_pImmediateContext->OMSetRenderTargets(1, &temp, temp2);
 	g_pImmediateContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
 	g_pImmediateContext->RSSetViewports(1, &m_ViewPort);
+
+	g_pImmediateContext->VSSetConstantBuffers(0, 1, &I_CameraMgr.m_MainCamera->m_pConstantBuffer);
 
 	return true;
 }

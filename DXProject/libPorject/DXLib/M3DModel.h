@@ -9,7 +9,7 @@ public:
 	//bool			CreateObj(MMesh* data);
 public:
 	//bool			Load(M_STR filename);
-	bool			Load_MAP(M_STR filename, MAPTYPE type);
+	bool			Load_MAP(M_STR filename, MAPTYPE type = NOTFOUND);
 public:
 	virtual bool	Init();
 	virtual bool	Frame();

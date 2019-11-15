@@ -26,7 +26,7 @@ MRAY MSelect::GetScreenRay()
 	return ray;
 }
 
-bool MSelect::CheckTri(MTreeNode * pNode, MRAY * ray, D3DXVECTOR3* minintersection)
+bool MSelect::CheckTri(MTreeNode * pNode, MRAY * ray, D3DXVECTOR3* minintersection, DWORD* index)
 {
 	M3DHeightMap* map = I_3DObjectMgr.m_InWorldFiled->ground;
 	vector<MVERTEX>& vertexlist = I_3DObjectMgr.m_InWorldFiled->ground->m_VertexList;
@@ -42,16 +42,24 @@ bool MSelect::CheckTri(MTreeNode * pNode, MRAY * ray, D3DXVECTOR3* minintersecti
 		D3DXVECTOR3 facenormal = map->ComputeFaceNormal(indexlist[i + 0], indexlist[i + 1], indexlist[i + 2]);
 		if (I_Collision.TritoRay(&facenormal, &vertexlist[indexlist[i + 0]].p, &vertexlist[indexlist[i + 1]].p, &vertexlist[indexlist[i + 2]].p, ray, &intersection))
 		{
-			//
-			//*minintersection = vertexlist[indexlist[i + 0]].p;
-			//return true;
-			//
 			float distance = I_Collision.GetDistance(ray->vOrigin, intersection);
 			if (mindistance > distance)
 			{
-				mindistance = distance;
-				*minintersection = intersection;
-				result = true;
+				if (minintersection)
+				{
+					mindistance = distance;
+					*minintersection = intersection;
+					result = true;
+					if (index)
+					{
+						// 인덱스를 넘기면 인접인덱스의 번호를 리턴한다.
+						*index = indexlist[i];
+					}
+				}
+				else
+				{
+					return true;
+				}
 			}
 		}
 	}

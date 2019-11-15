@@ -14,6 +14,7 @@ struct MTreeNode
 	vector<MTreeNode*>		m_pChild;
 	vector<M3DObject*>		m_pObj;
 	bool					Render();
+	bool					MapRender();
 	MTreeNode() { m_Tile = nullptr; };
 };
 

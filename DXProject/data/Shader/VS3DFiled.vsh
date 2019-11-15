@@ -13,10 +13,13 @@ cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 	float	height;
 };
 
-cbuffer cb1 : register(b1)
+cbuffer cb1 : register(b1) // constant buffer name : register (empty : num)
 {
-	matrix	m_matWorld		: packoffset(c0);
-	float4  m_ObjectColor	: packoffset(c4);
+	float3	m_ObjectColor;
+	int		m_isAlpha;
+	float2	m_WorldSize;
+	int		m_isDiffuse[2];
+	int		m_isNormal[2];
 };
 
 cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)

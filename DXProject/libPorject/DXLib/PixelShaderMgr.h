@@ -1,7 +1,7 @@
 #pragma once
 #include "MStd.h"
 #include "D3Dcompiler.h"
-#define PS_NUM 6
+#define PS_NUM 5
 
 enum PixelShader { PS2D, PS3D, PSSPLINE, PSBONE, PSFILED, PSFILED2 };
 

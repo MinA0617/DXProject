@@ -1,7 +1,10 @@
 #define g_iNumLight  1
 
-Texture2D g_txDiffuse : register(t0);
-Texture2D g_txNormal : register(t1);
+Texture2D g_txAlpha		: register(t0);
+Texture2D g_txDiffuse	: register(t1);
+Texture2D g_txNormal	: register(t2);
+Texture2D g_txDiffuse2	: register(t3);
+Texture2D g_txNormal2	: register(t4);
 
 SamplerState s0 : register(s0);
 
@@ -17,14 +20,12 @@ cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 
 cbuffer cb1 : register(b1) // constant buffer name : register (empty : num)
 {
-	float3	m_ObjectColor;
-	int		m_isDiffuse;
-	int		m_isNormal;
-	int		m_isSpecular;
-	int		m_isOpacity;
-	int		m_isReflection;
-	int		m_isRefraction;
-	int		m_isEnvironment;
+	float3	m_ObjectColor	 : packoffset(c0);
+	int		m_isAlpha		 : packoffset(c0.w);
+	float2	m_WorldSize		 : packoffset(c1);
+	int2	m_isDiffuse		 : packoffset(c1.z);
+	int2	m_isNormal		 : packoffset(c2);
+	float2	temtmep			 : packoffset(c2.z);
 };
 
 cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)
@@ -119,29 +120,60 @@ float NormalMapping(float3 LightVector, float3 NormalMapPixel)
 
 float4 PS(PS3D_INPUT data) : SV_TARGET
 {
-
 	float4 lastcolor;
-	if (m_isDiffuse == -1)
+	float4 layer1 = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
+	float2 uv = (float2(data.WorldPosition.x, data.WorldPosition.z) + (m_WorldSize / 2)) / m_WorldSize;
+	float4 alpha = g_txAlpha.Sample(s0, uv);
+	float4 layer2 = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
+	lastcolor = (layer1 * -alpha.x) + (layer2 * alpha.x);
+	return lastcolor;
+
+	// --------------------------
+	if (m_isDiffuse.x == -1)
 	{
 		float4 Diffusecolor = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
-		lastcolor = Diffusecolor;
+		layer1 = Diffusecolor;
+		if (m_isNormal.x == -1)
+		{
+			float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);
+			float normal = 0.0;
+			for (int i = 0; i < g_iNumLight; i++)
+			{
+				normal += NormalMapping(data.vLight[i], Nomarlcolor.xyz);
+			}
+			layer1 *= normal;
+		}
+		lastcolor = layer1;
 	}
 	else
 	{
 		float4 mutiplier = float4(0.3f, 0.3f, 0.3f, 1.0f) + float4(ComputeLight(data.WorldPosition, data.Normal), 1);
-		lastcolor.xyz = m_ObjectColor * mutiplier.xyz;
+		layer1.xyz = m_ObjectColor * mutiplier.xyz;
+		lastcolor = layer1;
 	}
 
-	if (m_isNormal == -1)
+	if (m_isAlpha == -1)
 	{
-		float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);
-		float normal = 0.0;
-		for (int i = 0; i < g_iNumLight; i++)
+		float2 uv = (float2(data.WorldPosition.x, data.WorldPosition.z) + (m_WorldSize / 2)) / m_WorldSize;
+		float4 alpha = g_txAlpha.Sample(s0, uv);
+		if (m_isDiffuse.y == -1)
 		{
-			normal += NormalMapping(data.vLight[i], Nomarlcolor.xyz);
+			float4 Diffusecolor = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
+			layer2 = Diffusecolor;
+			if (m_isNormal.y == -1)
+			{
+				float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);
+				float normal = 0.0;
+				for (int i = 0; i < g_iNumLight; i++)
+				{
+					normal += NormalMapping(data.vLight[i], Nomarlcolor.xyz);
+				}
+				layer2 *= normal;
+			}
+			lastcolor = (lastcolor * -alpha.x) + (layer2 * alpha.x);
 		}
-		lastcolor *= normal;
 	}
+
 
 	lastcolor.w = 1;
 	return lastcolor;

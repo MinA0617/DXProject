@@ -251,6 +251,10 @@ bool MTree::Render()
 	I_3DObjectMgr.m_InWorldFiled->Render();
 	for (auto node : m_RenderNodeList)
 	{
+		node->MapRender();
+	}
+	for (auto node : m_RenderNodeList)
+	{
 		node->Render();
 	}
 	return true;
@@ -275,7 +279,6 @@ MTree::~MTree()
 
 bool MTreeNode::Render()
 {
-	if (m_Tile) m_Tile->Render();
 	for (auto obj : m_pObj)
 	{
 		obj->Render();
@@ -283,6 +286,16 @@ bool MTreeNode::Render()
 	for (auto Child : m_pChild)
 	{
 		Child->Render();
+	}
+	return true;
+}
+
+bool MTreeNode::MapRender()
+{
+	if (m_Tile) m_Tile->Render();
+	for (auto Child : m_pChild)
+	{
+		Child->MapRender();
 	}
 	return true;
 }

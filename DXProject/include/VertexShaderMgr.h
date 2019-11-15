@@ -1,7 +1,7 @@
 #pragma once
 #include "MStd.h"
 #include "D3Dcompiler.h"
-#define VS_NUM 6
+#define VS_NUM 5
 
 enum VertexShader { VS2D, VS3D, VSSPLINE, VSCHARACTER, VSFILED, VSFILED2};
 

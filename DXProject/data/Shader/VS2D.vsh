@@ -14,11 +14,11 @@ cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 
 cbuffer cb1 : register(b1)
 {
-	float	PositionX	: packoffset(c0.x);
-	float	PositionY	: packoffset(c0.y);
-	float	ScaleX		: packoffset(c0.z);
-	float	ScaleY		: packoffset(c0.w);
-	float	Rotation	: packoffset(c1.x);
+	float	PositionX		: packoffset(c0.x);
+	float	PositionY		: packoffset(c0.y);
+	float	ScaleX			: packoffset(c0.z);
+	float	ScaleY			: packoffset(c0.w);
+	float	Rotation		: packoffset(c1.x);
 	float	b1empty1		: packoffset(c1.y);
 	float	b1empty2		: packoffset(c1.z);
 	float	b1empty3		: packoffset(c1.w);

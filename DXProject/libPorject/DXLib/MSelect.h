@@ -8,7 +8,7 @@ class MSelect
 public:
 	static D3DXVECTOR2		GetScreenPoint();
 	static MRAY				GetScreenRay();
-	static bool				CheckTri(MTreeNode* pNode, MRAY* ray, D3DXVECTOR3* minintersection);
+	static bool				CheckTri(MTreeNode* pNode, MRAY* ray, D3DXVECTOR3* minintersection = nullptr, DWORD* index = nullptr);
 	static MTreeNode*		CheckNode(MTreeNode* pNode, MRAY* ray);
 public:
 	static bool				PickObject(M3DObject* result);

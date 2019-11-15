@@ -11,6 +11,19 @@ MSample::~MSample()
 
 bool  MSample::Init()
 {
+	I_3DObjectMgr.CreateFiled(L"fgh", 17, 10, 4);
+	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+	if (hm->CreateAlphaTexture(2048))
+	{
+		hm->Load_MAP(L"../../data/image/Icon_NewFile.bmp");
+		hm->Load_MAP(L"../../data/image/asd.bmp");
+		for (auto temp : hm->m_List)
+		{
+			hm->SetTexture(temp, 0, DIFFUSE, 0);
+			hm->SetTexture(temp, 1, DIFFUSE, 1);
+		}
+	}
+
 	I_CameraMgr.CreateFPSCamera_Main();
 	I_Device.m_dxWrite.AddData(L"카메라이동 : WASD", D2D1::ColorF(0, 0, 0, 1.0), D3DXVECTOR2(0, 0));
 	I_Device.m_dxWrite.AddData(L"아이템 변경 : F1, F2", D2D1::ColorF(0, 0, 0, 1.0), D3DXVECTOR2(30, 0));
@@ -51,7 +64,6 @@ bool  MSample::Init()
 
 
 	light = &(I_LightMgr.m_List);
-	target = f;
 	return true;
 }
 

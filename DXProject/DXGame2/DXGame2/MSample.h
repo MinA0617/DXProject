@@ -51,7 +51,6 @@ public:
 	MSample();
 	~MSample();
 public:
-	Filed* f;
 
 	MUnit* unit;
 	MLight* light;

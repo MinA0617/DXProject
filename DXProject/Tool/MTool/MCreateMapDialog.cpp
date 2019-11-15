@@ -45,9 +45,9 @@ void MCreateMapDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_Map_LeafSize, m_fLeafSize);
 	DDV_MinMaxFloat(pDX, m_fLeafSize, 0.01, 9999.00);
 	DDX_Text(pDX, IDC_Map_Count, m_ctMapCount);
-	DDV_MinMaxInt(pDX, m_iTileSize, 1, 16385);
+	DDV_MinMaxInt(pDX, m_ctMapCount, 1, 16385);
 	DDX_Text(pDX, IDC_Map_Height, m_ctMapHeight);
-	DDV_MinMaxFloat(pDX, m_fLeafSize, 0.01, 9999.00);
+	DDV_MinMaxFloat(pDX, m_ctMapHeight, 0.01, 9999.00);
 	DDX_Control(pDX, IDC_BUTTON1, m_FindFile);
 }
 

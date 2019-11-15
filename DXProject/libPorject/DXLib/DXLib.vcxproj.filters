@@ -98,13 +98,13 @@
       <Filter>Object\3DObject\Light</Filter>
     </ClCompile>
     <ClCompile Include="MMaterial.cpp">
-      <Filter>Material</Filter>
+      <Filter>Object\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="MMaterialMgr.cpp">
-      <Filter>Material</Filter>
+      <Filter>Object\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="M3DMaterial.cpp">
-      <Filter>Material</Filter>
+      <Filter>Object\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="MKeyAnimation.cpp">
       <Filter>Object\Animation</Filter>
@@ -295,13 +295,13 @@
       <Filter>Object\3DObject\Light</Filter>
     </ClInclude>
     <ClInclude Include="MMaterial.h">
-      <Filter>Material</Filter>
+      <Filter>Object\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="MMaterialMgr.h">
-      <Filter>Material</Filter>
+      <Filter>Object\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="M3DMaterial.h">
-      <Filter>Material</Filter>
+      <Filter>Object\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="MKeyAnimation.h">
       <Filter>Object\Animation</Filter>
@@ -413,9 +413,6 @@
     <Filter Include="Manager">
       <UniqueIdentifier>{656a1593-601c-4f23-80c3-8ce168a8ed01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Material">
-      <UniqueIdentifier>{be76af1b-871d-4542-a76f-830344c5fc8b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Animation">
       <UniqueIdentifier>{f9b1b2fd-9b37-4f86-bc49-48fc35667391}</UniqueIdentifier>
     </Filter>
@@ -445,6 +442,9 @@
     </Filter>
     <Filter Include="Manager\ShaderMgr\Shader">
       <UniqueIdentifier>{a032cec9-3192-4285-9204-6990dd08382f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Resource\Material">
+      <UniqueIdentifier>{be76af1b-871d-4542-a76f-830344c5fc8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

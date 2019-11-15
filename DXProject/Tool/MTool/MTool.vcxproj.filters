@@ -51,6 +51,12 @@
     <ClInclude Include="MCreateMapDialog.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="MPushPull.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MCanvas.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MTool.cpp">
@@ -78,6 +84,12 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="MCreateMapDialog.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MPushPull.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MCanvas.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -77,15 +77,15 @@ bool PixelShaderMgr::Init()
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSFILED]);	// 컴파일된 쉐이더를 생성해 준다
 #pragma endregion PSFILED
 
-#pragma region PSFILED2
-	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/PS3DFiled2.psh", NULL, NULL, "PS", "ps_5_0", dwShaderFlags, 0, NULL, &pPSShader, &pErrorMsgs, NULL);
-	if (FAILED(LoadShaderResult))
-	{
-		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
-		return false;
-	}
-	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSFILED2]);	// 컴파일된 쉐이더를 생성해 준다
-#pragma endregion PSFILED2
+//#pragma region PSFILED2
+//	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/PS3DFiled2.psh", NULL, NULL, "PS", "ps_5_0", dwShaderFlags, 0, NULL, &pPSShader, &pErrorMsgs, NULL);
+//	if (FAILED(LoadShaderResult))
+//	{
+//		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
+//		return false;
+//	}
+//	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSFILED2]);	// 컴파일된 쉐이더를 생성해 준다
+//#pragma endregion PSFILED2
 
 	return true;
 }
