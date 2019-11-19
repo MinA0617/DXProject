@@ -18,6 +18,7 @@ public:
 	MPushPull	pushpull;
 	MCanvas		canvas;
 public:
+	MDXWirte*	data;
 	// Object
 	MLight* light;
 	MFiled* filed;

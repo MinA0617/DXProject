@@ -18,7 +18,9 @@ public:
 	ID3D11Texture2D*			m_pHeightTexture;
 
 	vector<DWORD>				m_TextureList;
-	ID3D11ShaderResourceView*	m_pAlphaTexture;
+
+	ID3D11Texture2D*			m_pAlphaTexture;
+	ID3D11ShaderResourceView*	m_pAlphaTextureSRV;
 
 	ID3D11Buffer*				m_pVertexBuffer;
 	ID3D11Buffer*				m_pIndexBuffer;

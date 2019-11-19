@@ -7,13 +7,13 @@ struct TTextArray
 	DWORD index;
 	D2D1_MATRIX_3X2_F  matWorld;	// 매트
 	D2D1_RECT_F  rt;				// 랙트
-	D3DCOLORVALUE color;			// 컬러
+	D3DXVECTOR4 color;			// 컬러
 	std::wstring data;				// 문자열
 	IDWriteTextFormat* pTextFormat;
 	TTextArray()
 	{
 		matWorld = D2D1::IdentityMatrix();
-		color = D2D1::ColorF(0, 0, 0, 1);
+		color = D3DXVECTOR4(0, 0, 0, 1);
 		rt.top = 0;
 		rt.left = 0;
 		rt.right = 800;
@@ -46,8 +46,8 @@ private:
 	HRESULT CreateDeviceResources(IDXGISurface1* pSurface);
 	void	DiscardDeviceResource();
 public:
-	DWORD	AddData(wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos);
-	void	UpdateData(DWORD index, wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos);
+	DWORD	AddData(wstring data, D3DXVECTOR4 color, D3DXVECTOR2 pos);
+	void	UpdateData(DWORD index, wstring data, D3DXVECTOR4 color, D3DXVECTOR2 pos);
 	void	ClearList();
 public:
 	bool	Init();

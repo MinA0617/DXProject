@@ -105,8 +105,8 @@ LRESULT CMToolView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 void CMToolView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
-	ClientToScreen(&point);
-	OnContextMenu(this, point);
+	//ClientToScreen(&point);
+	//OnContextMenu(this, point);
 }
 
 void CMToolView::OnContextMenu(CWnd* /* pWnd */, CPoint point)

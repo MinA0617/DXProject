@@ -132,4 +132,12 @@
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\brush\canvas.vsh">
+      <Filter>Core</Filter>
+    </FxCompile>
+    <FxCompile Include="..\brush\eraser.vsh">
+      <Filter>Core</Filter>
+    </FxCompile>
+  </ItemGroup>
 </Project>

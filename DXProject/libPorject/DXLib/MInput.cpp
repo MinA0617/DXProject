@@ -82,24 +82,23 @@ bool MInput::Frame()
 	g_MousePos.x = (m_Mousrpos.x * 1) - g_rtWindowClient.right / 2;
 	g_MousePos.y = (m_Mousrpos.y * -1) + g_rtWindowClient.bottom / 2;
 
-	//for (int iButton = 0; iButton < 3; iButton++)
-	//{
-	//	if (m_dwBeforeMouseState[iButton] == KEY_PUSH)
-	//	{
-	//		if (m_dwMouseState[iButton] == KEY_PUSH)
-	//		{
-	//			m_dwMouseState[iButton] = KEY_HOLD;
-	//		}
-	//	}
-	//	m_dwBeforeMouseState[iButton] = m_dwMouseState[iButton];
-	//}
-
-	for (int i = 0; i < 3; i++)
+	for (int iButton = 0; iButton < 3; iButton++)
 	{
-		if (m_dwMouseState[i] == KEY_UP)
+		if (m_dwBeforeMouseState[iButton] == KEY_PUSH)
 		{
-			m_dwMouseState[i] = KEY_FREE;
+			if (m_dwMouseState[iButton] == KEY_PUSH)
+			{
+				m_dwMouseState[iButton] = KEY_HOLD;
+			}
 		}
+		if (m_dwBeforeMouseState[iButton] == KEY_UP)
+		{
+			if (m_dwMouseState[iButton] == KEY_UP)
+			{
+				m_dwMouseState[iButton] = KEY_FREE;
+			}
+		}
+		m_dwBeforeMouseState[iButton] = m_dwMouseState[iButton];
 	}
 
 	g_ActionInput.a_LeftClick = m_dwMouseState[0];
@@ -125,10 +124,7 @@ LRESULT MInput::MsgProc(MSG msg)
 	{
 	case WM_LBUTTONDOWN:
 	{
-		if (m_dwMouseState[0] == KEY_PUSH)
-			m_dwMouseState[0] = KEY_HOLD;
-		else
-			m_dwMouseState[0] = KEY_PUSH;
+		m_dwMouseState[0] = KEY_PUSH;
 	}
 	break;
 	case WM_LBUTTONUP:
@@ -137,10 +133,7 @@ LRESULT MInput::MsgProc(MSG msg)
 	}break;
 	case WM_MBUTTONDOWN:
 	{
-		if (m_dwMouseState[1] == KEY_PUSH)
-			m_dwMouseState[1] = KEY_HOLD;
-		else
-			m_dwMouseState[1] = KEY_PUSH;
+		m_dwMouseState[1] = KEY_PUSH;
 	}break;
 	case WM_MBUTTONUP:
 	{
@@ -148,10 +141,7 @@ LRESULT MInput::MsgProc(MSG msg)
 	}break;
 	case WM_RBUTTONDOWN:
 	{
-		if (m_dwMouseState[2] == KEY_PUSH)
-			m_dwMouseState[2] = KEY_HOLD;
-		else
-			m_dwMouseState[2] = KEY_PUSH;
+		m_dwMouseState[2] = KEY_PUSH;
 	}break;
 	case WM_RBUTTONUP:
 	{

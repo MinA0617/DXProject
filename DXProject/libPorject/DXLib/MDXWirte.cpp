@@ -59,7 +59,7 @@ HRESULT MDXWirte::CreateDeviceIndependentResources()
 	return hr;
 }
 
-DWORD MDXWirte::AddData(wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos)
+DWORD MDXWirte::AddData(wstring data, D3DXVECTOR4 color, D3DXVECTOR2 pos)
 {
 	//// 포맷을 받을 수 있도록 변경하기 ////
 	TTextArray newtext;
@@ -72,7 +72,7 @@ DWORD MDXWirte::AddData(wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos)
 	return newtext.index;
 }
 
-void MDXWirte::UpdateData(DWORD index , wstring data, D3DCOLORVALUE color, D3DXVECTOR2 pos)
+void MDXWirte::UpdateData(DWORD index , wstring data, D3DXVECTOR4 color, D3DXVECTOR2 pos)
 {
 	m_dataList[index].data = data;
 	m_dataList[index].color = color;
@@ -107,8 +107,12 @@ bool MDXWirte::Render()
 	for (int iData = 0; iData < m_dataList.size(); iData++)
 	{
 		m_pRenderTarget->SetTransform(m_dataList[iData].matWorld);
-		m_pBlackBrush->SetColor(m_dataList[iData].color);
-
+		D2D1_COLOR_F temp;
+		temp.r = m_dataList[iData].color.x;
+		temp.g = m_dataList[iData].color.y;
+		temp.b = m_dataList[iData].color.z;
+		temp.a = m_dataList[iData].color.w;
+		m_pBlackBrush->SetColor(temp);
 		IDWriteTextFormat*   pTextFormat = m_dataList[iData].pTextFormat;
 		if (pTextFormat == nullptr)
 		{

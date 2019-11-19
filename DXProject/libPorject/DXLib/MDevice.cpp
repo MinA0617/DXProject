@@ -40,7 +40,6 @@ bool MDevice::Init()
 	//if (!I_GeometryShaderMgr.Init()) return false;
 	if (!I_DxState.Init()) return false;
 	if (!I_3DObjectMgr.Init()) return false;
-	m_dxWrite.Init();
 
 	return true;
 }
@@ -59,7 +58,11 @@ bool MDevice::Release()
 	SAFE_RELEASE(m_pDevice);
 	SAFE_RELEASE(m_pImmediateContext);
 	SAFE_RELEASE(m_pGIFactory);
-	m_dxWrite.Release();
+
+	for (auto wr : m_dxWriteList)
+	{
+		wr->Release();
+	}
 
 	return true;
 }
@@ -74,7 +77,10 @@ bool MDevice::PreRender()
 bool MDevice::PostRender()
 {
 	I_RenderTargetMgr.PostRender();
-	m_dxWrite.Render();
+	for (auto wr : m_dxWriteList)
+	{
+		wr->Render();
+	}
 	m_pSwapChain->Present(0, 0);
 	return true;
 }
@@ -89,7 +95,10 @@ bool MDevice::Frame()
 {
 	I_MaterialMgr.Frame();
 	I_RenderTargetMgr.Frame();
-	m_dxWrite.Frame();
+	for (auto wr : m_dxWriteList)
+	{
+		wr->Frame();
+	}
 	return true;
 }
 

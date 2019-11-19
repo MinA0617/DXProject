@@ -36,7 +36,7 @@ protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
-	CMFCToolBarImages m_UserImages;
+	//CMFCToolBarImages m_UserImages;
 	CPropertiesWnd    m_wndProperties;
 
 // 생성된 메시지 맵 함수

@@ -124,8 +124,9 @@ float4 PS(PS3D_INPUT data) : SV_TARGET
 	float4 layer1 = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
 	float2 uv = (float2(data.WorldPosition.x, data.WorldPosition.z) + (m_WorldSize / 2)) / m_WorldSize;
 	float4 alpha = g_txAlpha.Sample(s0, uv);
-	float4 layer2 = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
-	lastcolor = (layer1 * -alpha.x) + (layer2 * alpha.x);
+	float4 layer2 = g_txDiffuse2.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
+	lastcolor = (layer1 * (1 - alpha.x)) + (layer2 * alpha.x);
+	lastcolor.w = 1;
 	return lastcolor;
 
 	// --------------------------
