@@ -31,6 +31,15 @@
 #define IDS_EDIT_MENU                   306
 #define IDD_MBForm                      311
 #define IDB_BITMAP1                     325
+#define IDC_RADIO1                      1000
+#define IDC_LIST1                       1001
+#define IDC_LIST2                       1002
+#define IDC_SLIDER1                     1003
+#define IDC_SCROLLBAR1                  1004
+#define IDC_SCROLLBAR2                  1005
+#define IDC_SCROLLBAR3                  1006
+#define IDC_LIST3                       1007
+#define IDC_COMBO1                      1008
 #define ID_BUTTON32773                  32773
 #define ID_BUTTON32774                  32774
 
@@ -38,9 +47,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        328
+#define _APS_NEXT_RESOURCE_VALUE        329
 #define _APS_NEXT_COMMAND_VALUE         32775
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

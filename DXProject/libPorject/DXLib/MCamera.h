@@ -22,7 +22,7 @@ public:
 	virtual void		MoveBack(float valve);
 	virtual void		MoveRight(float valve);
 	virtual void		MoveLeft(float valve);
-
+	virtual void		Resize();
 	virtual bool		Init() override;
 	virtual bool		Frame() override;
 	virtual bool		Render() override;

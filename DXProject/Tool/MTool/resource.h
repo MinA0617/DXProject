@@ -41,7 +41,9 @@
 #define ID_VIEW_APPLOOK_WINDOWS_7       219
 #define IDS_EDIT_MENU                   306
 #define IDD_CtlForm                     310
+#define IDD_MapCtlForm                  310
 #define IDC_BUTTON_LOD                  311
+#define IDC_OPEN_BRUSH                  311
 #define IDC_BUTTON_SOLID                312
 #define IDD_TOOL_CREATEMAP              313
 #define IDD_TOOL_LOADTEXTURE            314
@@ -53,6 +55,26 @@
 #define IDC_RADIO_MAP01                 1011
 #define IDC_RADIO_MAP02                 1012
 #define IDC_BUTTON1                     1014
+#define IDC_TILE_LIST                   1019
+#define IDC_BRUSH_LIST                  1020
+#define IDC_RADIO_LAYER2                1022
+#define IDC_RADIO_LAYER1                1023
+#define IDC_RADIO_LAYER3                1024
+#define IDC_BRUSH_SIZE                  1027
+#define IDC_BRUSH_OPACITY               1028
+#define IDC_PUSH_SIZE                   1029
+#define IDC_PUSH_POWER                  1030
+#define IDC_PUSH_SIZE_SPIN              1032
+#define IDC_PUSH_POWER_SPIN             1033
+#define IDC_BRUSH_SIZE_SPIN             1034
+#define IDC_BRUSH_OPACITY_SPIN          1035
+#define IDC_EDIT1                       1037
+#define IDC_Map_AlphaTextureSize        1037
+#define IDC_OPEN_TILE                   1039
+#define IDC_BUTTON_TILE                 1040
+#define IDC_BUTTON_BRUSH                1041
+#define IDC_BUTTON_TILE3                1042
+#define IDC_BUTTON_PUSH                 1042
 #define idd                             32772
 #define IDD                             32772
 
@@ -62,7 +84,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        319
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1018
+#define _APS_NEXT_CONTROL_VALUE         1041
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif

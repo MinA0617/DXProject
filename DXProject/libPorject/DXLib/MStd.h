@@ -358,6 +358,10 @@ struct Keyinput
 	int RIGHT;
 	int SPACE;
 	int ENTER;
+
+	int CTRL;
+	int ALT;
+	int SHIFT;
 };
 
 template <typename T>

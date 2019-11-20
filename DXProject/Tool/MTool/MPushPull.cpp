@@ -83,7 +83,7 @@ bool MPushPull::PushPull()
 					i = XCount;
 					while (1)
 					{
-						if (index + i >= vertexlist.size()) break;
+						if (Xlist[j] + i >= vertexlist.size()) break;
 						D3DXVECTOR3& vertex = vertexlist[Xlist[j] + i].p;
 						D3DXVECTOR2 length(vertex.x, vertex.z);
 						float distance = D3DXVec2Length(&(center2d - length));
@@ -101,7 +101,7 @@ bool MPushPull::PushPull()
 					i = XCount;
 					while (1)
 					{
-						if (index < i) break;
+						if (Xlist[j] < i) break;
 						D3DXVECTOR3& vertex = vertexlist[Xlist[j] - i].p;
 						D3DXVECTOR2 length(vertex.x, vertex.z);
 						float distance = D3DXVec2Length(&(center2d - length));

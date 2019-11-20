@@ -11,7 +11,8 @@ public:
 	static bool				CheckTri(MTreeNode* pNode, MRAY* ray, D3DXVECTOR3* minintersection = nullptr, DWORD* index = nullptr);
 	static MTreeNode*		CheckNode(MTreeNode* pNode, MRAY* ray);
 public:
-	static bool				PickObject(M3DObject* result);
+	static M3DObject*		PickObject();
+	static MMapNode*		PickTile();
 	static bool				PickGroundPosition(D3DXVECTOR3* result);
 public:
 	MSelect();

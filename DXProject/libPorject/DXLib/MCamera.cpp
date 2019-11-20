@@ -125,3 +125,9 @@ void MCamera::MoveLeft(float valve)
 	D3DXVec3Normalize(&Right, &Right);
 	m_LocalPosition -= Right * valve * g_fSeoundPerFrame;
 }
+
+void MCamera::Resize()
+{
+	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4, (float)g_rtWindowClient.right / (float)g_rtWindowClient.bottom, 1.0f, MAXDISTANCE);
+	D3DXMatrixTranspose(&m_matProj, &m_matProj);
+}

@@ -32,6 +32,7 @@ public:
 	bool						m_bIsEraser;
 	float						m_fOpacity;
 public:
+	bool						LoadBrush(M_STR filepath);
 	bool						Create(float xsize, float ysize);
 	bool						Begin();
 	bool						End();

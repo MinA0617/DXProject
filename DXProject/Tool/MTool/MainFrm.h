@@ -5,6 +5,7 @@
 #pragma once
 #include "PropertiesWnd.h"
 #include "MCreateMapDialog.h"
+#include "MMapPane.h"
 
 class CMainFrame : public CFrameWndEx
 {
@@ -15,7 +16,8 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
-	MCreateMapDialog m_MapDlg;
+	MMapPane			m_MapPane;
+	MCreateMapDialog	m_MapDlg;
 // 작업입니다.
 public:
 
@@ -36,8 +38,9 @@ protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CMFCMenuBar       m_wndMenuBar;
 	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
-	//CMFCToolBarImages m_UserImages;
-	CPropertiesWnd    m_wndProperties;
+	CMFCToolBarImages m_UserImages;
+
+	CPropertiesWnd    m_wndProperties; // 다른속성창으로 만들기
 
 // 생성된 메시지 맵 함수
 protected:

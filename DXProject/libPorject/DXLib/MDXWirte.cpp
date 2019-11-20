@@ -20,6 +20,8 @@ void MDXWirte::DiscardDeviceResource()
 HRESULT MDXWirte::CreateDeviceResources(IDXGISurface1* pSurface)
 {
 	//// 3D랜더타겟을 2D로 변화하여 
+	SAFE_RELEASE(m_pRenderTarget);
+	SAFE_RELEASE(m_pBlackBrush);
 	HRESULT hr = S_OK;
 	D2D1_RENDER_TARGET_PROPERTIES rp;
 	rp.type = D2D1_RENDER_TARGET_TYPE_DEFAULT;
@@ -42,6 +44,7 @@ HRESULT MDXWirte::CreateDeviceResources(IDXGISurface1* pSurface)
 HRESULT MDXWirte::CreateDeviceIndependentResources()
 {
 	//// 팩토리와 텍스트 포멧을 지정하여 생성한다 ////
+	SAFE_RELEASE(m_pd2dFactory);
 	HRESULT hr = S_OK;
 	//// 공유|분리지정, 식별ID ////
 	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pd2dFactory);

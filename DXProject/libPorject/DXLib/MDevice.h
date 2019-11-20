@@ -30,6 +30,7 @@ public:
 	bool						CreateSwapChain();
 	bool						SetRenderTargetView();
 	bool						SetViewPort();
+	bool						ResizeDXWirte();
 public:
 	bool						Init();
 	bool						Frame();

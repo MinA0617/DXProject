@@ -7,6 +7,7 @@ private:
 	M3DHeightMap* m_pHM;
 	float	m_fRadius;
 	float	m_fPower;
+public:
 	bool	m_bReversal;
 private:
 	void	ModifyVertex(DWORD index, float distance);

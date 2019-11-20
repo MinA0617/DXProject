@@ -16,6 +16,12 @@
     <Filter Include="Core">
       <UniqueIdentifier>{fe155e06-ee33-4c7b-b1f9-fa895ae73b1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Modify">
+      <UniqueIdentifier>{81d3a58f-1ec9-4bac-ba45-4c124a055b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Dialog">
+      <UniqueIdentifier>{5619e93e-d871-43e0-a4af-06036170ffdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MTool.h">
@@ -45,17 +51,23 @@
     <ClInclude Include="MToolCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="MCtlForm.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MCreateMapDialog.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="MCanvas.h">
+      <Filter>Core\Modify</Filter>
     </ClInclude>
     <ClInclude Include="MPushPull.h">
-      <Filter>Core</Filter>
+      <Filter>Core\Modify</Filter>
     </ClInclude>
-    <ClInclude Include="MCanvas.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="MTileing.h">
+      <Filter>Core\Modify</Filter>
+    </ClInclude>
+    <ClInclude Include="MCreateMapDialog.h">
+      <Filter>Core\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="MMapCtlForm.h">
+      <Filter>Core\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="MMapPane.h">
+      <Filter>Core\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,17 +92,23 @@
     <ClCompile Include="MToolCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="MCtlForm.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MCreateMapDialog.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="MCanvas.cpp">
+      <Filter>Core\Modify</Filter>
     </ClCompile>
     <ClCompile Include="MPushPull.cpp">
-      <Filter>Core</Filter>
+      <Filter>Core\Modify</Filter>
     </ClCompile>
-    <ClCompile Include="MCanvas.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="MTileing.cpp">
+      <Filter>Core\Modify</Filter>
+    </ClCompile>
+    <ClCompile Include="MCreateMapDialog.cpp">
+      <Filter>Core\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="MMapCtlForm.cpp">
+      <Filter>Core\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="MMapPane.cpp">
+      <Filter>Core\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,11 +151,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\brush\canvas.vsh">
-      <Filter>Core</Filter>
-    </FxCompile>
     <FxCompile Include="..\brush\eraser.vsh">
-      <Filter>Core</Filter>
+      <Filter>Core\Modify</Filter>
+    </FxCompile>
+    <FxCompile Include="..\brush\canvas.vsh">
+      <Filter>Core\Modify</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

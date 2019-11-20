@@ -38,4 +38,6 @@ public:
 	afx_msg void OnEnChangeMapTilesize();
 	afx_msg void OnBnClickedCreate();
 	afx_msg void OnBnClickedLoadFile();
+	afx_msg void OnEnChangeMapAlphatexturesize();
+	int m_iTextureSize;
 };

@@ -123,14 +123,10 @@ bool MCanvas::Init()
 	}
 #pragma endregion BLEND
 
-	DWORD index = I_TextureMgr.Load(L"../brush/defult.bmp");
-	if (index) m_BrushList.push_back(index);
-	index = I_TextureMgr.Load(L"../brush/defult2.bmp");
-	if (index) m_BrushList.push_back(index);
-	index = I_TextureMgr.Load(L"../brush/defult3.bmp");
-	if (index) m_BrushList.push_back(index);
-
-
+	//DWORD index = I_TextureMgr.Load(L"../brush/defult.bmp");
+	//if (index) m_BrushList.push_back(index);
+	//index = I_TextureMgr.Load(L"../brush/defult2.bmp");
+	//if (index) m_BrushList.push_back(index);
 	return true;
 }
 
@@ -141,6 +137,17 @@ bool MCanvas::Frame()
 		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
 	}
 	return true;
+}
+
+bool MCanvas::LoadBrush(M_STR filepath)
+{
+	int	index = I_TextureMgr.Load(filepath);
+	if (index)
+	{
+		m_BrushList.push_back(index);
+		return true;
+	}
+	return false;
 }
 
 bool MCanvas::Create(float xsize, float ysize)
@@ -187,6 +194,7 @@ bool MCanvas::Create(float xsize, float ysize)
 
 bool MCanvas::Brushing()
 {
+	if (m_BrushID >= m_BrushList.size()) return false;
 	if (!I_3DObjectMgr.m_InWorldFiled) return false;
 	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
 	if(!hm->m_pAlphaTexture) return false;

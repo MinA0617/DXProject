@@ -29,6 +29,7 @@ MCreateMapDialog::MCreateMapDialog(CWnd* pParent /*=nullptr*/)
 	, m_fLeafSize(10)
 	, m_ctMapCount(129)
 	, m_ctMapHeight(100)
+	, m_iTextureSize(2048)
 {
 
 }
@@ -49,6 +50,8 @@ void MCreateMapDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_Map_Height, m_ctMapHeight);
 	DDV_MinMaxFloat(pDX, m_ctMapHeight, 0.01, 9999.00);
 	DDX_Control(pDX, IDC_BUTTON1, m_FindFile);
+	DDX_Text(pDX, IDC_Map_AlphaTextureSize, m_iTextureSize);
+	DDV_MinMaxInt(pDX, m_iTextureSize, 1, 99999999);
 }
 
 
@@ -61,6 +64,7 @@ BEGIN_MESSAGE_MAP(MCreateMapDialog, CDialogEx)
 	ON_EN_CHANGE(IDC_Map_TileSize, &MCreateMapDialog::OnEnChangeMapTilesize)
 	ON_BN_CLICKED(IDOK2, &MCreateMapDialog::OnBnClickedCreate)
 	ON_BN_CLICKED(IDC_BUTTON1, &MCreateMapDialog::OnBnClickedLoadFile)
+	ON_EN_CHANGE(IDC_Map_AlphaTextureSize, &MCreateMapDialog::OnEnChangeMapAlphatexturesize)
 END_MESSAGE_MAP()
 
 void MCreateMapDialog::OnBnClickedRadioNew()
@@ -137,8 +141,15 @@ void MCreateMapDialog::OnBnClickedCreate()
 		name += buffer;
 		if (I_3DObjectMgr.CreateFiled(name, m_ctMapCount, m_fLeafSize, m_iTileSize))
 		{
-			CDialogEx::OnOK();
-			AfxMessageBox(L"성공하였습니다!");
+			M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+			if (hm->CreateAlphaTexture(m_iTextureSize))
+			{
+				if (theApp.m_Tool.canvas.Create(m_iTextureSize, m_iTextureSize))
+				{
+					CDialogEx::OnOK();
+					AfxMessageBox(L"성공하였습니다!");
+				}
+			}
 		}
 		else
 		{
@@ -150,6 +161,15 @@ void MCreateMapDialog::OnBnClickedCreate()
 	{
 		if (I_Parser.Load_HM(m_FileName, m_fLeafSize, m_ctMapHeight, m_iTileSize))
 		{
+			M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+			if (hm->CreateAlphaTexture(m_iTextureSize))
+			{
+				if (theApp.m_Tool.canvas.Create(m_iTextureSize, m_iTextureSize))
+				{
+					CDialogEx::OnOK();
+					AfxMessageBox(L"성공하였습니다!");
+				}
+			}
 			AfxMessageBox(L"성공! 불러오기에 성공하였습니다.");
 		}
 		else
@@ -157,4 +177,9 @@ void MCreateMapDialog::OnBnClickedCreate()
 			AfxMessageBox(L"실패! 올파른 파일이 아닙다.");
 		}
 	}
+}
+
+void MCreateMapDialog::OnEnChangeMapAlphatexturesize()
+{
+	UpdateData(TRUE);
 }

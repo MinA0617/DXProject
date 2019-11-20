@@ -141,11 +141,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_FILE_NEW);
 	lstBasicCommands.AddTail(ID_FILE_OPEN);
 	lstBasicCommands.AddTail(ID_FILE_SAVE);
-	lstBasicCommands.AddTail(ID_FILE_PRINT);
+	//lstBasicCommands.AddTail(ID_FILE_PRINT);
 	lstBasicCommands.AddTail(ID_APP_EXIT);
-	lstBasicCommands.AddTail(ID_EDIT_CUT);
-	lstBasicCommands.AddTail(ID_EDIT_PASTE);
-	lstBasicCommands.AddTail(ID_EDIT_UNDO);
+	//lstBasicCommands.AddTail(ID_EDIT_CUT);
+	//lstBasicCommands.AddTail(ID_EDIT_PASTE);
+	//lstBasicCommands.AddTail(ID_EDIT_UNDO);
 	lstBasicCommands.AddTail(ID_APP_ABOUT);
 	lstBasicCommands.AddTail(ID_VIEW_STATUS_BAR);
 	lstBasicCommands.AddTail(ID_VIEW_TOOLBAR);
@@ -158,6 +158,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_VIEW_APPLOOK_WINDOWS_7);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
+
+	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI;
+	BOOL bRet = m_MapPane.CreateEx(NULL, L"MapTool", this, CRect(0, 0, 300, 800), TRUE, 12345, dwStyle);
+
+	m_MapPane.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_MapPane);
 
 	return 0;
 }

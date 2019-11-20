@@ -105,6 +105,8 @@ bool MCore::ResizeDevice(UINT width, UINT height)
 {
 	I_Device.ResizeSwapChain(width, height);
 	I_RenderTargetMgr.Resize();
+	if (I_CameraMgr.m_MainCamera) I_CameraMgr.m_MainCamera->Resize();
+	I_Device.ResizeDXWirte();
 	return true;
 }
 

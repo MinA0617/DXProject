@@ -102,10 +102,16 @@ MTreeNode* MSelect::CheckNode(MTreeNode* pNode, MRAY* ray)
 }
 
 
-bool MSelect::PickObject(M3DObject * result)
+M3DObject* MSelect::PickObject()
 {
+	return nullptr;
+}
 
-	return true;
+MMapNode* MSelect::PickTile()
+{
+	MTreeNode* pNode = CheckNode(I_3DObjectMgr.m_pTree->m_pRootNode, &GetScreenRay());
+	if (pNode) return pNode->m_Tile;
+	return nullptr;
 }
 
 bool MSelect::PickGroundPosition(D3DXVECTOR3 * result)

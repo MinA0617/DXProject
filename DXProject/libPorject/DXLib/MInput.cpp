@@ -75,6 +75,10 @@ bool MInput::Frame()
 	g_ActionInput.SPACE = KeyCheck(VK_SPACE);
 	g_ActionInput.ENTER = KeyCheck(VK_RETURN);
 
+	g_ActionInput.SHIFT = KeyCheck(VK_SHIFT);
+	g_ActionInput.CTRL = KeyCheck(VK_CONTROL);
+	g_ActionInput.ALT = KeyCheck(VK_MENU);
+
 
 	///////////////////마우스 체크////////////////////
 	GetCursorPos(&m_Mousrpos);

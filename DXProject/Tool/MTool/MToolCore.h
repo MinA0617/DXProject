@@ -10,11 +10,16 @@
 #pragma comment (lib, "fmod_vc")
 #include "MPushPull.h"
 #include "MCanvas.h"
+#include "MTileing.h"
+
+enum ModifyerState { NOT_SET = 0, TILEING, BRUSH, PUSH };
 
 class MToolCore : public MCore
 {
 public:
 	// Modifyer
+	ModifyerState	m_State;
+	MTileing	tileing;
 	MPushPull	pushpull;
 	MCanvas		canvas;
 public:

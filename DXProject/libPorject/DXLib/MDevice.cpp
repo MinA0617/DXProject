@@ -250,6 +250,15 @@ bool MDevice::SetViewPort()
 	return true;
 }
 
+bool MDevice::ResizeDXWirte()
+{
+	for (auto temp : m_dxWriteList)
+	{
+		temp->Init();
+	}
+	return false;
+}
+
 bool MDevice::ResizeSwapChain(UINT width, UINT height)
 {
 	if (m_pDevice == nullptr) return true;
