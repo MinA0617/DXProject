@@ -18,6 +18,46 @@ MMapCtlForm*  MMapCtlForm::CreateOne(CWnd* pParent)
 	return pForm;
 }
 
+bool MMapCtlForm::LoadBrush(CString path)
+{
+	M_STR str = path;
+	if (theApp.m_Tool.canvas.LoadBrush(str))
+	{
+		TCHAR Drive[MAX_PATH] = { 0, };
+		TCHAR Dir[MAX_PATH] = { 0, };
+		TCHAR Name[MAX_PATH] = { 0, };
+		TCHAR Ext[MAX_PATH] = { 0, };
+		_tsplitpath_s(path, Drive, Dir, Name, Ext); // 패스와 이름과 확장자 끊어주기
+		CString tilename = Name; // 이름저장
+
+		m_BrushList.InsertItem(m_iBrushCount, tilename);
+		m_BrushList.SetItemText(m_iBrushCount, 1, tilename);
+		m_iBrushCount++;
+		return true;
+	}
+	return false;
+}
+
+bool MMapCtlForm::LoadTile(CString path)
+{
+	M_STR str = path;
+	if (I_3DObjectMgr.m_InWorldFiled->ground->Load_MAP(str))
+	{
+		TCHAR Drive[MAX_PATH] = { 0, };
+		TCHAR Dir[MAX_PATH] = { 0, };
+		TCHAR Name[MAX_PATH] = { 0, };
+		TCHAR Ext[MAX_PATH] = { 0, };
+		_tsplitpath_s(path, Drive, Dir, Name, Ext); // 패스와 이름과 확장자 끊어주기
+		CString tilename = Name; // 이름저장
+
+		m_TileLIst.InsertItem(m_iTileCount, tilename);
+		m_TileLIst.SetItemText(m_iTileCount, 1, tilename);
+		m_iTileCount++;
+		return true;
+	}
+	return false;
+}
+
 MMapCtlForm::MMapCtlForm() : CFormView(IDD_MapCtlForm)
 , m_iBrushSize(100)
 , m_iBrushOpacity(100)
@@ -127,7 +167,7 @@ void MMapCtlForm::OnDeltaposBrushOpacity(NMHDR *pNMHDR, LRESULT *pResult)
 	UpdateData(FALSE);
 	*pResult = 0;
 
-	theApp.m_Tool.canvas.m_fOpacity = m_iBrushOpacity / 200.0 + 0.5;
+	theApp.m_Tool.canvas.m_fOpacity = m_iBrushOpacity / 100.00;
 }
 
 
@@ -168,7 +208,7 @@ void MMapCtlForm::OnEnChangeBrushSize()
 void MMapCtlForm::OnEnChangeBrushOpacity()
 {
 	UpdateData(TRUE);
-	theApp.m_Tool.canvas.m_fOpacity = m_iBrushOpacity / 200.0 + 0.5;;
+	theApp.m_Tool.canvas.m_fOpacity = m_iBrushOpacity / 100.00;
 }
 
 
@@ -221,21 +261,7 @@ void MMapCtlForm::OnBnClickedOpenTile()
 	{
 		selFileName = dlg.GetPathName();
 		CMToolApp* pApp = (CMToolApp*)AfxGetApp();
-		M_STR str = selFileName;
-		if (I_3DObjectMgr.m_InWorldFiled->ground->Load_MAP(str))
-		{
-			TCHAR Drive[MAX_PATH] = { 0, };
-			TCHAR Dir[MAX_PATH] = { 0, };
-			TCHAR Name[MAX_PATH] = { 0, };
-			TCHAR Ext[MAX_PATH] = { 0, };
-			_tsplitpath_s(selFileName, Drive, Dir, Name, Ext); // 패스와 이름과 확장자 끊어주기
-			CString tilename = Name; // 이름저장
-
-			m_TileLIst.InsertItem(m_iTileCount, tilename);
-			m_TileLIst.SetItemText(m_iTileCount, 1, tilename);
-			m_iTileCount++;
-		}
-		else
+		if (!LoadTile(selFileName))
 		{
 			AfxMessageBox(L"실패! 올파른 파일이 아닙다.");
 			return;
@@ -243,7 +269,6 @@ void MMapCtlForm::OnBnClickedOpenTile()
 
 	}
 }
-
 
 void MMapCtlForm::OnBnClickedOpenBrush()
 {
@@ -257,27 +282,7 @@ void MMapCtlForm::OnBnClickedOpenBrush()
 	if (dlg.DoModal() == IDOK)
 	{
 		selFileName = dlg.GetPathName();
-		CMToolApp* pApp = (CMToolApp*)AfxGetApp();
-		M_STR str = selFileName;
-		if (theApp.m_Tool.canvas.LoadBrush(str))
-		{
-			TCHAR Drive[MAX_PATH] = { 0, };
-			TCHAR Dir[MAX_PATH] = { 0, };
-			TCHAR Name[MAX_PATH] = { 0, };
-			TCHAR Ext[MAX_PATH] = { 0, };
-			_tsplitpath_s(selFileName, Drive, Dir, Name, Ext); // 패스와 이름과 확장자 끊어주기
-			CString tilename = Name; // 이름저장
-
-			//CDC* p;
-			//p.getb
-			//CBitmap temp;
-			//CImageList m_ImageList;
-			//m_BrushList.CreateDragImage(m_iBrushCount, );
-			m_BrushList.InsertItem(m_iBrushCount, tilename);
-			m_BrushList.SetItemText(m_iBrushCount, 1, tilename);
-			m_iBrushCount++;
-		}
-		else
+		if(!LoadBrush(selFileName))
 		{
 			AfxMessageBox(L"실패! 올파른 파일이 아닙다.");
 		}

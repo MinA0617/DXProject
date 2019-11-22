@@ -17,7 +17,9 @@ public:
 
 // 작업입니다.
 public:
-
+	bool		SaveHeightMap(CString path, FILE* file, float height);
+	bool		SaveAlphaMap(CString path, FILE* file);
+	bool		SaveTileIndex(FILE* file);
 // 재정의입니다.
 public:
 	virtual BOOL OnNewDocument();
@@ -45,4 +47,7 @@ protected:
 	// 검색 처리기에 대한 검색 콘텐츠를 설정하는 도우미 함수
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	afx_msg void OnFileSave();
+	afx_msg void OnFileOpen();
 };

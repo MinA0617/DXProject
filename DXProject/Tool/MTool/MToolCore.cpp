@@ -74,7 +74,7 @@ bool  MToolCore::Frame()
 		}
 	}
 
-	if(0)
+	if(1)
 	{
 		D3DXVECTOR3 tt;
 		y += 1 * g_fSeoundPerFrame;

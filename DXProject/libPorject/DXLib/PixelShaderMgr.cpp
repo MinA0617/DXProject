@@ -35,6 +35,7 @@ bool PixelShaderMgr::Init()
 		return false;
 	}
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PS2D]);	// 컴파일된 쉐이더를 생성해 준다
+	SAFE_RELEASE(pPSShader);
 #pragma endregion PS2D
 
 #pragma region PS3D
@@ -45,6 +46,7 @@ bool PixelShaderMgr::Init()
 		return false;
 	}
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PS3D]);	// 컴파일된 쉐이더를 생성해 준다
+	SAFE_RELEASE(pPSShader);
 #pragma endregion PS3D
 
 #pragma region PSSPLINE
@@ -55,6 +57,7 @@ bool PixelShaderMgr::Init()
 		return false;
 	}
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSSPLINE]);	// 컴파일된 쉐이더를 생성해 준다
+	SAFE_RELEASE(pPSShader);
 #pragma endregion PSSPLINE
 
 #pragma region PSBONE
@@ -65,6 +68,7 @@ bool PixelShaderMgr::Init()
 		return false;
 	}
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSBONE]);	// 컴파일된 쉐이더를 생성해 준다
+	SAFE_RELEASE(pPSShader);
 #pragma endregion PSBONE
 
 #pragma region PSFILED
@@ -75,6 +79,7 @@ bool PixelShaderMgr::Init()
 		return false;
 	}
 	g_pDevice->CreatePixelShader(pPSShader->GetBufferPointer(), pPSShader->GetBufferSize(), NULL, &m_PSList[PSFILED]);	// 컴파일된 쉐이더를 생성해 준다
+	SAFE_RELEASE(pPSShader);
 #pragma endregion PSFILED
 
 //#pragma region PSFILED2

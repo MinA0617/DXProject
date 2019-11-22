@@ -10,6 +10,9 @@ public:
 	MMapCtlForm();   // 표준 생성자입니다.
 	virtual ~MMapCtlForm();
 	static MMapCtlForm*  CreateOne(CWnd* pParent);
+public:
+	bool LoadBrush(CString path);
+	bool LoadTile(CString path);
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_MapCtlForm };
@@ -36,22 +39,22 @@ public:
 	afx_msg void OnLvnItemchangedTileList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedOpenTile();
 	afx_msg void OnBnClickedOpenBrush();
-	int				m_iLayer;
-	int				m_iBrushSize;
-	int				m_iBrushOpacity;
-	float			m_iPushSize;
-	float			m_iPushPower;
-	CListCtrl		m_TileLIst;
-	CListCtrl		m_BrushList;
-	int				m_iTileID;
-	int				m_iBrushID;
-	int				m_iTileCount;
-	int				m_iBrushCount;
-
 	afx_msg void OnBnClickedButtonTile();
 	afx_msg void OnBnClickedButtonBrush();
 	afx_msg void OnBnClickedButtonPush();
-	CButton m_TileBotton;
-	CButton m_DrawBotton;
-	CButton m_PushBotton;
+
+	int			m_iLayer;
+	int			m_iBrushSize;
+	int			m_iBrushOpacity;
+	float		m_iPushSize;
+	float		m_iPushPower;
+	CListCtrl	m_TileLIst;
+	CListCtrl	m_BrushList;
+	int			m_iTileID;
+	int			m_iBrushID;
+	int			m_iTileCount;
+	int			m_iBrushCount;
+	CButton		m_TileBotton;
+	CButton		m_DrawBotton;
+	CButton		m_PushBotton;
 };

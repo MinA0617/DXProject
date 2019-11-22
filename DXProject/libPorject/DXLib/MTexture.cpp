@@ -19,6 +19,7 @@ bool MTexture::Load(M_STR filename)
 	//// 디바이스객체, 파일이름, 마테리얼속성, 펌프인터페이스, 텍스쳐리소스, 결과값,
 	TextureLoadResult = D3DX11CreateShaderResourceViewFromFile(g_pDevice, filename.c_str(), NULL, NULL, &m_pTexture, NULL);
 	if (FAILED(TextureLoadResult)) return false;
+	m_szPath = filename;
 	//// ID3D11Resource로 받은 텍스쳐를 ID3D11Texture2D로 다운캐스팅 ////
 	//pRes->QueryInterface(__uuidof(ID3D11ShaderResourceView), (LPVOID*)&m_pTexture);
 	//pRes->Release(); // 안쓰는 부모형은 릴리즈
@@ -52,4 +53,9 @@ MSize MTexture::GetTextureSize()
 M_STR MTexture::GetName()
 {
 	return m_szName;
+}
+
+M_STR MTexture::GetPath()
+{
+	return m_szPath;
 }

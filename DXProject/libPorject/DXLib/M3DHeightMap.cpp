@@ -7,12 +7,12 @@ bool M3DHeightMap::SetTexture(MMapNode * node, UINT textid, MAPTYPE type, UINT l
 	{
 	case DIFFUSE:
 		node->m_ConstantMap.m_isDiffuse[(int)layerid] = -1;
-		node->SetTexture(I_TextureMgr[m_TextureList[textid]], type, layerid);
+		node->SetTexture(textid, type, layerid);
 		node->UpdateConstantBuffer();
 		break;
 	case NORMAL:
 		node->m_ConstantMap.m_isNormal[(int)layerid] = -1;
-		node->SetTexture(I_TextureMgr[m_TextureList[textid]], type, layerid);
+		node->SetTexture(textid, type, layerid);
 		node->UpdateConstantBuffer();
 		break;
 	default:
@@ -437,99 +437,6 @@ bool M3DHeightMap::CreateAlphaTexture(int xsize, int ysize)
 	hr = g_pDevice->CreateShaderResourceView(m_pAlphaTexture, NULL, &m_pAlphaTextureSRV);
 	if (FAILED(hr)) return false;
 
-	
-
-
-	/*HRESULT hr;
-	D3D11_TEXTURE2D_DESC td;
-	ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
-	td.Width = xsize;
-	if (ysize == -1) { td.Height = xsize; }
-	else { td.Height = ysize; }
-	td.MipLevels = 1;
-	td.SampleDesc.Count = 1;
-	td.SampleDesc.Quality = 0;
-	td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	td.Usage = D3D11_USAGE_STAGING;
-	td.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
-	td.BindFlags = 0;
-	td.ArraySize = 1;
-	hr = g_pDevice->CreateTexture2D(&td, NULL, &m_pAlphaTexture);
-	if (FAILED(hr)) return false;
-
-	m_SourceRegion.left = 0;
-	m_SourceRegion.right = xsize;
-	m_SourceRegion.top = 0;
-	m_SourceRegion.bottom = td.Height;
-	m_SourceRegion.front = 0;
-	m_SourceRegion.back = 1;
-
-	D3D11_TEXTURE2D_DESC desc;
-	m_pAlphaTexture->GetDesc(&desc);
-
-	hr = g_pDevice->CreateTexture2D(&desc, 0, &m_pAlphaTextureDest);
-	if (FAILED(hr)) return false;
-
-	g_pImmediateContext->CopyResource(m_pAlphaTextureDest, m_pAlphaTexture);
-
-	D3DX11SaveTextureToFile(g_pImmediateContext, m_pAlphaTextureDest, D3DX11_IFF_BMP, L"temp.bmp");
-
-	g_pImmediateContext->CopySubresourceRegion(m_pAlphaTextureDest, 0, 0, 0, 0, m_pAlphaTexture, 0, &m_SourceRegion);
-
-	hr = g_pDevice->CreateShaderResourceView(m_pAlphaTextureDest, NULL, &m_pAlphaTextureSRV);*/
-
-	//if (m_pAlphaTexture != NULL) return false;
-	////ID3D11Texture2D* texture = NULL;
-	//HRESULT hr;
-	//D3D11_TEXTURE2D_DESC td;
-	//ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
-	//td.Width = xsize;
-	//if (ysize == -1) { td.Height = xsize; }
-	//else { td.Height = ysize; }
-	////td.SampleDesc.Count = 1;
-	////td.SampleDesc.Quality = 0;
-	////td.Usage = D3D11_USAGE_DYNAMIC;
-	////td.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	////td.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE && D3D11_CPU_ACCESS_READ;
-	////td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	////td.ArraySize = 1;
-	//td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	//td.Usage = D3D11_USAGE_STAGING;
-	//td.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
-	//td.BindFlags = 0;
-	//td.ArraySize = 1;
-	//td.MipLevels = 1;
-	//td.SampleDesc.Count = 1;
-	//td.SampleDesc.Quality = 0;
-	//hr = g_pDevice->CreateTexture2D(&td, NULL, &m_pAlphaTexture);
-	//if (FAILED(hr))
-	//{
-	//	return false;
-	//}
-	//D3D11_SHADER_RESOURCE_VIEW_DESC srvd;
-	//ZeroMemory(&srvd, sizeof(srvd));
-	//srvd.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-
-	//DXGI_FORMAT_R8G8B8A8_UNORM
-
-
-	////srvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	////srvd.Texture2D.MostDetailedMip = 2;
-	////srvd.Texture2D.MipLevels = 1;
-	////
-	////srvd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
-	////srvd.Buffer.ElementOffset = 0;
-	////srvd.Buffer.ElementWidth = xsize * sizeof(D3DXVECTOR4);
-
-	////srvd.Buffer.ElementOffset = 0;
-	//hr = g_pDevice->CreateShaderResourceView((ID3D11Resource*)m_pAlphaTexture, NULL, &m_pAlphaTextureSRV);
-	//hr = g_pDevice->CreateShaderResourceView(m_pAlphaTexture, NULL, &m_pAlphaTextureSRV);
-	////hr = D3DX11CreateShaderResourceViewFromResource(g_pDevice, NULL, (LPCWSTR)m_pAlphaTexture, NULL, NULL, &m_pAlphaTextureSRV, NULL);
-	//if (FAILED(hr))
-	//{
-	//	return false;
-	//}
-	////SAFE_RELEASE(texture);
 	for (int i = 0; i < m_List.size(); i++)
 	{
 		m_List[i]->m_ConstantMap.m_isAlpha = -1;

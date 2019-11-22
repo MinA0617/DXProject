@@ -1,5 +1,6 @@
 #include "MMapNode.h"
 #include "M3DHeightMap.h"
+#include "M3DObjectMgr.h"
 
 bool MMapNode::UpdateConstantBuffer()
 {
@@ -7,19 +8,19 @@ bool MMapNode::UpdateConstantBuffer()
 	return true;
 }
 
-bool MMapNode::SetTexture(MTexture * tex, MAPTYPE type, UINT id)
+bool MMapNode::SetTexture(DWORD tex, MAPTYPE type, UINT layer)
 {
-	if (id > MAX_MAP_COUNT) return false;
+	if (layer > MAX_MAP_COUNT) return false;
 	switch (type)
 	{
 	case DIFFUSE:
 	{
-		m_pDiffuseMap[(int)id] = tex;
+		m_pDiffuseMap[(int)layer] = tex;
 		return true;
 	}break;
 	case NORMAL:
 	{
-		m_pNormalMap[(int)id] = tex;
+		m_pNormalMap[(int)layer] = tex;
 		return true;
 	}break;
 	default:
@@ -130,16 +131,17 @@ bool MMapNode::CreateIndexBuffer()
 
 bool MMapNode::Render()
 {
+	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
 	for (int i = 0; i < MAX_MAP_COUNT; i++)
 	{
-		if (m_pDiffuseMap[i])
+		if (m_pDiffuseMap[i] != -1)
 		{
-			ID3D11ShaderResourceView* temp = m_pDiffuseMap[i]->GetTexture();
+			ID3D11ShaderResourceView* temp = I_TextureMgr[hm->m_TextureList[m_pDiffuseMap[i]]]->GetTexture();
 			g_pImmediateContext->PSSetShaderResources(1 + (2 * i), 1, &temp);
 		}
-		if (m_pNormalMap[i])
+		if (m_pNormalMap[i] != -1)
 		{
-			ID3D11ShaderResourceView* temp = m_pNormalMap[i]->GetTexture();
+			ID3D11ShaderResourceView* temp = I_TextureMgr[hm->m_TextureList[m_pNormalMap[i]]]->GetTexture();
 			g_pImmediateContext->PSSetShaderResources(2 + (2 * i), 1, &temp);
 		}
 	}
@@ -197,8 +199,8 @@ MMapNode::MMapNode()
 {
 	for (int i = 0; i < MAX_MAP_COUNT; i++)
 	{
-		m_pDiffuseMap[i] = nullptr;
-		m_pNormalMap[i] = nullptr;
+		m_pDiffuseMap[i] = -1;
+		m_pNormalMap[i] = -1;
 	}
 	m_dwCurLevel = 1;
 	for (int i = 0; i < 4; i++)

@@ -32,8 +32,10 @@ public:
 	bool						m_bIsEraser;
 	float						m_fOpacity;
 public:
+	ID3D11Texture2D*			GetTexture();
 	bool						LoadBrush(M_STR filepath);
 	bool						Create(float xsize, float ysize);
+	bool						Load(M_STR filepath);
 	bool						Begin();
 	bool						End();
 

@@ -95,8 +95,8 @@ bool MCanvas::Init()
 	ds.IndependentBlendEnable = TRUE;
 	ds.RenderTarget[0].BlendEnable = TRUE;
 
-	ds.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	ds.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	ds.RenderTarget[0].BlendOp = D3D11_BLEND_OP_MAX;
+	ds.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
 	ds.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
 
 	ds.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
@@ -115,7 +115,7 @@ bool MCanvas::Init()
 
 	ds.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	ds.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	ds.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+	ds.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 
 	if (FAILED(hr = g_pDevice->CreateBlendState(&ds, &m_BSERASER)))
 	{
@@ -137,6 +137,11 @@ bool MCanvas::Frame()
 		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
 	}
 	return true;
+}
+
+ID3D11Texture2D * MCanvas::GetTexture()
+{
+	return m_pCanvasTexture;
 }
 
 bool MCanvas::LoadBrush(M_STR filepath)
@@ -182,13 +187,67 @@ bool MCanvas::Create(float xsize, float ysize)
 	m_ViewPort.TopLeftX = 0;
 	m_ViewPort.TopLeftY = 0;
 
-	hm->m_pAlphaTexture->GetDesc(&td);
+	//hm->m_pAlphaTexture->GetDesc(&td);
 	m_TextureSize.x = td.Width;
 	m_TextureSize.y = td.Height;
 
 	SAFE_RELEASE(hm->m_pAlphaTextureSRV);
 	hm->m_pAlphaTextureSRV = m_pShaderResourceView;
 
+	return true;
+}
+
+bool MCanvas::Load(M_STR filepath)
+{
+	if (!I_3DObjectMgr.m_InWorldFiled) return false;
+	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+	if (!hm->m_pAlphaTexture) return false;
+
+	ID3D11Resource *pResource = NULL;
+	HRESULT TextureLoadResult;
+
+	D3DX11_IMAGE_INFO ImageInfo;
+	D3DX11GetImageInfoFromFile(filepath.c_str(), NULL, &ImageInfo, &TextureLoadResult);
+	if (FAILED(TextureLoadResult)) return false;
+
+	D3DX11_IMAGE_LOAD_INFO loadInfo;
+	ZeroMemory(&loadInfo, sizeof(D3DX11_IMAGE_LOAD_INFO));
+	loadInfo.MipLevels = 1;
+	loadInfo.Usage = D3D11_USAGE_DEFAULT;
+	loadInfo.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	//loadInfo.Format = DXGI_FORMAT_FROM_FILE;
+	loadInfo.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	loadInfo.pSrcInfo = &ImageInfo;
+
+	//// 디바이스객체, 파일이름, 마테리얼속성, 펌프인터페이스, 텍스쳐리소스, 결과값,
+	TextureLoadResult = D3DX11CreateTextureFromFile(g_pDevice, filepath.c_str(), &loadInfo, NULL, &pResource, NULL);
+	if (FAILED(TextureLoadResult)) return false;
+	TextureLoadResult = pResource->QueryInterface(__uuidof(ID3D11Texture2D), (LPVOID*)&m_pCanvasTexture);
+	if (FAILED(TextureLoadResult)) return false;
+	SAFE_RELEASE(pResource);
+
+	HRESULT hr;
+	D3D11_TEXTURE2D_DESC td;
+	m_pCanvasTexture->GetDesc(&td);
+
+	hr = g_pDevice->CreateShaderResourceView(m_pCanvasTexture, NULL, &m_pShaderResourceView);
+	if (FAILED(hr)) return false;
+	hr = g_pDevice->CreateRenderTargetView(m_pCanvasTexture, NULL, &m_pRenderTargetView);
+	if (FAILED(hr)) return false;
+
+	m_ViewPort.Width = td.Width;
+	m_ViewPort.Height = td.Height;
+	m_ViewPort.MinDepth = 0;
+	m_ViewPort.MaxDepth = 1;
+	m_ViewPort.TopLeftX = 0;
+	m_ViewPort.TopLeftY = 0;
+
+	//hm->m_pAlphaTexture->GetDesc(&td);
+	m_TextureSize.x = td.Width;
+	m_TextureSize.y = td.Height;
+
+	SAFE_RELEASE(hm->m_pAlphaTextureSRV);
+	hm->m_pAlphaTextureSRV = m_pShaderResourceView;
 	return true;
 }
 

@@ -57,9 +57,9 @@ float4 PS(PS2D_INPUT data) : SV_TARGET
 {
 	float4 color = g_txDiffuse.Sample(s0, data.UVPos);
 	float4 lastcolor = (float4)0;
-	if (channel == 0) lastcolor.x = color.x;
-	if (channel == 1) lastcolor.y = color.x;
-	if (channel == 2) lastcolor.z = color.x;
-	lastcolor.w = color.w * Rotation;
+	if (channel == 0) lastcolor.x = color.x * Rotation;
+	if (channel == 1) lastcolor.y = color.x * Rotation;
+	if (channel == 2) lastcolor.z = color.x * Rotation;
+	lastcolor.w = color.w;
 	return lastcolor;
 }

@@ -138,9 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="MHM.h" />
     <ClInclude Include="MSample.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MHM.cpp" />
     <ClCompile Include="MSample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

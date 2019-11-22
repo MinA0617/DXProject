@@ -32,11 +32,11 @@ public:
 	MMapNode*				m_pNeighborNode[4];
 public:
 	ID3D11Buffer*			m_pConstantBuffer;
-	MTexture*				m_pDiffuseMap[MAX_MAP_COUNT];
-	MTexture*				m_pNormalMap[MAX_MAP_COUNT];
+	int						m_pDiffuseMap[MAX_MAP_COUNT];
+	int						m_pNormalMap[MAX_MAP_COUNT];
 public:
 	bool					UpdateConstantBuffer();
-	bool					SetTexture(MTexture* tex, MAPTYPE type, UINT id = 0);
+	bool					SetTexture(DWORD tex, MAPTYPE type, UINT layer = 0);
 	bool					CreateMidIndexBuffer(int XCount);
 	bool					CreateIndexBuffer();
 	bool					Render();
