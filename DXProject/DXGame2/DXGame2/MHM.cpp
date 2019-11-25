@@ -23,6 +23,7 @@ bool MHM::Init()
 	{
 		{"POSITION"	, 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{"WORLDPOS"	, 0, DXGI_FORMAT_R32G32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 0 },
+		{"LEVEL"	, 0, DXGI_FORMAT_R32_FLOAT, 1, 8, D3D11_INPUT_PER_INSTANCE_DATA, 0 },
 	};
 	int layoutNum = _countof(layout);
 	LoadShaderResult = g_pDevice->CreateInputLayout(layout, layoutNum, pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &lo);
@@ -39,6 +40,14 @@ bool MHM::Init()
 	g_pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), NULL, &ps);	// 컴파일된 쉐이더를 생성해 준다
 
 
+
+	return true;
+}
+
+bool MHM::Render()
+{
+	g_pImmediateContext->HSSetShader(hs,)
+	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 
 	return true;
 }

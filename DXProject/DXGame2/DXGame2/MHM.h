@@ -12,6 +12,7 @@ public:
 	ID3D11DomainShader*		ds;
 	ID3D11PixelShader*		ps;
 	bool				Init();
+	bool				Render();
 	MHM();
 	~MHM();
 };

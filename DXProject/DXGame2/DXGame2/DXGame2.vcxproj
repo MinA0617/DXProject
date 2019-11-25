@@ -145,6 +145,12 @@
     <ClCompile Include="MHM.cpp" />
     <ClCompile Include="MSample.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\data\Shader\test\DS3D.vsh" />
+    <FxCompile Include="..\..\data\Shader\test\HS3D.vsh" />
+    <FxCompile Include="..\..\data\Shader\test\PS3D.psh" />
+    <FxCompile Include="..\..\data\Shader\test\VS3D.vsh" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
