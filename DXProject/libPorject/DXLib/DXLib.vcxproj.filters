@@ -181,6 +181,15 @@
     <ClCompile Include="MRenderTargetMgr.cpp">
       <Filter>Manager\DirectMgr</Filter>
     </ClCompile>
+    <ClCompile Include="M3DInstanceModel.cpp">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DInstance.cpp">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="MFunction.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MWindow.h">
@@ -378,6 +387,15 @@
     <ClInclude Include="MRenderTargetMgr.h">
       <Filter>Manager\DirectMgr</Filter>
     </ClInclude>
+    <ClInclude Include="M3DInstanceModel.h">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DInstance.h">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="MFunction.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sound">
@@ -446,6 +464,9 @@
     <Filter Include="Object\Resource\Material">
       <UniqueIdentifier>{be76af1b-871d-4542-a76f-830344c5fc8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\3DObject\Instance">
+      <UniqueIdentifier>{e0542cca-6f80-48a5-9fec-7e539048aa4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DXLib.rc">
@@ -490,6 +511,9 @@
       <Filter>Manager\ShaderMgr\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\Shader\GS3DFiled2.gsh">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\3DINSTANCE.hlsl">
       <Filter>Manager\ShaderMgr\Shader</Filter>
     </FxCompile>
   </ItemGroup>

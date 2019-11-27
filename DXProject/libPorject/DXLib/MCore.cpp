@@ -91,10 +91,10 @@ void MCore::MCoreMsgProc(MSG msg)
 		GetWindowRect(m_hWnd, &m_rtWindowBounds);
 		GetClientRect(g_hWnd, &m_rtWindowClient);
 		g_rtWindowClient = m_rtWindowClient;
-		ResizeDevice(width, height);
-
 		m_iWindowWidth = m_rtWindowClient.right - m_rtWindowClient.left;
 		m_iWindowHeight = m_rtWindowClient.bottom - m_rtWindowClient.top;
+
+		ResizeDevice(width, height);
 	}
 	default:
 		break;

@@ -1,0 +1,89 @@
+//-----------------------------------------------------------------------------
+// Global variables
+//-----------------------------------------------------------------------------
+#define g_iNumLight 1
+#define BEZIER_HS_PARTITION "integer"
+
+Texture2D g_txHegith : register(t0);
+Texture2D g_txNormal : register(t1);
+SamplerState s0 : register(s0);
+
+float2 UV : SV_DomainLocation;
+
+cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
+{
+	matrix	g_matView;
+	matrix	g_matProj;
+	float3	g_EyePos;
+	float	width;
+	float3	g_EyeDir;
+	float	height;
+};
+
+struct BEZIER_CONTROL_POINT
+{
+	float m_vPosition[3];
+};
+
+struct HS_OUTPUT // 444 please
+{
+	float3 Position				: SV_POSITION;	// reservation spell
+	float2 WorldPos				: WORLDPOS;
+};
+
+struct HS_CONSTANT_OUTPUT
+{
+	float edges[4] : SV_TessFactor;
+	float inside[2] : SV_InsideTessFactor;
+};
+
+struct DS_OUTPUT
+{
+	float4 Position				: SV_POSITION;	// reservation spell
+	float3 Normal				: NORMAL;
+	float3 WorldPosition		: POSITION0;
+};
+
+float4 BernsteinBasis(float t)
+{
+	float invT = 1.0f - t;
+	return float4(invT * invT * invT, 3.0f * t * invT * invT, 3.0f * t * t * invT, t * t * t);
+}
+
+float4 dBernsteinBasis(float t)
+{
+	float invT = 1.0f - t;
+	return float4(-3 * invT * invT, 3 * invT * invT - 6 * t * invT, 6 * t * invT - 3 * t * t, 3 * t * t);
+}
+
+float3 EvaluateBezier(const OutputPatch<HS_OUTPUT, 16> bezpatch, float4 BasisU, float4 BasisV)
+{
+	float3 Value = float3(0, 0, 0);
+	Value = BasisV.x * (bezpatch[0].Position * BasisU.x + bezpatch[1].Position * BasisU.y + bezpatch[2].Position * BasisU.z + bezpatch[3].Position * BasisU.w);
+	Value += BasisV.y * (bezpatch[4].Position * BasisU.x + bezpatch[5].Position * BasisU.y + bezpatch[6].Position * BasisU.z + bezpatch[7].Position * BasisU.w);
+	Value += BasisV.z * (bezpatch[8].Position * BasisU.x + bezpatch[9].Position * BasisU.y + bezpatch[10].Position * BasisU.z + bezpatch[11].Position * BasisU.w);
+	Value += BasisV.w * (bezpatch[12].Position * BasisU.x + bezpatch[13].Position * BasisU.y + bezpatch[14].Position * BasisU.z + bezpatch[15].Position * BasisU.w);
+	return Value;
+}
+
+[domain("quad")]
+DS_OUTPUT DS(HS_CONSTANT_OUTPUT input, float2 UV : SV_DomainLocation, const OutputPatch<HS_OUTPUT, 16> bezpatch)
+{
+	float4 BasisU = BernsteinBasis(UV.x);
+	float4 BasisV = BernsteinBasis(UV.y);
+	float4 dBasisU = dBernsteinBasis(UV.x);
+	float4 dBasisV = dBernsteinBasis(UV.y);
+
+	float3 WorldPos = EvaluateBezier(bezpatch, BasisU, BasisV);
+	float3 Tangent = EvaluateBezier(bezpatch, dBasisU, BasisV);
+	float3 BiTanget = EvaluateBezier(bezpatch, BasisU, dBasisV);
+	float3 Norm = normalize(cross(Tangent, BiTanget));
+
+	DS_OUTPUT Output;
+	Output.WorldPosition = WorldPos;
+	Output.Position = mul(float4(WorldPos, 1), g_matView);
+	Output.Position = mul(Output.Position, g_matProj);
+	Output.Normal = Norm;
+
+	return Output;
+}

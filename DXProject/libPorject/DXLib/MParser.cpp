@@ -126,6 +126,7 @@ bool MParser::CreateBuffer(MMesh * Target, vector<MVERTEX>& vertices, vector<DWO
 	SubresourceData.pSysMem = &index.at(0);
 	if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &Target->m_pIndexBuffer))) return false;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	Target->m_iIndexCount = index.size();
 	return true;
 }
 
@@ -155,6 +156,120 @@ bool MParser::CheckChar(string::iterator data)
 {
 	if (*data == ' ')	return true;
 	return false;
+}
+
+bool MParser::CreateMeshData(ITOR & data, M3DInstanceModel * target)
+{
+	vector<MVERTEX>	vertices;
+	vector<DWORD>	index;
+	while (1)
+	{
+		if (*data == "MVERTEX_COUNT")
+		{
+			data++;
+			int iCount = DataToInt(data);
+			for (int i = 0; i < iCount; i++)
+			{
+				MVERTEX newdata;
+				ZeroMemory(&newdata, sizeof(newdata));
+				newdata.p.x = DataToFloat(data);
+				newdata.p.y = DataToFloat(data);
+				newdata.p.z = DataToFloat(data);
+				newdata.t.x = DataToFloat(data);
+				newdata.t.y = DataToFloat(data);
+				newdata.t.z = DataToFloat(data);
+				newdata.n.x = DataToFloat(data);
+				newdata.n.y = DataToFloat(data);
+				newdata.n.z = DataToFloat(data);
+				newdata.tv.x = DataToFloat(data);
+				newdata.tv.y = DataToFloat(data);
+				newdata.tv.z = DataToFloat(data);
+				vertices.push_back(newdata);
+			}
+			data--;
+		}
+		if (*data == "INDEX_COUNT")
+		{
+			data++;
+			int iCount = DataToInt(data);
+			for (int i = 0; i < iCount; i++)
+			{
+				index.push_back(DataToInt(data));
+			}
+			data--;
+		}
+		if (*data == "BOUNDING_BOX")
+		{
+			data++;
+			float minx = DataToFloat(data);
+			float miny = DataToFloat(data);
+			float minz = DataToFloat(data);
+			float maxx = DataToFloat(data);
+			float maxy = DataToFloat(data);
+			float maxz = DataToFloat(data);
+#if defined(DEBUG) || defined(_DEBUG)
+			target->m_Box.Init();
+#endif // DEBUG
+			target->m_Box.fOldExtent[0] = (maxx - minx) / 2;
+			target->m_Box.fOldExtent[1] = (maxy - miny) / 2;
+			target->m_Box.fOldExtent[2] = (maxz - minz) / 2;
+			target->m_Box.vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
+		}
+		if (*data == "MAP_ID")
+		{
+			data++;
+			MAPTYPE maptype = DataToMAPTYPE(data);
+			M_STR name = DataToMSTR(data);
+			target->Load_MAP(name, maptype);
+			data--;
+		}
+		if (*data == "OBJECT_END")
+		{
+			CreateBuffer(target->m_Mesh, vertices, index);
+			vertices.clear();
+			index.clear();
+			return true;
+		}
+		data++;
+	}
+	m_wordlist.clear();
+	return true;
+}
+
+
+bool MParser::ParsingDate(M_STR filename, vector<string>& list)
+{
+	ifstream stream;
+	stream.open(filename);
+	if (stream.fail() == true)
+	{
+		return false;
+	}
+	string word;
+	while (!stream.eof())
+	{
+		getline(stream, word);
+		string::iterator start = word.begin();
+		for (string::iterator data = word.begin(); data != word.end(); data++)
+		{
+			if (CheckChar(data))
+			{
+				string newword(start, data);
+				if (newword.size() != 0)
+				{
+					list.push_back(newword);
+				}
+				start = data + 1;
+			}
+		}
+		string newword(start, word.end());
+		if (newword.size() != 0)
+		{
+			list.push_back(newword);
+		}
+	}
+	stream.close();
+	return true;
 }
 
 bool MParser::Load(M_STR filename, MSkeleton* target)
@@ -222,6 +337,15 @@ bool MParser::Load(M_STR filename, MSkeleton* target)
 	default:
 		break;
 	}
+	return true;
+}
+
+bool MParser::Load(M_STR filename, vector<M_STR>& namelist)
+{
+	vector<string> wordlist;
+	ParsingDate(filename, wordlist);
+	CreateInstanceOBJData(wordlist, namelist);
+	if (namelist.size() == 0) return false;
 	return true;
 }
 
@@ -329,6 +453,77 @@ bool MParser::SetBBData(M_STR name, MSkeleton* skt, bool isClear)
 		}
 	}
 	m_wordlist.clear();
+}
+
+bool MParser::CreateInstanceOBJData(vector<string>& list, vector<M_STR>& namelist)
+{
+	if (!list.size()) return false;
+	for (ITOR data = list.begin(); data != list.end(); data++)
+	{
+		if (*data == "TYPE")
+		{
+			data++;
+			if (*data == "GEOMETRY")
+			{
+				data++; data++;
+				M3DInstanceModel* NewModel = new M3DInstanceModel;
+				NewModel->Init();
+				MMesh* NewMeshObj = new MMesh;
+				M_STR oname = DataToMSTR(data);
+				namelist.push_back(oname);
+				NewModel->m_name = oname;
+				NewModel->m_Mesh = I_MeshMgr.Add(NewMeshObj, oname);
+				NewModel->m_Mesh->m_VertexShaderID = VS3DINSTANCE;
+				if (NewModel->m_Mesh != nullptr)
+				{
+					I_3DObjectMgr.AddInstanceModel(NewModel);
+					CreateMeshData(data, NewModel);
+				}
+				else
+				{
+					M_STR message;
+					message = L"실패. 같은 이름의 오브젝트 : ";
+					message += oname;
+					MessageBoxW(g_hWnd, (LPCWSTR)&message, L"Error", MB_OK);
+					NewMeshObj->Release();
+					NewModel->Release();
+					delete NewMeshObj;
+					delete NewModel;
+				}
+				data--;
+			}
+			//else if (*data == "SKINGEOMETRY")
+			//{
+			//	//data++; data++;
+			//	//MSkinModel* NewSkinModel = new MSkinModel;
+			//	//NewSkinModel->CreateConstantBuffer();
+			//	//MSkinMesh* NewMeshObj = new MSkinMesh;
+			//	//M_STR oname = DataToMSTR(data);
+			//	//NewSkinModel->m_name = oname;
+			//	//NewSkinModel->m_pObj = I_MeshMgr.Add(NewMeshObj, oname);
+			//	//if (NewSkinModel->m_pObj != nullptr)
+			//	//{
+			//	//	I_3DObjectMgr.Add(NewSkinModel);
+			//	//	CreateSkinningData(data, NewSkinModel, NewMeshObj);
+			//	//	list.push_back(NewSkinModel);
+			//	//	list2.push_back(NewMeshObj);
+			//	//}
+			//	//else
+			//	//{
+			//	//	M_STR message;
+			//	//	message = L"실패. 같은 이름의 오브젝트 : ";
+			//	//	message += oname;
+			//	//	MessageBoxW(g_hWnd, (LPCWSTR)&message, L"Error", MB_OK);
+			//	//	NewMeshObj->Release();
+			//	//	NewSkinModel->Release();
+			//	//	delete NewMeshObj;
+			//	//	delete NewSkinModel;
+			//	//}
+			//	//data--;
+			//}
+		}
+	}
+	return true;
 }
 
 bool MParser::CreateOBJData(M_STR name, MSkeleton* skt)

@@ -3,8 +3,7 @@
 //-----------------------------------------------------------------------------
 cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 {
-	matrix	g_matView;
-	matrix	g_matProj;
+	matrix	g_matViewProj;
 	float3	g_EyePos;
 	float	width;
 	float3	g_EyeDir;
@@ -46,8 +45,7 @@ VSSPLINE_OUTPUT VS(VSSPLINE_INPUT input)
 
 	float4 Pos = float4(input.Position, 1);
 	Pos = mul(Pos, m_matWorld);
-	Pos = mul(Pos, g_matView);
-	Pos = mul(Pos, g_matProj);
+	Pos = mul(Pos, g_matViewProj);
 
 	Output.Position = Pos;
 

@@ -1,10 +1,10 @@
 #define g_iNumLight				1
 
-Texture2D g_txDiffuse : register(t0);
-Texture2D g_txNormal : register(t1);
-TextureCube g_txEniv : register(t2);
-Texture2D g_txSpecular : register(t3);
-Texture2D g_txOpacity : register(t4);
+//Texture2D g_txDiffuse : register(t0);
+//Texture2D g_txNormal : register(t1);
+//TextureCube g_txEniv : register(t2);
+//Texture2D g_txSpecular : register(t3);
+//Texture2D g_txOpacity : register(t4);
 
 SamplerState s0 : register(s0);
 
@@ -43,14 +43,12 @@ cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)
 	float	c1temd;
 };
 
-struct PS3D_INPUT // 444 please
+struct PS_INPUT // 444 please
 {
-	float4 Position				: SV_POSITION;
-	float3 UVPos				: TEXCOORD0;
+	float4 Position				: SV_POSITION;	// reservation spell
 	float3 Normal				: NORMAL;
 	float3 WorldPosition		: POSITION0;
-	float3 Reflect				: TEXCOORD1;
-	float3 vLight[g_iNumLight]	: TEXCOORD2;
+
 };
 
 float3 ComputeLight(float3 Pos, float3 Normal)
@@ -155,68 +153,68 @@ float NormalMapping(float3 LightVector, float3 NormalMapPixel)
 	return fDot;
 }
 
-float4 PS(PS3D_INPUT data) : SV_TARGET
+float4 PS(PS_INPUT data) : SV_TARGET
 {
-	float4 lastcolor;
-	if (m_isDiffuse == -1)
-	{
-		float4 Diffusecolor = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
-		lastcolor = Diffusecolor;
-	}
-	else
-	{
-		float4 mutiplier = float4(0.3f, 0.3f, 0.3f, 1.0f) + float4(ComputeLight(data.WorldPosition, data.Normal), 1);
-		lastcolor.xyz = m_ObjectColor * mutiplier.xyz;
-	}
-	if (m_isNormal == -1)
-	{
-		float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);
-		float normal = 0.0;
-		for (int i = 0; i < g_iNumLight; i++)
-		{
-			normal += NormalMapping(data.vLight[i], Nomarlcolor.xyz);
-		}
-		lastcolor *= normal;
-	}
-	if (m_isSpecular != 0)
-	{
-		if(m_isSpecular == -1)
-		{
-			float4 SpecularColor = g_txSpecular.Sample(s0, data.UVPos.xy);
-			float Specular = ComputeSpecular(SpecularColor.x, data.Normal, data.WorldPosition);
-			lastcolor += Specular;
-		}
-		else
-		{
-			float Specular = ComputeSpecular(m_isSpecular / 255, data.Normal, data.WorldPosition);
-			lastcolor += Specular;
-		}
-	}
-	if (m_isEnvironment == -1)
-	{
-		float4 Enivcolor = g_txEniv.Sample(s0, data.Reflect);
-		lastcolor = lerp(Enivcolor, lastcolor, 0.5);
-	}
-	if (m_isOpacity == -1)
-	{
-		float4 Opactiy = g_txOpacity.Sample(s0, data.UVPos.xy);
-		lastcolor.w = Opactiy.x;
-	}
-	else
-	{
-		lastcolor.w = m_isOpacity / 255.00;
-	}
-	if (m_isReflection == -1)
-	{
-		//lastcolor.r = 1;
-	}
-	if (m_isRefraction == -1)
-	{
-		//lastcolor.g = 1;
-	}
-	if (m_isEnvironment == -1)
-	{
-		//lastcolor.b = 1;
-	}
+	float4 lastcolor = float4(1,1,1,1);
+	//if (m_isDiffuse == -1)
+	//{
+	//	float4 Diffusecolor = g_txDiffuse.Sample(s0, data.UVPos.xy) * max(float4(0.1f, 0.1f, 0.1f, 1.0f), float4(ComputeLight(data.WorldPosition, data.Normal), 1));
+	//	lastcolor = Diffusecolor;
+	//}
+	//else
+	//{
+	//	float4 mutiplier = float4(0.3f, 0.3f, 0.3f, 1.0f) + float4(ComputeLight(data.WorldPosition, data.Normal), 1);
+	//	lastcolor.xyz = m_ObjectColor * mutiplier.xyz;
+	//}
+	//if (m_isNormal == -1)
+	//{
+	//	float4 Nomarlcolor = g_txNormal.Sample(s0, data.UVPos.xy);
+	//	float normal = 0.0;
+	//	for (int i = 0; i < g_iNumLight; i++)
+	//	{
+	//		normal += NormalMapping(data.vLight[i], Nomarlcolor.xyz);
+	//	}
+	//	lastcolor *= normal;
+	//}
+	//if (m_isSpecular != 0)
+	//{
+	//	if(m_isSpecular == -1)
+	//	{
+	//		float4 SpecularColor = g_txSpecular.Sample(s0, data.UVPos.xy);
+	//		float Specular = ComputeSpecular(SpecularColor.x, data.Normal, data.WorldPosition);
+	//		lastcolor += Specular;
+	//	}
+	//	else
+	//	{
+	//		float Specular = ComputeSpecular(m_isSpecular / 255, data.Normal, data.WorldPosition);
+	//		lastcolor += Specular;
+	//	}
+	//}
+	//if (m_isEnvironment == -1)
+	//{
+	//	float4 Enivcolor = g_txEniv.Sample(s0, data.Reflect);
+	//	lastcolor = lerp(Enivcolor, lastcolor, 0.5);
+	//}
+	//if (m_isOpacity == -1)
+	//{
+	//	float4 Opactiy = g_txOpacity.Sample(s0, data.UVPos.xy);
+	//	lastcolor.w = Opactiy.x;
+	//}
+	//else
+	//{
+	//	lastcolor.w = m_isOpacity / 255.00;
+	//}
+	//if (m_isReflection == -1)
+	//{
+	//	//lastcolor.r = 1;
+	//}
+	//if (m_isRefraction == -1)
+	//{
+	//	//lastcolor.g = 1;
+	//}
+	//if (m_isEnvironment == -1)
+	//{
+	//	//lastcolor.b = 1;
+	//}
 	return lastcolor;
 }

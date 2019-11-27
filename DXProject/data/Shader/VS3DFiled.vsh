@@ -5,8 +5,7 @@
 
 cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 {
-	matrix	g_matView;
-	matrix	g_matProj;
+	matrix	g_matViewProj;
 	float3	g_EyePos;
 	float	width;
 	float3	g_EyeDir;
@@ -59,8 +58,7 @@ VS3D_OUTPUT VS( VS3D_INPUT input)
 
 	Output.WorldPosition = Pos;
 
-	Pos = mul(Pos, g_matView);
-	Pos = mul(Pos, g_matProj);
+	Pos = mul(Pos, g_matViewProj);
 
 	Output.Position = Pos;
 
@@ -69,19 +67,19 @@ VS3D_OUTPUT VS( VS3D_INPUT input)
 	Output.Normal = input.Normal;
 	// -----------------------------
 
-	float3 Normal = input.Normal;
-	float3 Tangent = input.Tangent;
-	float3 BiNormal = normalize(cross(Normal, Tangent));
-	for (int i = 0; i < g_iNumLight; i++)
-	{
-		float3x3 mat =
-		{
-			Tangent.x,BiNormal.x,Normal.x,
-			Tangent.y,BiNormal.y,Normal.y,
-			Tangent.z,BiNormal.z,Normal.z
-		};
-		Output.vLight[i] = normalize(mul(-g_LightDir.xyz, mat));
-	}
+	//float3 Normal = input.Normal;
+	//float3 Tangent = input.Tangent;
+	//float3 BiNormal = normalize(cross(Normal, Tangent));
+	//for (int i = 0; i < g_iNumLight; i++)
+	//{
+	//	float3x3 mat =
+	//	{
+	//		Tangent.x,BiNormal.x,Normal.x,
+	//		Tangent.y,BiNormal.y,Normal.y,
+	//		Tangent.z,BiNormal.z,Normal.z
+	//	};
+	//	Output.vLight[i] = normalize(mul(-g_LightDir.xyz, mat));
+	//}
 
 	return Output;
 }

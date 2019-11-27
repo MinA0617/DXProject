@@ -33,7 +33,7 @@
   <ItemGroup>
     <FxCompile Include="..\..\data\Shader\test\PS3D.psh" />
     <FxCompile Include="..\..\data\Shader\test\VS3D.vsh" />
-    <FxCompile Include="..\..\data\Shader\test\DS3D.vsh" />
-    <FxCompile Include="..\..\data\Shader\test\HS3D.vsh" />
+    <FxCompile Include="..\..\data\Shader\test\DS3D.dsh" />
+    <FxCompile Include="..\..\data\Shader\test\HS3D.hsh" />
   </ItemGroup>
 </Project>

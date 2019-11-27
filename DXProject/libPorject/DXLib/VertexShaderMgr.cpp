@@ -131,7 +131,35 @@ bool VertexShaderMgr::Init()
 	if (pVSShader)pVSShader->Release();
 	if (pErrorMsgs)pErrorMsgs->Release();
 	if (FAILED(LoadShaderResult)) return false;
-#pragma endregion VSFILED
+#pragma endregion VS3DINSTANCE
+
+#pragma region VS3DINSTANCE
+	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/3DINSTANCE.hlsl", NULL, NULL, "VS", "vs_5_0", dwShaderFlags, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
+	if (FAILED(LoadShaderResult))
+	{
+		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
+		return false;
+	}
+	g_pDevice->CreateVertexShader(pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), NULL, &m_VSList[VS3DINSTANCE]);	// 컴파일된 쉐이더를 생성해 준다
+	const D3D11_INPUT_ELEMENT_DESC layout6[] =
+	{
+		{"POSITION",		0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TEXCOORD",		0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"NORMAL",			0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TANGENTVECTOR",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+		{"WORLDMAT",		0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		{"WORLDMAT",		1, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 16, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		{"WORLDMAT",		2, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 32, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		{"WORLDMAT",		3, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 48, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+	};
+	layoutNum = _countof(layout6);
+	LoadShaderResult = g_pDevice->CreateInputLayout(layout6, layoutNum, pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), &m_LOList[VS3DINSTANCE]);
+	if (pVSShader)pVSShader->Release();
+	if (pErrorMsgs)pErrorMsgs->Release();
+	if (FAILED(LoadShaderResult)) return false;
+#pragma endregion VS3DINSTANCE
+	
 
 //#pragma region VSFILED2
 //	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/VS3DFiled2.vsh", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pVSShader, &pErrorMsgs, NULL);

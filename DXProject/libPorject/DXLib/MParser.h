@@ -29,18 +29,26 @@ protected:
 	MAPTYPE			DataToMAPTYPE(ITOR &data);
 	//string		DataToSTR(ITOR &data);
 	M_STR			DataToMSTR(ITOR &data);
-	D3DXVECTOR3			FindMin(vector<MVERTEX>	&vertices);
-	D3DXVECTOR3			FindMax(vector<MVERTEX> &vertices);
+	D3DXVECTOR3		FindMin(vector<MVERTEX>	&vertices);
+	D3DXVECTOR3		FindMax(vector<MVERTEX> &vertices);
 	bool			CreateBuffer(MMesh* Target, vector<MVERTEX>	&vertices, vector<DWORD> &index);
 	bool			CreateBuffer(MMesh* Target, vector<DWORD> &index);
 	bool			CheckChar(string::iterator data);
 	bool			CreateGeometryData(ITOR &data, M3DModel* target);
 	bool			CreateSkinningData(ITOR &data, MSkinModel* target, MSkinMesh* mesh);
 	bool			SetBBData(M_STR name, MSkeleton* skt, bool isClear);
-	virtual bool	CreateOBJData(M_STR name, MSkeleton* target = nullptr);
-	virtual bool	CreateSKTData(M_STR name);
-	virtual bool	CreateKEYData(M_STR name);
+	bool			CreateOBJData(M_STR name, MSkeleton* target = nullptr);
+	bool			CreateSKTData(M_STR name);
+	bool			CreateKEYData(M_STR name);
 public:
+	// -------------------------------------------------------------------------------------------
+	// 인스턴스 용
+	bool			CreateMeshData(ITOR &data, M3DInstanceModel* target);
+	bool			CreateInstanceOBJData(vector<string>& list, vector<M_STR>& namelist);
+	bool			ParsingDate(M_STR filename, vector<string>& list);
+	bool			Load(M_STR filename, vector<M_STR>& namelist);
+	// -------------------------------------------------------------------------------------------
+
 	bool			Load(M_STR filename, MSkeleton* target = nullptr);
 	MFiled*			Load_HM(M_STR filename, float leafsize = 10, float height = 1.0, int minlevel = 64, float lodstartdistance = 1000, bool isChange = true);
 	bool			Load_BB(M_STR filename, MSkeleton* skt, bool isClear = true);

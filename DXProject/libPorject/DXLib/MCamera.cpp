@@ -26,34 +26,31 @@ bool MCamera::Init()
 	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4, (float)g_rtWindowClient.right / (float)g_rtWindowClient.bottom, 1.0f, MAXDISTANCE);
 
 	D3DXMatrixTranspose(&m_matWorld, &m_matWorld);
-	D3DXMatrixTranspose(&m_matView, &m_matView);
-	D3DXMatrixTranspose(&m_matProj, &m_matProj);
-
-
 
 	CreateConstantBuffer();
 	return true;
 }
 
+bool MCamera::CameraFrame()
+{
+	m_WorldPosition = m_LocalPosition;
+	m_WorldConstant.matViewProj = m_matView * m_matProj;
+	D3DXMatrixTranspose(&m_WorldConstant.matViewProj, &m_WorldConstant.matViewProj);
+	m_WorldConstant.vEyePos = m_WorldPosition;
+	m_WorldConstant.vEyeDir = m_LookAt;
+	m_WorldConstant.fClinetSizeW = g_rtWindowClient.right;
+	m_WorldConstant.fClinetSizeH = g_rtWindowClient.bottom;
+	if (m_pConstantBuffer)
+	{
+		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_WorldConstant, 0, 0);
+	}
+	return false;
+}
+
 bool MCamera::Frame()
 {
 	D3DXMatrixLookAtLH(&m_matView, &GetLocalPosition(), &m_LookAt, &m_Up);
-	D3DXMatrixTranspose(&m_matView, &m_matView);
-
-	m_WorldPosition = m_LocalPosition;
-
-	D3D11_MAPPED_SUBRESOURCE MappedResource;
-	if (SUCCEEDED(g_pImmediateContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource)))
-	{
-		VS_WORLD_BUFFER* data = (VS_WORLD_BUFFER*)MappedResource.pData;
-		data->matView = m_matView;
-		data->matProj = m_matProj;
-		data->vEyePos = m_WorldPosition;
-		data->vEyeDir = m_LookAt;
-		data->fClinetSizeW = g_rtWindowClient.right;
-		data->fClinetSizeH = g_rtWindowClient.bottom;
-		g_pImmediateContext->Unmap(m_pConstantBuffer, 0);
-	}
+	CameraFrame();
 	return true;
 }
 
@@ -65,23 +62,21 @@ bool MCamera::CreateConstantBuffer()
 	D3D11_BUFFER_DESC BufferDesc;
 	HRESULT CreateBufferResult;
 
-	VS_WORLD_BUFFER data;
-	ZeroMemory(&data, sizeof(VS_WORLD_BUFFER));
+	ZeroMemory(&m_WorldConstant, sizeof(VS_WORLD_BUFFER));
 
-	data.matView = m_matView;
-	data.matProj = m_matProj;
-	data.fClinetSizeW = g_rtWindowClient.right;
-	data.fClinetSizeH = g_rtWindowClient.bottom;
+	m_WorldConstant.matViewProj = m_matView * m_matView;
+	m_WorldConstant.fClinetSizeW = g_rtWindowClient.right;
+	m_WorldConstant.fClinetSizeH = g_rtWindowClient.bottom;
 
 	D3D11_SUBRESOURCE_DATA SubresourceData;
 	ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
-	SubresourceData.pSysMem = &data;
+	SubresourceData.pSysMem = &m_WorldConstant;
 
 	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
 	BufferDesc.ByteWidth = sizeof(VS_WORLD_BUFFER);
-	BufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	BufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	BufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	//BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pConstantBuffer))) return false;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	return true;
@@ -129,5 +124,4 @@ void MCamera::MoveLeft(float valve)
 void MCamera::Resize()
 {
 	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4, (float)g_rtWindowClient.right / (float)g_rtWindowClient.bottom, 1.0f, MAXDISTANCE);
-	D3DXMatrixTranspose(&m_matProj, &m_matProj);
 }

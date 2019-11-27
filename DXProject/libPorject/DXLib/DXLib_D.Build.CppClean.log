@@ -1,7 +1,5 @@
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.pdb
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.idb
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mcore.obj
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mcameramgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mcamera.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dspline.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dobjectmgr.obj
@@ -16,12 +14,12 @@ e:\kgca36\gitdx\dxproject\libporject\dxlib\mkeyanimation.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mboundingbox.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dheightmap.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mfiled.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dinstancemodel.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dinstance.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dbone.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m2dscreen.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m2dobject.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\geometryshadermgr.obj
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mparser.obj
-e:\kgca36\gitdx\dxproject\libporject\dxlib\momnilight.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mtree.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mselect.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mmeshmgr.obj
@@ -40,8 +38,8 @@ e:\kgca36\gitdx\dxproject\libporject\dxlib\mdirectlight.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mdevice.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\m3dmaterial.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mcreate.obj
-e:\kgca36\gitdx\dxproject\libporject\dxlib\mcollision.obj
-e:\kgca36\gitdx\dxproject\libporject\dxlib\vertexshadermgr.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mcore.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mcameramgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\pixelshadermgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mwindow.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\muint.obj
@@ -60,6 +58,10 @@ e:\kgca36\gitdx\dxproject\libporject\dxlib\mskeleton.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mrpgcamera.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mrendertargetmgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\mrendertarget.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mparser.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\momnilight.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\mcollision.obj
+e:\kgca36\gitdx\dxproject\libporject\dxlib\vertexshadermgr.obj
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib_d.lib
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.res
 e:\kgca36\gitdx\dxproject\libporject\dxlib\dxlib.tlog\cl.command.1.tlog

@@ -46,6 +46,7 @@
 #define IDC_OPEN_BRUSH                  311
 #define IDC_BUTTON_SOLID                312
 #define IDD_TOOL_CREATEMAP              313
+#define IDD_ObjectCtlForm               313
 #define IDD_TOOL_LOADTEXTURE            314
 #define IDD_DIALOG_CREATE_MAP           315
 #define IDC_Map_Count                   1002
@@ -55,6 +56,7 @@
 #define IDC_RADIO_MAP01                 1011
 #define IDC_RADIO_MAP02                 1012
 #define IDC_BUTTON1                     1014
+#define IDC_DELETE_BUTTON               1015
 #define IDC_TILE_LIST                   1019
 #define IDC_BRUSH_LIST                  1020
 #define IDC_RADIO_LAYER2                1022
@@ -75,6 +77,10 @@
 #define IDC_BUTTON_BRUSH                1041
 #define IDC_BUTTON_TILE3                1042
 #define IDC_BUTTON_PUSH                 1042
+#define IDC_CREATE_IN_WORLD_BUTTON      1043
+#define IDC_DELETE_IN_WORLD_BUTTON      1045
+#define IDC_LOAD_BUTTON                 1046
+#define IDC_OBJ_LIST                    1048
 #define idd                             32772
 #define IDD                             32772
 
@@ -82,9 +88,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        319
+#define _APS_NEXT_RESOURCE_VALUE        321
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1041
+#define _APS_NEXT_CONTROL_VALUE         1049
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif

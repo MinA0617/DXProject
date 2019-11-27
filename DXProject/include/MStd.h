@@ -40,6 +40,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "time.h"
 
 using namespace std;
 
@@ -252,8 +253,7 @@ struct MSize
 
 struct VS_WORLD_BUFFER
 {
-	D3DXMATRIX matView;
-	D3DXMATRIX matProj;
+	D3DXMATRIX matViewProj;
 	D3DXVECTOR3 vEyePos;
 	float fClinetSizeW;		//c0.x
 	D3DXVECTOR3 vEyeDir;
@@ -295,6 +295,8 @@ struct CONSTANT_Matrial
 	int				isReflection;
 	int				isRefraction;
 	int				isEnvironment;
+	int				empty1;
+	int				empty2;
 };
 
 enum { KEY_FREE = 0, KEY_PUSH = 1, KEY_HOLD = 2, KEY_UP = 3 };

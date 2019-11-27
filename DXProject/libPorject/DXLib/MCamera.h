@@ -5,6 +5,7 @@ class MCamera : public M3DObject
 {
 	friend class MCameraMgr;
 public:
+	VS_WORLD_BUFFER		m_WorldConstant;
 	D3DXMATRIX			m_matWorld;
 	D3DXMATRIX			m_matView;
 	D3DXMATRIX			m_matProj;
@@ -24,6 +25,7 @@ public:
 	virtual void		MoveLeft(float valve);
 	virtual void		Resize();
 	virtual bool		Init() override;
+	virtual bool		CameraFrame();
 	virtual bool		Frame() override;
 	virtual bool		Render() override;
 	virtual bool		Release() override;

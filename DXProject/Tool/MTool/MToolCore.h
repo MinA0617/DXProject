@@ -11,17 +11,20 @@
 #include "MPushPull.h"
 #include "MCanvas.h"
 #include "MTileing.h"
+#include "MCreateInstance.h"
 
-enum ModifyerState { NOT_SET = 0, TILEING, BRUSH, PUSH };
+enum ModifyerState { NOT_SET = 0, TILEING, BRUSH, PUSH, CREATEOBJ, DELETEOBJ };
 
 class MToolCore : public MCore
 {
 public:
+	M3DInstanceModel* inmo;
 	// Modifyer
 	ModifyerState	m_State;
 	MTileing	tileing;
 	MPushPull	pushpull;
 	MCanvas		canvas;
+	MCreateInstance instance;
 public:
 	MDXWirte*	data;
 	// Object

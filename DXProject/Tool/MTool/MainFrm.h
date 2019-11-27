@@ -6,6 +6,7 @@
 #include "PropertiesWnd.h"
 #include "MCreateMapDialog.h"
 #include "MMapPane.h"
+#include "MObjectPane.h"
 
 class CMainFrame : public CFrameWndEx
 {
@@ -17,6 +18,7 @@ protected: // serialization에서만 만들어집니다.
 // 특성입니다.
 public:
 	MMapPane			m_MapPane;
+	MObjectPane			m_ObjectPane;
 	MCreateMapDialog	m_MapDlg;
 // 작업입니다.
 public:

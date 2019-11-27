@@ -22,6 +22,12 @@
     <Filter Include="Core\Dialog">
       <UniqueIdentifier>{5619e93e-d871-43e0-a4af-06036170ffdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Dialog\Map">
+      <UniqueIdentifier>{a7b66573-84a8-4c1a-9ca7-085c678c8a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Dialog\Object">
+      <UniqueIdentifier>{72c38221-b822-418e-a409-5bb515d4046e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MTool.h">
@@ -61,13 +67,22 @@
       <Filter>Core\Modify</Filter>
     </ClInclude>
     <ClInclude Include="MCreateMapDialog.h">
-      <Filter>Core\Dialog</Filter>
+      <Filter>Core\Dialog\Map</Filter>
     </ClInclude>
     <ClInclude Include="MMapCtlForm.h">
-      <Filter>Core\Dialog</Filter>
+      <Filter>Core\Dialog\Map</Filter>
     </ClInclude>
     <ClInclude Include="MMapPane.h">
-      <Filter>Core\Dialog</Filter>
+      <Filter>Core\Dialog\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MObjectPane.h">
+      <Filter>Core\Dialog\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MObjectCtlForm.h">
+      <Filter>Core\Dialog\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MCreateInstance.h">
+      <Filter>Core\Modify</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -102,13 +117,22 @@
       <Filter>Core\Modify</Filter>
     </ClCompile>
     <ClCompile Include="MCreateMapDialog.cpp">
-      <Filter>Core\Dialog</Filter>
+      <Filter>Core\Dialog\Map</Filter>
     </ClCompile>
     <ClCompile Include="MMapCtlForm.cpp">
-      <Filter>Core\Dialog</Filter>
+      <Filter>Core\Dialog\Map</Filter>
     </ClCompile>
     <ClCompile Include="MMapPane.cpp">
-      <Filter>Core\Dialog</Filter>
+      <Filter>Core\Dialog\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MObjectPane.cpp">
+      <Filter>Core\Dialog\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MObjectCtlForm.cpp">
+      <Filter>Core\Dialog\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MCreateInstance.cpp">
+      <Filter>Core\Modify</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

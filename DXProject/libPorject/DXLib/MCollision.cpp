@@ -252,7 +252,7 @@ bool MCollision::AABBtoRay(MBoundingBox * box, MRAY * ray, D3DXVECTOR3* intersec
 				return false;
 		}
 	}
-	if (intersection)ray->vOrigin + ray->vDirection* t_min;
+	if (intersection) *intersection = ray->vOrigin + ray->vDirection* t_min;
 	//m_vIntersection = ray->vOrigin + ray->vDirection* t_min;
 	return true;
 }

@@ -10,10 +10,14 @@ D3DXVECTOR2 MSelect::GetScreenPoint()
 MRAY MSelect::GetScreenRay()
 {
 	MRAY ray;
-	D3DXMATRIX Proj, View;
-	D3DXMatrixTranspose(&Proj, &I_CameraMgr.m_MainCamera->m_matProj);
-	D3DXMatrixTranspose(&View, &I_CameraMgr.m_MainCamera->m_matView);
+	D3DXMATRIX View = I_CameraMgr.m_MainCamera->m_matView;
+	D3DXMATRIX Proj = I_CameraMgr.m_MainCamera->m_matProj;
 	D3DXVECTOR3 v;
+	POINT ptCursor;
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+	//v.x = (((2.0f * ptCursor.x) / g_rtWindowClient.right)-1) / Proj._11;
+	//v.y = -(((2.0f * ptCursor.y) / g_rtWindowClient.bottom)-1) / Proj._22;
 	v.x = (((2.0f * g_MousePos.x) / g_rtWindowClient.right)) / Proj._11;
 	v.y = (((2.0f * g_MousePos.y) / g_rtWindowClient.bottom)) / Proj._22;
 	v.z = 1.0f;
@@ -70,7 +74,6 @@ MTreeNode* MSelect::CheckNode(MTreeNode* pNode, MRAY* ray)
 {
 	int m_DepthLevelOfMapNode = I_3DObjectMgr.m_pTree->m_DepthLevelOfMapNode;
 	MTreeNode* minNode = nullptr;
-	float mindistance = 999999999;
 	if (I_Collision.AABBtoRay(&pNode->m_Box, ray))
 	{
 		if (pNode->m_iDepth == m_DepthLevelOfMapNode)
@@ -81,6 +84,7 @@ MTreeNode* MSelect::CheckNode(MTreeNode* pNode, MRAY* ray)
 		{
 			for (int i = 0; i < pNode->m_pChild.size(); i++)
 			{
+				float mindistance = 1000000000;
 				MTreeNode* result = CheckNode(pNode->m_pChild[i], ray);
 				if (result)
 				{

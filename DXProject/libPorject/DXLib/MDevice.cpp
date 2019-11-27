@@ -168,6 +168,7 @@ bool MDevice::CreateGIFactory()
 
 bool MDevice::CreateSwapChain()
 {
+	SAFE_RELEASE(m_pSwapChain);
 	HRESULT hr;
 	ZeroMemory(&m_SwapChainDesc, sizeof(m_SwapChainDesc));
 	m_SwapChainDesc.BufferCount = 1;
@@ -175,23 +176,22 @@ bool MDevice::CreateSwapChain()
 	m_SwapChainDesc.Windowed = true;
 	m_SwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	m_SwapChainDesc.SampleDesc.Count = 1;
+	m_SwapChainDesc.SampleDesc.Quality = 0;
 	m_SwapChainDesc.BufferDesc.Width = g_rtWindowClient.right;
 	m_SwapChainDesc.BufferDesc.Height = g_rtWindowClient.bottom;
 	m_SwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	m_SwapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
 	m_SwapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 	hr = m_pGIFactory->CreateSwapChain( m_pDevice, &m_SwapChainDesc, &m_pSwapChain);
-	if (FAILED(hr))
-	{
-		return false;
-	}
-	g_rtWindowClient.right = m_SwapChainDesc.BufferDesc.Width;
-	g_rtWindowClient.bottom = m_SwapChainDesc.BufferDesc.Height;
+	if (FAILED(hr)) return false;
+	//g_rtWindowClient.right = m_SwapChainDesc.BufferDesc.Width;
+	//g_rtWindowClient.bottom = m_SwapChainDesc.BufferDesc.Height;
 	return true;
 }
 
 bool MDevice::SetRenderTargetView()
 {
+	SAFE_RELEASE(m_pRenderTargetView);
 	HRESULT hr;
 	ID3D11Texture2D* pBackBuffer;
 	hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
@@ -206,8 +206,8 @@ bool MDevice::SetRenderTargetView()
 	ID3D11Texture2D* texture;
 	D3D11_TEXTURE2D_DESC td;
 	ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
-	td.Width = m_SwapChainDesc.BufferDesc.Width;
-	td.Height = m_SwapChainDesc.BufferDesc.Height;
+	td.Width = g_rtWindowClient.right;
+	td.Height = g_rtWindowClient.bottom;
 	td.ArraySize = 1;
 	td.MipLevels = 1;
 	td.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -235,16 +235,13 @@ bool MDevice::SetRenderTargetView()
 
 bool MDevice::SetViewPort()
 {
-	m_ViewPort.Width = m_SwapChainDesc.BufferDesc.Width;
-	m_ViewPort.Height = m_SwapChainDesc.BufferDesc.Height;
+	m_ViewPort.Width = g_rtWindowClient.right;
+	m_ViewPort.Height = g_rtWindowClient.bottom;
 	m_ViewPort.MinDepth = 0;
 	m_ViewPort.MaxDepth = 1;
 	m_ViewPort.TopLeftX = 0;
 	m_ViewPort.TopLeftY = 0;
 	m_pImmediateContext->RSSetViewports(1, &m_ViewPort);
-
-	g_rtWindowClient.right = m_SwapChainDesc.BufferDesc.Width;
-	g_rtWindowClient.bottom = m_SwapChainDesc.BufferDesc.Height;
 
 	g_ViewPort = m_ViewPort;
 	return true;
@@ -261,13 +258,11 @@ bool MDevice::ResizeDXWirte()
 
 bool MDevice::ResizeSwapChain(UINT width, UINT height)
 {
-	if (m_pDevice == nullptr) return true;
-	HRESULT hr;
+	if (m_pDevice == nullptr) return false;
+	HRESULT hr = S_OK;
 	m_pImmediateContext->OMSetRenderTargets(0, NULL, NULL);
-
-	hr = m_pSwapChain->ResizeBuffers(m_SwapChainDesc.BufferCount, width, height, m_SwapChainDesc.BufferDesc.Format, m_SwapChainDesc.Flags);
-
-	m_pSwapChain->GetDesc(&m_SwapChainDesc);
-	//// ¼öÁ¤¿ä¸Á ////
+	if (!CreateSwapChain()) return false;
+	if (!SetRenderTargetView()) return false;
+	if (!SetViewPort()) return false;
 	return true;
 }

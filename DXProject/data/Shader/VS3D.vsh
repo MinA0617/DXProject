@@ -5,8 +5,7 @@
 
 cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 {
-	matrix	g_matView;
-	matrix	g_matProj;
+	matrix	g_matViewProj;
 	float3	g_EyePos;
 	float	width;
 	float3	g_EyeDir;
@@ -16,7 +15,6 @@ cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 cbuffer cb1 : register(b1)
 {
 	matrix	m_matWorld		: packoffset(c0);
-	float4  m_ObjectColor	: packoffset(c4);
 };
 
 cbuffer cb2 : register(b2) // constant buffer name : register (empty : num)
@@ -60,8 +58,7 @@ VS3D_OUTPUT VS( VS3D_INPUT input)
 	Output.Reflect = normalize(reflect(Incident, input.Normal));
 	Output.WorldPosition = Pos.xyz;
 
-	Pos = mul(Pos, g_matView);
-	Pos = mul(Pos, g_matProj);
+	Pos = mul(Pos, g_matViewProj);
 
 	Output.Position = Pos;
 	Output.UVPos = input.UVPos;

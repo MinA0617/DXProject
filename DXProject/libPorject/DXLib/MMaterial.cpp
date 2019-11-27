@@ -76,7 +76,7 @@ bool MMaterial::CreateConstantBuffer()
 	D3D11_SUBRESOURCE_DATA SubresourceData;
 
 	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
-	BufferDesc.ByteWidth = sizeof(CONSTANT_3DOBJ);
+	BufferDesc.ByteWidth = sizeof(CONSTANT_Matrial);
 	BufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	BufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
@@ -108,7 +108,7 @@ bool MMaterial::Init()
 bool MMaterial::Frame()
 {
 	// 상수버퍼 갱신
-	g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantMatrial, 0, 0);
+	if(m_pConstantBuffer) g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantMatrial, 0, 0);
 	return true;
 }
 

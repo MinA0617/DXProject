@@ -160,10 +160,15 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
 	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI;
-	BOOL bRet = m_MapPane.CreateEx(NULL, L"MapTool", this, CRect(0, 0, 300, 800), TRUE, 12345, dwStyle);
-
+	BOOL bRet = m_MapPane.CreateEx(NULL, L"MapTool", this, CRect(0, 0, 400, 800), TRUE, 12346, dwStyle);
 	m_MapPane.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_MapPane);
+
+	DWORD dwStyle2 = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI;
+	BOOL bRet2 = m_ObjectPane.CreateEx(NULL, L"ObjectTool", this, CRect(0, 0, 250, 800), TRUE, 54321, dwStyle2);
+	m_MapPane.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_ObjectPane);
+
 
 	return 0;
 }

@@ -11,8 +11,9 @@ bool MTree::AddObject(M3DObject * pObj)
 	return false;
 }
 
-bool MTree::Build(float fX, float fZ, float fMinSize)
+bool MTree::Build(float fX, float fZ, float fMinSize, int renderlevel)
 {
+	m_DepthLevelOfMapNode = renderlevel;
 	m_pRootNode = CreateNode(-fX / 2, -fZ / 2, fX / 2, fZ / 2);
 	m_fMinDivideSize = fMinSize;
 	return BuildTree(m_pRootNode);
@@ -24,7 +25,7 @@ bool MTree::BuildHeightMap(M3DHeightMap* target)
 	float size = target->m_fLeafSize;
 	float xsize = size * target->m_iCount - size;
 	float zsize = size * target->m_iCount - size;
-	Build(xsize, zsize, size);
+	Build(xsize, zsize, size, m_DepthLevelOfMapNode);
 	SetMaxY(m_pRootNode, target);
 	//SetNode(target);
 	return true;
@@ -216,16 +217,26 @@ int MTree::CheckNode(MTreeNode * node)
 	{
 		return false;
 	}break;
-	case 0:
+	case 0: // 걸친경우
 	{
 		if (node->m_iDepth == m_DepthLevelOfMapNode)
 		{
 			m_RenderNodeList.push_back(node);
 			return true;
 		}
-		for (int i = 0; i < node->m_pChild.size(); i++)
+		else
 		{
-			CheckNode(node->m_pChild[i]);
+			for (auto temp : node->m_pInstanceList)
+			{
+				if (I_CameraMgr.frustum.CheckOBB(&temp->m_Box))
+				{
+					m_RenderObjList.push_back(temp);
+				}
+			}
+			for (int i = 0; i < node->m_pChild.size(); i++)
+			{
+				CheckNode(node->m_pChild[i]);
+			}
 		}
 	}break;
 	case 1:
@@ -238,20 +249,74 @@ int MTree::CheckNode(MTreeNode * node)
 	}
 }
 
+int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
+{
+	if (pNode->m_Box.vMin.x <= data->m_Box.vMin.x && pNode->m_Box.vMax.x >= data->m_Box.vMax.x)
+	{
+		if (pNode->m_Box.vMin.z <= data->m_Box.vMin.z && pNode->m_Box.vMax.z >= data->m_Box.vMax.z)
+		{
+			if (pNode->m_iDepth == m_DepthLevelOfMapNode)
+			{
+				map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+				if (temp != m_InstanceObjTable.end())
+				{
+					(*temp).second->m_pInstanceList.erase(data);
+					m_InstanceObjTable.erase(data);
+				}
+				m_InstanceObjTable.insert(make_pair(data, pNode));
+				pNode->m_pInstanceList.insert(data);
+				return true;
+			}
+			else
+			{
+				for (auto temp : pNode->m_pChild)
+				{
+					if (CheckInstanceObj(temp, data))
+					{
+						return true;
+					}
+				}
+				map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+				if (temp != m_InstanceObjTable.end())
+				{
+					(*temp).second->m_pInstanceList.erase(data);
+					m_InstanceObjTable.erase(data);
+				}
+				m_InstanceObjTable.insert(make_pair(data, pNode));
+				pNode->m_pInstanceList.insert(data);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+int MTree::CheckInstanceObject(M3DInstance * data)
+{
+	// 기존것이던 새로운것이던 상관없음, 걍 추가됨 //
+	CheckInstanceObj(m_pRootNode, data);
+	return 0;
+}
+
 
 bool MTree::Frame()
 {
 	m_RenderNodeList.clear();
+	m_RenderObjList.clear();
 	CheckNode(m_pRootNode);
 	return true;
 }
 
 bool MTree::Render()
 {
-	I_3DObjectMgr.m_InWorldFiled->Render();
+	if(I_3DObjectMgr.m_InWorldFiled)	I_3DObjectMgr.m_InWorldFiled->Render();
 	for (auto node : m_RenderNodeList)
 	{
 		node->MapRender();
+	}
+	for (auto node : m_RenderObjList)
+	{
+		node->PreRender();
 	}
 	for (auto node : m_RenderNodeList)
 	{
@@ -279,23 +344,36 @@ MTree::~MTree()
 
 bool MTreeNode::Render()
 {
-	for (auto obj : m_pObj)
+	for (auto obj : m_pObjList)
 	{
 		obj->Render();
 	}
-	for (auto Child : m_pChild)
+	for (auto obj : m_pInstanceList)
 	{
-		Child->Render();
+		obj->PreRender();
+	}
+	if (!m_Tile)
+	{
+		for (auto Child : m_pChild)
+		{
+			Child->Render();
+		}
 	}
 	return true;
 }
 
 bool MTreeNode::MapRender()
 {
-	if (m_Tile) m_Tile->Render();
-	for (auto Child : m_pChild)
+	if (m_Tile)
 	{
-		Child->MapRender();
+		m_Tile->Render();
+	}
+	else
+	{
+		for (auto Child : m_pChild)
+		{
+			Child->MapRender();
+		}
 	}
 	return true;
 }

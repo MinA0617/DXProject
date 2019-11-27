@@ -46,9 +46,9 @@ bool MFrustum::CheckPlane(MPlane plane, MBoundingBox* box)
 {
 	float distance;
 	D3DXVECTOR3 normal = D3DXVECTOR3(plane.fA, plane.fB, plane.fC);
-	D3DXVECTOR3 dir0 = box->vAxis[0] * box->fOldExtent[0];
-	D3DXVECTOR3 dir1 = box->vAxis[1] * box->fOldExtent[1];
-	D3DXVECTOR3 dir2 = box->vAxis[2] * box->fOldExtent[2];
+	D3DXVECTOR3 dir0 = box->vAxis[0] * box->fExtent[0];
+	D3DXVECTOR3 dir1 = box->vAxis[1] * box->fExtent[1];
+	D3DXVECTOR3 dir2 = box->vAxis[2] * box->fExtent[2];
 	distance = fabs(D3DXVec3Dot(&normal, &dir0));
 	distance += fabs(D3DXVec3Dot(&normal, &dir1));
 	distance += fabs(D3DXVec3Dot(&normal, &dir2));
@@ -80,26 +80,27 @@ int MFrustum::CheckNode(MTreeNode* node)
 	float fDistance = 0;
 	D3DXVECTOR3 vDir;
 	D3DXVECTOR3 vNormal;
+	MBoundingBox& Box = node->m_Box;
 	int result = 1;
 	for (int i = 0; i < 4; i++)
 	{
-		vDir = node->m_Box.vAxis[0] * node->m_Box.fExtent[0];
+		vDir = Box.vAxis[0] * Box.fExtent[0];
 		vNormal = D3DXVECTOR3(m_Plane[i].fA,
 			m_Plane[i].fB,
 			m_Plane[i].fC);
 
 		fDistance = fabs(D3DXVec3Dot(&vNormal, &vDir));
-		vDir = node->m_Box.vAxis[1] * node->m_Box.fExtent[1];
+		vDir = Box.vAxis[1] * (Box.fExtent[1]);
 		fDistance += fabs(D3DXVec3Dot(&vNormal, &vDir));
 
 
-		vDir = node->m_Box.vAxis[2] * node->m_Box.fExtent[2];
+		vDir = Box.vAxis[2] * Box.fExtent[2];
 		fDistance += fabs(D3DXVec3Dot(&vNormal, &vDir));
 
 		fPlaneToCenter =
-			m_Plane[i].fA * node->m_Box.vCenter.x +
-			m_Plane[i].fB * node->m_Box.vCenter.y +
-			m_Plane[i].fC * node->m_Box.vCenter.z +
+			m_Plane[i].fA * Box.vCenter.x +
+			m_Plane[i].fB * (Box.vCenter.y)+
+			m_Plane[i].fC * Box.vCenter.z +
 			m_Plane[i].fD;
 
 		if (fPlaneToCenter <= fDistance)
@@ -118,8 +119,6 @@ void MFrustum::CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj)
 {
 	m_matView = matView;
 	m_matProj = matProj;
-	D3DXMatrixTranspose(&m_matView, &m_matView);
-	D3DXMatrixTranspose(&m_matProj, &m_matProj);
 	D3DXMATRIX matInvVP = m_matView * m_matProj;
 	D3DXMatrixInverse(&matInvVP, NULL, &matInvVP);
 
@@ -127,11 +126,6 @@ void MFrustum::CreateFrustum(D3DXMATRIX& matView, D3DXMATRIX& matProj)
 	// 4   3
 	//   0
 	m_vFrustum[0] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_vFrustum[1] = D3DXVECTOR3(-1.0f, 1.0f, 1.0f);
-	m_vFrustum[2] = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_vFrustum[3] = D3DXVECTOR3(1.0f, -1.0f, 1.0f);
-	m_vFrustum[4] = D3DXVECTOR3(-1.0f, -1.0f, 1.0f);
 
 	m_vFrustum[1] = D3DXVECTOR3(-1.0f, 1.0f, 1.0f);
 	m_vFrustum[2] = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

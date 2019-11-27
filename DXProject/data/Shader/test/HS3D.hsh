@@ -2,7 +2,7 @@
 // Global variables
 //-----------------------------------------------------------------------------
 #define g_iNumLight  1
-#define MAX_POINTS 32
+#define MAX_POINTS 4
 cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 {
 	matrix	g_matView;
@@ -39,14 +39,13 @@ struct HS_CONSTANT_OUTPUT
 
 struct HS_INPUT
 {
-	float2	Position				: POSITION;
+	float3	Position				: POSITION;
 	float2	WorldPos				: WORLDPOS;
-	float	Level					: LEVEL;
 };
 
 struct HS_OUTPUT // 444 please
 {
-	float2 Position				: SV_POSITION;	// reservation spell
+	float3 Position				: SV_POSITION;	// reservation spell
 	float2 WorldPos				: WORLDPOS;
 };
 
@@ -71,10 +70,10 @@ HS_CONSTANT_OUTPUT PatchConstantFunction(InputPatch<HS_INPUT, MAX_POINTS> inputP
 [domain("quad")]
 [partitioning("integer")]
 [outputtopology("triangle_cw")]
-[outputcontrolpoints(4)]
+[outputcontrolpoints(16)]
 [patchconstantfunc("PatchConstantFunction")]
 [maxtessfactor(64.0f)]
-HS_OUTPUT HS(InputPatch<HS_INPUT, MAX_POINTS> Patch, uint pointId : SV_OutputControlPointID, uint patchId : SV_PrimitiveID)
+HS_OUTPUT HS(InputPatch<HS_INPUT, MAX_POINTS> patch, uint pointId : SV_OutputControlPointID, uint patchId : SV_PrimitiveID)
 {
 	HS_OUTPUT output;
 	output.Position = patch[pointId].Position;

@@ -4,6 +4,7 @@
 #include "MRenderTargetMgr.h"
 #include "GeometryShaderMgr.h"
 #include "MDXWirte.h"
+#include "MFunction.h"
 
 class MDevice : public MSingleton<MDevice>
 {

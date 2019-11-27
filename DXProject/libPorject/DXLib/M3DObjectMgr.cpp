@@ -177,6 +177,19 @@ int M3DObjectMgr::AddInWorld(M_STR* namelist, int namecount)
 	return result;
 }
 
+bool M3DObjectMgr::DeleteInWorld(int index)
+{
+	ITORO temp = m_InWorldObjectList.find(index);
+	if (temp != m_InWorldObjectList.end())
+	{
+		(*temp).second->Release();
+		delete (*temp).second;
+		m_InWorldObjectList.erase(index);
+		return true;
+	}
+	return false;
+}
+
 bool M3DObjectMgr::CreateBasicBuffer()
 {
 	SPLINE_VERTEX ver[8];
@@ -252,9 +265,76 @@ bool M3DObjectMgr::CreateBasicBuffer()
 	return true;
 }
 
+int M3DObjectMgr::AddInstanceModel(M3DInstanceModel* model)
+{
+	InstanceModelList.insert(make_pair(m_iInstanceListCount, model));
+	InstanceModelNameTable.insert(make_pair(model->m_name, m_iInstanceListCount));
+	return m_iInstanceListCount++;
+}
+
+int M3DObjectMgr::AddInstanceObj(int id, int count)
+{
+	map<int, M3DInstanceModel*>::iterator temp = InstanceModelList.find(id);
+	if (temp != InstanceModelList.end())
+	{
+		int result = (*temp).second->CreateInstanceObject(count);
+		for (int i = 0; i < count; i++)
+		{
+			m_pTree->CheckInstanceObject((*temp).second->GetInstanceObject(result + i));
+		}
+		return result;
+	}
+	return -1;
+}
+
+M3DInstanceModel * M3DObjectMgr::GetInstanceModel(M_STR name)
+{
+	map<M_STR, int>::iterator temp = InstanceModelNameTable.find(name);
+	if (temp != InstanceModelNameTable.end())
+	{
+		map<int, M3DInstanceModel*>::iterator temp2 = InstanceModelList.find((*temp).second);
+		if (temp2 != InstanceModelList.end())
+		{
+			return (*temp2).second;
+		}
+	}
+	return nullptr;
+}
+
+M3DInstanceModel * M3DObjectMgr::GetInstanceModel(int id)
+{
+	map<int, M3DInstanceModel*>::iterator temp = InstanceModelList.find(id);
+	if (temp != InstanceModelList.end())
+	{
+		return (*temp).second;
+	}
+	return nullptr;
+}
+
+M3DInstance* M3DObjectMgr::GetInstanceObj(int id, int lowid)
+{
+	map<int, M3DInstanceModel*>::iterator temp = InstanceModelList.find(id);
+	if (temp != InstanceModelList.end())
+	{
+		M3DInstance* result = (*temp).second->GetInstanceObject(lowid);
+		return result;
+	}
+	return nullptr;
+}
+
+bool M3DObjectMgr::InstanceRender()
+{
+	for (auto data : InstanceModelList)
+	{
+		data.second->Render();
+	}
+	return true;
+}
+
 bool M3DObjectMgr::Init()
 {
 	//m_pWorld = new M3DObject;
+	m_iInstanceListCount = 0;
 	I_CameraMgr.Init();
 	I_LightMgr.Init();
 	CreateBasicBuffer();
@@ -269,6 +349,10 @@ bool M3DObjectMgr::Frame()
 	
 	if(m_InWorldFiled)	m_InWorldFiled->Frame();
 
+	for (auto data : InstanceModelList)
+	{
+		data.second->Frame();
+	}
 	for (auto data : m_InWorldObjectList)
 	{
 		data.second->Frame();
@@ -284,6 +368,7 @@ bool M3DObjectMgr::Render()
 {
 	I_CameraMgr.Render();
 	I_LightMgr.Render();
+	InstanceRender();
 	if(m_pTree) m_pTree->Render();
 	for (auto data : m_InWorldUnitList)
 	{

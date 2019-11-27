@@ -189,8 +189,11 @@
   <ItemGroup>
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MCanvas.h" />
+    <ClInclude Include="MCreateInstance.h" />
     <ClInclude Include="MCreateMapDialog.h" />
     <ClInclude Include="MMapCtlForm.h" />
+    <ClInclude Include="MObjectCtlForm.h" />
+    <ClInclude Include="MObjectPane.h" />
     <ClInclude Include="MPushPull.h" />
     <ClInclude Include="MTileing.h" />
     <ClInclude Include="MTool.h" />
@@ -206,8 +209,11 @@
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MCanvas.cpp" />
+    <ClCompile Include="MCreateInstance.cpp" />
     <ClCompile Include="MCreateMapDialog.cpp" />
     <ClCompile Include="MMapCtlForm.cpp" />
+    <ClCompile Include="MObjectCtlForm.cpp" />
+    <ClCompile Include="MObjectPane.cpp" />
     <ClCompile Include="MPushPull.cpp" />
     <ClCompile Include="MTileing.cpp" />
     <ClCompile Include="MTool.cpp" />

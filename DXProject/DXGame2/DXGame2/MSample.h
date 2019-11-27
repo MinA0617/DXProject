@@ -1,5 +1,7 @@
 #pragma once
 #include "MCore.h"
+#include "MHM.h"
+#include "M3DInstanceModel.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
 #pragma comment (lib, "DXLib_D")
@@ -9,36 +11,6 @@
 
 #pragma comment (lib, "fmod_vc")
 
-//struct ConstantFiled
-//{
-//	float g_FiledSize;
-//	float g_TileSize;
-//	float g_Heigth;
-//	float temp;
-//};
-//
-//struct filedvecter
-//{
-//	D3DXVECTOR2	Position;
-//	int			DivisionCount;
-//	int			NeighborType;
-//};
-//
-//class Filed : public M3DModel
-//{
-//public:
-//	ConstantFiled   constant;
-//	MTexture		heigth;
-//	ID3D11Buffer*	cb;
-//	ID3D11Buffer*	vb;
-//	virtual bool	Init();
-//	virtual bool	Frame();
-//	virtual bool	Render();
-//	virtual bool	Release();
-//public:
-//	Filed() {};
-//	~Filed() {}
-//};
 
 class MSample : public MCore
 {
@@ -51,14 +23,16 @@ public:
 	MSample();
 	~MSample();
 public:
-
-	MUnit* unit;
-	MLight* light;
-	//M3DModel* target;
-	MFiled* filed;
-	M3DObject* target;
-	M3DModel* box1;
-	M3DModel* box2;
+	M3DInstanceModel* inmo;
+	MDXWirte*	data;
+	////MHM hm;
+	//MUnit* unit;
+	//MLight* light;
+	////M3DModel* target;
+	//MFiled* filed;
+	//M3DObject* target;
+	//M3DModel* box1;
+	//M3DModel* box2;
 	float y;
 };
 

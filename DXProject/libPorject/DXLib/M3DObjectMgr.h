@@ -42,7 +42,21 @@ public:
 	MFiled*				CreateFiled(M_STR name, int count, float leafsize = 10, int tilesize = 64, float startlod = 1000, bool isChange = true);
 	bool				SetFiled(M_STR name);
 	int					AddInWorld(M_STR* namelist, int namecount = 1);
+	bool				DeleteInWorld(int index);
 	bool				CreateBasicBuffer();
+public:
+	//--- test ---
+	map<M_STR, int>				InstanceModelNameTable;
+	map<int, M3DInstanceModel*> InstanceModelList;
+	int							m_iInstanceListCount;
+	int							AddInstanceModel(M3DInstanceModel* model);
+	int							AddInstanceObj(int id, int count = 1);
+	M3DInstanceModel*			GetInstanceModel(M_STR name);
+	M3DInstanceModel*			GetInstanceModel(int id);
+	M3DInstance*				GetInstanceObj(int id, int lowid);
+	
+	bool						InstanceRender();
+	// ------------
 public:
 	virtual bool		Init();
 	virtual bool		Frame();

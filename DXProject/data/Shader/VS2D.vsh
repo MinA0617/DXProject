@@ -4,8 +4,7 @@
 
 cbuffer cb0 : register(b0) // constant buffer name : register (empty : num)
 {
-	matrix	g_matView;
-	matrix	g_matProj;
+	matrix	g_matViewProj;
 	float3	g_EyePos;
 	float	width;
 	float3	g_EyeDir;

@@ -14,8 +14,25 @@ IMPLEMENT_DYNAMIC(MMapCtlForm, CFormView)
 MMapCtlForm*  MMapCtlForm::CreateOne(CWnd* pParent)
 {
 	MMapCtlForm* pForm = new MMapCtlForm;
-	pForm->Create(NULL, NULL, WS_CHILD | WS_VISIBLE, CRect(0, 0, 500, 800), pParent, 0, NULL);
+	pForm->Create(NULL, NULL, WS_CHILD | WS_VISIBLE, CRect(0, 0, 400, 800), pParent, 0, NULL);
 	return pForm;
+}
+
+MMapCtlForm::MMapCtlForm() : CFormView(IDD_MapCtlForm)
+, m_iBrushSize(100)
+, m_iBrushOpacity(100)
+, m_iPushSize(100)
+, m_iPushPower(100)
+{
+	m_iTileID = 0;
+	m_iBrushID = 0;
+	m_iLayer = 0;
+	m_iTileCount = 0;
+	m_iBrushCount = 0;
+}
+
+MMapCtlForm::~MMapCtlForm()
+{
 }
 
 bool MMapCtlForm::LoadBrush(CString path)
@@ -56,23 +73,6 @@ bool MMapCtlForm::LoadTile(CString path)
 		return true;
 	}
 	return false;
-}
-
-MMapCtlForm::MMapCtlForm() : CFormView(IDD_MapCtlForm)
-, m_iBrushSize(100)
-, m_iBrushOpacity(100)
-, m_iPushSize(100)
-, m_iPushPower(100)
-{
-	m_iTileID = 0;
-	m_iBrushID = 0;
-	m_iLayer = 0;
-	m_iTileCount = 0;
-	m_iBrushCount = 0;
-}
-
-MMapCtlForm::~MMapCtlForm()
-{
 }
 
 void MMapCtlForm::DoDataExchange(CDataExchange* pDX)
@@ -256,7 +256,7 @@ void MMapCtlForm::OnBnClickedOpenTile()
 		return;
 	}
 	CString selFileName;
-	CFileDialog dlg(TRUE, L"bmp", NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"bmp Files(*.bmp)|*.bmp|png Files(*.png) | *.png | All Files(*.*)|*.*|", this);
+	CFileDialog dlg(TRUE, L"bmp", NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"bmp Files(*.bmp)|*.bmp|png Files(*.png) | *.png |jpg Files(*.jpg) | *.jpg | All Files(*.*)|*.*|", this);
 	if (dlg.DoModal() == IDOK)
 	{
 		selFileName = dlg.GetPathName();
@@ -278,7 +278,7 @@ void MMapCtlForm::OnBnClickedOpenBrush()
 		return;
 	}
 	CString selFileName;
-	CFileDialog dlg(TRUE, L"bmp", NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"bmp Files(*.bmp)|*.bmp|png Files(*.png) | *.png | All Files(*.*)|*.*|", this);
+	CFileDialog dlg(TRUE, L"bmp", NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"bmp Files(*.bmp)|*.bmp|png Files(*.png) | *.png |jpg Files(*.jpg) | *.jpg | All Files(*.*)|*.*|", this);
 	if (dlg.DoModal() == IDOK)
 	{
 		selFileName = dlg.GetPathName();

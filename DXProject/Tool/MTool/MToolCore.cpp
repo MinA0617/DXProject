@@ -13,11 +13,13 @@ MToolCore::~MToolCore()
 
 bool  MToolCore::Init()
 {
+	inmo = nullptr;
+
 	data = new MDXWirte;
 	data->Init();
 	I_Device.m_dxWriteList.push_back(data);
-	data->AddData(L"asd", D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(0, 0));
-	data->AddData(L"a2sd", D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(0, 0));
+	data->AddData(L"0", D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 10));
+	data->AddData(L"0", D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 60));
 
 	filed == nullptr;
 	I_CameraMgr.CreateFPSCamera_Main();
@@ -37,16 +39,52 @@ bool  MToolCore::Init()
 
 bool  MToolCore::Frame()
 {
+	// --test
+	if (inmo != nullptr)
+	{
+		M3DInstanceModel* temp = (*I_3DObjectMgr.InstanceModelList.find(0)).second;
+		M_STR str = to_wstring(temp->m_MatrixList.size());
+		data->UpdateData(1, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 60));
+	}
+	if (g_ActionInput.Delete == KEY_PUSH)
+	{
+		if (inmo == nullptr)
+		{
+			inmo = new M3DInstanceModel;
+			inmo->Init();
+			I_Parser.Load(L"../../data/obj/Box001.OBJ");
+			M_STR name[1];
+			name[0] = L"Box001";
+			int result = I_3DObjectMgr.AddInWorld(name);
+			inmo->m_Mesh = I_3DObjectMgr.findObject(result)->m_pObj;
+			inmo->m_Box.Copy(I_3DObjectMgr.findObject(result)->m_Box);
+			I_3DObjectMgr.DeleteInWorld(result);
+			inmo->m_Material->m_PixelShaderID = PS3DINSTANCE;
+			inmo->m_Mesh->m_VertexShaderID = VS3DINSTANCE;
+
+			int id = I_3DObjectMgr.AddInstanceModel(inmo);
+			I_3DObjectMgr.AddInstanceObj(id, 100);
+			for (int i = 0; i < 100; i++)
+			{
+				M3DInstance* temp = I_3DObjectMgr.GetInstanceObj(id, i);
+				int x, y, z;
+				x = (i * (5141 * (i + 5))) % 360;
+				y = (i * (5554 * (i + 7))) % 100;
+				z = (i * (4587 * (i + 8))) % 360;
+				temp->SetPosition(D3DXVECTOR3(x, y, z));
+				temp->SetScale(D3DXVECTOR3(1 + (i*0.02), 1 + (i*0.02), 1 + (i*0.02)));
+			}
+		}
+	}
+	// -----
+	M_STR str = to_wstring(I_Timer.GetFramePerSecond());
+	data->UpdateData(0, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 10));
+
 	I_CameraMgr.m_MainCamera->isRotition = false;
 	if (g_ActionInput.a_RightClick >= KEY_PUSH)
 	{
 		I_CameraMgr.m_MainCamera->isRotition = true;
 	}
-
-	M_STR str = to_wstring(g_ActionInput.Num1);
-	data->UpdateData(0, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(0, 0));
-	str = to_wstring(I_Timer.GetFramePerSecond());
-	data->UpdateData(1, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(0, 50));
 
 	if (g_ActionInput.a_LeftClick >= KEY_PUSH)
 	{
@@ -69,6 +107,11 @@ bool  MToolCore::Frame()
 			else pushpull.m_bReversal = false;
 			pushpull.PushPull();
 			break;
+		case CREATEOBJ:
+			if (g_ActionInput.a_LeftClick == KEY_PUSH)
+			{
+				instance.Create();
+			}
 		default:
 			break;
 		}
