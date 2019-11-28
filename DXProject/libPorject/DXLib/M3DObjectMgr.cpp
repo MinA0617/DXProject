@@ -37,13 +37,6 @@ MFiled * M3DObjectMgr::findFiled(M_STR name)
 	return (*data).second;
 }
 
-M3DModel* M3DObjectMgr::findObject(int index)
-{
-	ITORO temp = m_InWorldObjectList.find(index);
-	if (temp == m_InWorldObjectList.end())return nullptr;
-	return (*temp).second;
-}
-
 M3DObject * M3DObjectMgr::operator[](M_STR name)
 {
 	ITOR temp = m_List.find(name);
@@ -161,34 +154,34 @@ bool M3DObjectMgr::SetFiled(M_STR name)
 	return false;
 }
 
-int M3DObjectMgr::AddInWorld(M_STR* namelist, int namecount)
-{
-	int result = -1;
-	for (int i = 0; i < namecount; i++)
-	{
-		if (i == 0)
-		{
-			result = m_iObjIndex;
-		}
-		M3DModel* model = new M3DModel;
-		model->Copy((*m_List.find(namelist[i])).second);
-		m_InWorldObjectList.insert(make_pair(m_iObjIndex++, model));
-	}
-	return result;
-}
-
-bool M3DObjectMgr::DeleteInWorld(int index)
-{
-	ITORO temp = m_InWorldObjectList.find(index);
-	if (temp != m_InWorldObjectList.end())
-	{
-		(*temp).second->Release();
-		delete (*temp).second;
-		m_InWorldObjectList.erase(index);
-		return true;
-	}
-	return false;
-}
+//int M3DObjectMgr::AddInWorld(M_STR* namelist, int namecount)
+//{
+//	int result = -1;
+//	for (int i = 0; i < namecount; i++)
+//	{
+//		if (i == 0)
+//		{
+//			result = m_iObjIndex;
+//		}
+//		M3DModel* model = new M3DModel;
+//		model->Copy((*m_List.find(namelist[i])).second);
+//		m_InWorldObjectList.insert(make_pair(m_iObjIndex++, model));
+//	}
+//	return result;
+//}
+//
+//bool M3DObjectMgr::DeleteInWorld(int index)
+//{
+//	ITORO temp = m_InWorldObjectList.find(index);
+//	if (temp != m_InWorldObjectList.end())
+//	{
+//		(*temp).second->Release();
+//		delete (*temp).second;
+//		m_InWorldObjectList.erase(index);
+//		return true;
+//	}
+//	return false;
+//}
 
 bool M3DObjectMgr::CreateBasicBuffer()
 {
@@ -287,6 +280,30 @@ int M3DObjectMgr::AddInstanceObj(int id, int count)
 	return -1;
 }
 
+int M3DObjectMgr::AddInstanceObj(int id, D3DXVECTOR3 * pos, D3DXQUATERNION * rot, D3DXVECTOR3 * scl)
+{
+	map<int, M3DInstanceModel*>::iterator temp = InstanceModelList.find(id);
+	if (temp != InstanceModelList.end())
+	{
+		int result = (*temp).second->CreateInstanceObject();
+		M3DInstance * instance = (*temp).second->GetInstanceObject(result);
+		instance->SetTransform(*pos, *rot, *scl);
+		//m_pTree->CheckInstanceObject((*temp).second->GetInstanceObject(result));
+		return result;
+	}
+	return -1;
+}
+
+int M3DObjectMgr::GetInstanceModelID(M_STR name)
+{
+	map<M_STR, int>::iterator temp = InstanceModelNameTable.find(name);
+	if (temp != InstanceModelNameTable.end())
+	{
+		return (*temp).second;
+	}
+	return -1;
+}
+
 M3DInstanceModel * M3DObjectMgr::GetInstanceModel(M_STR name)
 {
 	map<M_STR, int>::iterator temp = InstanceModelNameTable.find(name);
@@ -353,10 +370,6 @@ bool M3DObjectMgr::Frame()
 	{
 		data.second->Frame();
 	}
-	for (auto data : m_InWorldObjectList)
-	{
-		data.second->Frame();
-	}
 	for (auto data : m_InWorldUnitList)
 	{
 		data.second->Frame();
@@ -374,18 +387,12 @@ bool M3DObjectMgr::Render()
 	{
 		data.second->Render();
 	}
+	for (auto data : m_List)
+	{
+		data.second->Render();
+	}
 	if (1)
 	{
-		for (auto data : m_InWorldObjectList)
-		{
-			if (data.second->m_Box)
-			{
-				if (I_CameraMgr.frustum.CheckOBB(data.second->m_Box))
-				{
-					data.second->Render();
-				}
-			}
-		}
 		for (auto data : m_InWorldUnitList)
 		{
 			if (data.second->m_Box)
@@ -425,11 +432,6 @@ bool M3DObjectMgr::Release()
 		data.second->Release();
 		delete data.second;
 	}
-	for (auto data : m_InWorldObjectList)
-	{
-		data.second->Release();
-		delete data.second;
-	}
 	SAFE_RELEASE(m_pTree);
 	SAFE_DELETE(m_pTree);
 	return true;
@@ -437,7 +439,6 @@ bool M3DObjectMgr::Release()
 
 M3DObjectMgr::M3DObjectMgr()
 {
-	m_iObjIndex = 0;
 	m_InWorldFiled = nullptr;
 	m_pTree = nullptr;
 }

@@ -46,6 +46,7 @@
 #define IDC_OPEN_BRUSH                  311
 #define IDC_BUTTON_SOLID                312
 #define IDD_TOOL_CREATEMAP              313
+#define IDD_Rotation_X                  313
 #define IDD_ObjectCtlForm               313
 #define IDD_TOOL_LOADTEXTURE            314
 #define IDD_DIALOG_CREATE_MAP           315
@@ -72,7 +73,9 @@
 #define IDC_BRUSH_OPACITY_SPIN          1035
 #define IDC_EDIT1                       1037
 #define IDC_Map_AlphaTextureSize        1037
+#define IDD_Rotation_Y                  1038
 #define IDC_OPEN_TILE                   1039
+#define IDD_Rotation_Z                  1039
 #define IDC_BUTTON_TILE                 1040
 #define IDC_BUTTON_BRUSH                1041
 #define IDC_BUTTON_TILE3                1042
@@ -81,6 +84,11 @@
 #define IDC_DELETE_IN_WORLD_BUTTON      1045
 #define IDC_LOAD_BUTTON                 1046
 #define IDC_OBJ_LIST                    1048
+#define IDC_Scale                       1050
+#define IDC_RotationSliderX             1051
+#define IDC_ScaleSlider                 1052
+#define IDC_RotationSliderY             1053
+#define IDC_RotationSliderZ             1054
 #define idd                             32772
 #define IDD                             32772
 
@@ -90,7 +98,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        321
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1049
+#define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif

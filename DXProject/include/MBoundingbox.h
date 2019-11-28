@@ -6,7 +6,7 @@ class M3DObject;
 class MBoundingBox
 {
 public:
-	M3DObject*		m_pTarget;
+	D3DXVECTOR3		vPoint[8];
 	bool			n_bCanOverlap;
 	D3DXVECTOR3		vMin;
 	D3DXVECTOR3		vMax;
@@ -17,7 +17,9 @@ public:
 	float			fExtent[3];
 	bool			Copy(MBoundingBox* target);
 	bool			BuildForMinMax();
-	bool			Updata();
+	bool			SelfUpdate();
+	bool			Updata(D3DXVECTOR3* pos, D3DXQUATERNION* rot, D3DXVECTOR3* scl);
+	bool			UpdataMaxY(float maxy);
 	vector<MBoundingBox*> m_ChildList;
 	//----------
 #if defined(DEBUG) || defined(_DEBUG)

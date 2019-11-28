@@ -42,6 +42,9 @@ MAPTYPE MParser::DataToMAPTYPE(ITOR & data)
 	case 1:
 		return MAPTYPE(DIFFUSE);
 		break;
+	case 6:
+		return MAPTYPE(OPACITY);
+		break;
 	default:
 		return MAPTYPE(NOTFOUND);
 		break;
@@ -95,6 +98,65 @@ D3DXVECTOR3 MParser::FindMax(vector<MVERTEX>& vertices)
 		if (z < vertices[i].p.z) z = vertices[i].p.z;
 	}
 	return D3DXVECTOR3(x, y, z);
+}
+
+M_STR MParser::AnotherPath(M_STR oldpath)
+{
+	M_STR str = oldpath;
+	str += L" 파일을 찾을 수 없습니다. 경로를 재설정 해주십시오.";
+	MessageBoxW(g_hWnd, str.c_str(), L"Error", MB_OK);
+	OPENFILENAME    ofn;
+	TCHAR           szFile[MAX_PATH] = { 0, };
+	TCHAR			szFileTitle[MAX_PATH] = { 0, };
+	static TCHAR    *szFilter;
+
+	TCHAR lpCurBuffer[256] = { 0, };
+	GetCurrentDirectory(256, lpCurBuffer);
+
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+	_tcscpy_s(szFile, _T("*.*\0"));
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = GetActiveWindow();
+	ofn.lpstrFilter = szFilter;
+	ofn.lpstrCustomFilter = NULL;
+	ofn.nMaxCustFilter = 0L;
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFileTitle = szFileTitle;
+	ofn.nMaxFileTitle = MAX_PATH;
+	ofn.lpstrInitialDir = _T("../../data/");
+	ofn.lpstrTitle = L"asd";
+	ofn.Flags = OFN_EXPLORER | OFN_ALLOWMULTISELECT;
+	ofn.nFileOffset = 0;
+	ofn.nFileExtension = 0;
+
+	if (!GetOpenFileName(&ofn))
+	{
+		return false;
+	}
+	TCHAR* load = _tcstok(szFile, _T("\n"));
+	M_STR dir = szFile;
+
+	SetCurrentDirectory(lpCurBuffer);
+	return dir;
+}
+
+bool MParser::Load_Map(M3DInstanceModel* target, M_STR name, MAPTYPE maptype)
+{
+	if (!target->Load_MAP(name, maptype))
+	{
+		while (1)
+		{
+			M_STR newname = AnotherPath(name);
+			if (target->Load_MAP(newname, maptype))
+			{
+				break;
+			}
+		}
+	}
+	return true;
 }
 
 bool MParser::CreateBuffer(MMesh * Target, vector<MVERTEX>& vertices, vector<DWORD>& index)
@@ -220,7 +282,7 @@ bool MParser::CreateMeshData(ITOR & data, M3DInstanceModel * target)
 			data++;
 			MAPTYPE maptype = DataToMAPTYPE(data);
 			M_STR name = DataToMSTR(data);
-			target->Load_MAP(name, maptype);
+			Load_Map(target, name, maptype);
 			data--;
 		}
 		if (*data == "OBJECT_END")
@@ -448,7 +510,6 @@ bool MParser::SetBBData(M_STR name, MSkeleton* skt, bool isClear)
 			box->fOldExtent[1] = (maxy - miny) / 2;
 			box->fOldExtent[2] = (maxz - minz) / 2;
 			box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
-			box->m_pTarget = target;
 			target->m_Box = box;
 		}
 	}
@@ -677,7 +738,6 @@ bool MParser::CreateSKTData(M_STR name)
 			target->m_Box->fOldExtent[1] = (maxy - miny) / 2;
 			target->m_Box->fOldExtent[2] = (maxz - minz) / 2;
 			target->m_Box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
-			target->m_Box->m_pTarget = target;
 		}
 		//if (*data == "OBJECT_END")
 		//{
@@ -853,7 +913,6 @@ bool MParser::CreateGeometryData(ITOR &data, M3DModel* target)
 			target->m_Box->fOldExtent[1] = (maxy - miny) / 2;
 			target->m_Box->fOldExtent[2] = (maxz - minz) / 2;
 			target->m_Box->vOldCenter = (D3DXVECTOR3(minx, miny, minz) + D3DXVECTOR3(maxx, maxy, maxz)) / 2;
-			target->m_Box->m_pTarget = target;
 		}
 		if (*data == "MAP_ID")
 		{

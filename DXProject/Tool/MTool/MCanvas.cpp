@@ -122,20 +122,6 @@ bool MCanvas::Init()
 		return false;
 	}
 #pragma endregion BLEND
-
-	//DWORD index = I_TextureMgr.Load(L"../brush/defult.bmp");
-	//if (index) m_BrushList.push_back(index);
-	//index = I_TextureMgr.Load(L"../brush/defult2.bmp");
-	//if (index) m_BrushList.push_back(index);
-	return true;
-}
-
-bool MCanvas::Frame()
-{
-	if (m_pConstantBuffer)
-	{
-		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
-	}
 	return true;
 }
 
@@ -179,6 +165,14 @@ bool MCanvas::Create(float xsize, float ysize)
 	if (FAILED(hr)) return false;
 	hr = g_pDevice->CreateRenderTargetView(m_pCanvasTexture, NULL, &m_pRenderTargetView);
 	if (FAILED(hr)) return false;
+
+	hr = g_pDevice->CreateTexture2D(&td, NULL, &m_pPreviewTexture);
+	if (FAILED(hr)) return false;
+	hr = g_pDevice->CreateShaderResourceView(m_pPreviewTexture, NULL, &m_pPreviewShaderResourceView);
+	if (FAILED(hr)) return false;
+	hr = g_pDevice->CreateRenderTargetView(m_pPreviewTexture, NULL, &m_pPreviewRenderTargetView);
+	if (FAILED(hr)) return false;
+
 
 	m_ViewPort.Width = xsize;
 	m_ViewPort.Height = ysize;
@@ -235,6 +229,14 @@ bool MCanvas::Load(M_STR filepath)
 	hr = g_pDevice->CreateRenderTargetView(m_pCanvasTexture, NULL, &m_pRenderTargetView);
 	if (FAILED(hr)) return false;
 
+	hr = g_pDevice->CreateTexture2D(&td, NULL, &m_pPreviewTexture);
+	g_pImmediateContext->CopyResource(m_pPreviewTexture, m_pCanvasTexture);
+	if (FAILED(hr)) return false;
+	hr = g_pDevice->CreateShaderResourceView(m_pPreviewTexture, NULL, &m_pPreviewShaderResourceView);
+	if (FAILED(hr)) return false;
+	hr = g_pDevice->CreateRenderTargetView(m_pPreviewTexture, NULL, &m_pPreviewRenderTargetView);
+	if (FAILED(hr)) return false;
+
 	m_ViewPort.Width = td.Width;
 	m_ViewPort.Height = td.Height;
 	m_ViewPort.MinDepth = 0;
@@ -251,47 +253,45 @@ bool MCanvas::Load(M_STR filepath)
 	return true;
 }
 
-bool MCanvas::Brushing()
-{
-	if (m_BrushID >= m_BrushList.size()) return false;
-	if (!I_3DObjectMgr.m_InWorldFiled) return false;
-	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
-	if(!hm->m_pAlphaTexture) return false;
-	MRAY ray = MSelect::GetScreenRay();
-	MTreeNode* pNode = MSelect::CheckNode(I_3DObjectMgr.m_pTree->m_pRootNode, &ray);
-	D3DXVECTOR3 center;
-	DWORD		index;
-	int	XCount = I_3DObjectMgr.m_InWorldFiled->ground->m_iCount;
-	if (pNode)
-	{
-		if (MSelect::CheckTri(pNode, &ray, &center, &index))
-		{
-			float x = (center.x / (hm->m_fLeafSize * hm->m_iCount)) * 2;
-			float y = (center.z / (hm->m_fLeafSize * hm->m_iCount)) * 2;
-			m_ConstantOBJ.ScreenScale = D3DXVECTOR2(m_iRadius, m_iRadius);
-			m_ConstantOBJ.ScreenPosition = D3DXVECTOR2((x * m_TextureSize.x) / 2, -(y * m_TextureSize.y) / 2);
-			m_ConstantOBJ.ScreenRotation = m_fOpacity;
-			m_ConstantOBJ.empty1 = m_TextureSize.x;
-			m_ConstantOBJ.empty2 = m_TextureSize.y;
-			m_ConstantOBJ.empty3 = m_Channel;
-
-			Begin();
-			Frame();
-			Render();
-			End();
-
-			//SAFE_RELEASE(hm->m_pAlphaTextureSRV);
-			//HRESULT hr = g_pDevice->CreateShaderResourceView(m_pCanvasTexture, NULL, &hm->m_pAlphaTextureSRV);
-			//if (FAILED(hr)) return false;
-
-		}
-		return true;
-	}
-}
+//bool MCanvas::Brushing()
+//{
+//	if (m_BrushID >= m_BrushList.size()) return false;
+//	if (!I_3DObjectMgr.m_InWorldFiled) return false;
+//	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+//	if(!hm->m_pAlphaTexture) return false;
+//	DWORD	index;
+//	if (MSelect::PickGroundPosition(&m_center, &index))
+//	{
+//		float x = (m_center.x / (hm->m_fLeafSize * hm->m_iCount)) * 2;
+//		float y = (m_center.z / (hm->m_fLeafSize * hm->m_iCount)) * 2;
+//		m_ConstantOBJ.ScreenScale = D3DXVECTOR2(m_iRadius, m_iRadius);
+//		m_ConstantOBJ.ScreenPosition = D3DXVECTOR2((x * m_TextureSize.x) / 2, -(y * m_TextureSize.y) / 2);
+//		m_ConstantOBJ.ScreenRotation = m_fOpacity;
+//		m_ConstantOBJ.empty1 = m_TextureSize.x;
+//		m_ConstantOBJ.empty2 = m_TextureSize.y;
+//		m_ConstantOBJ.empty3 = m_Channel;
+//		Draw();
+//		return true;
+//	}
+//	return false;
+//}
 
 bool MCanvas::Begin()
 {
 	I_DxState.RS_Set(MNoneCulling);
+
+	//if (m_bIsRealDraw)
+	//{
+	//	m_iViewports = 1;
+	//	g_pImmediateContext->RSGetViewports(&m_iViewports, &m_OldViewPort);
+	//	g_pImmediateContext->OMGetRenderTargets(1, &m_pOldRenderTargetView, &m_pOldDepthStencilView);
+	//}
+	//else
+	//{
+	//	m_iPreViewViewports = 1;
+	//	g_pImmediateContext->RSGetViewports(&m_iPreViewViewports, &m_OldViewPort);
+	//	g_pImmediateContext->OMGetRenderTargets(1, &m_pOldRenderTargetView, &m_pOldDepthStencilView);
+	//}
 
 	m_iViewports = 1;
 	g_pImmediateContext->RSGetViewports(&m_iViewports, &m_OldViewPort);
@@ -301,7 +301,15 @@ bool MCanvas::Begin()
 	ID3D11DepthStencilView* temp2 = NULL;
 
 	g_pImmediateContext->OMSetRenderTargets(1, &temp, temp2);
-	g_pImmediateContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
+
+	if (m_bIsRealDraw)
+	{
+		g_pImmediateContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
+	}
+	else
+	{
+		g_pImmediateContext->OMSetRenderTargets(1, &m_pPreviewRenderTargetView, NULL);
+	}
 	g_pImmediateContext->RSSetViewports(1, &m_ViewPort);
 	return true;
 }
@@ -311,21 +319,62 @@ bool MCanvas::End()
 	ID3D11RenderTargetView* temp = NULL;
 	ID3D11DepthStencilView* temp2 = NULL;
 	g_pImmediateContext->OMSetRenderTargets(1, &temp, temp2);
-
 	g_pImmediateContext->RSSetViewports(m_iViewports, &m_OldViewPort);
+	//if (m_bIsRealDraw)
+	//{
+	//	g_pImmediateContext->RSSetViewports(m_iViewports, &m_OldViewPort);
+	//}
+	//{
+	//	g_pImmediateContext->RSSetViewports(m_iPreViewViewports, &m_OldViewPort);
+	//}
 	g_pImmediateContext->OMSetRenderTargets(1, &m_pOldRenderTargetView, m_pOldDepthStencilView);
-
 
 	m_pOldRenderTargetView = NULL;
 	m_pOldDepthStencilView = NULL;
-
 
 	I_DxState.RS_Set(MSolidFrame);
 	return true;
 }
 
-bool MCanvas::Render()
+bool MCanvas::Frame()
 {
+	if (m_BrushID >= m_BrushList.size()) return false;
+	if (!I_3DObjectMgr.m_InWorldFiled) return false;
+	M3DHeightMap* hm = I_3DObjectMgr.m_InWorldFiled->ground;
+	if (!hm->m_pAlphaTexture) return false;
+	DWORD	index;
+	if (m_pConstantBuffer)
+	{
+		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
+	}
+	if (MSelect::PickGroundPosition(&m_center, &index))
+	{
+		g_pImmediateContext->CopyResource(m_pPreviewTexture, m_pCanvasTexture);
+		float x = (m_center.x / (hm->m_fLeafSize * hm->m_iCount)) * 2;
+		float y = (m_center.z / (hm->m_fLeafSize * hm->m_iCount)) * 2;
+		m_ConstantOBJ.ScreenScale = D3DXVECTOR2(m_iRadius, m_iRadius);
+		m_ConstantOBJ.ScreenPosition = D3DXVECTOR2((x * m_TextureSize.x) / 2, -(y * m_TextureSize.y) / 2);
+		m_ConstantOBJ.ScreenRotation = m_fOpacity;
+		m_ConstantOBJ.empty1 = m_TextureSize.x;
+		m_ConstantOBJ.empty2 = m_TextureSize.y;
+		m_ConstantOBJ.empty3 = m_Channel;
+		Draw();
+		if (m_bIsRealDraw)
+		{
+			hm->m_pAlphaTextureSRV = m_pShaderResourceView;
+		}
+		else
+		{
+			hm->m_pAlphaTextureSRV = m_pPreviewShaderResourceView;
+		}
+		return true;
+	}
+	return true;
+}
+
+bool MCanvas::Draw()
+{
+	Begin();
 	I_DxState.RS_Set(MNoneCulling);
 
 	I_DxState.SS_Set(MWrapLinear);
@@ -355,6 +404,7 @@ bool MCanvas::Render()
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &m_pBuffer, &stride, &offset);
 	g_pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_pImmediateContext->Draw(6, 0);
+	End();
 	return true;
 }
 
@@ -367,6 +417,7 @@ bool MCanvas::Release()
 
 MCanvas::MCanvas()
 {
+	m_bIsRealDraw = false;
 	m_iRadius = 100;
 	m_Channel = 0;
 	m_bIsEraser = false;

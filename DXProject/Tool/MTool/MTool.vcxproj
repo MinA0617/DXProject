@@ -189,7 +189,7 @@
   <ItemGroup>
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MCanvas.h" />
-    <ClInclude Include="MCreateInstance.h" />
+    <ClInclude Include="MCreateDeleteInstance.h" />
     <ClInclude Include="MCreateMapDialog.h" />
     <ClInclude Include="MMapCtlForm.h" />
     <ClInclude Include="MObjectCtlForm.h" />
@@ -209,7 +209,7 @@
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MCanvas.cpp" />
-    <ClCompile Include="MCreateInstance.cpp" />
+    <ClCompile Include="MCreateDeleteInstance.cpp" />
     <ClCompile Include="MCreateMapDialog.cpp" />
     <ClCompile Include="MMapCtlForm.cpp" />
     <ClCompile Include="MObjectCtlForm.cpp" />

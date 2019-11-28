@@ -22,42 +22,7 @@ bool M3DInstance::Update()
 		m_WorldScale = m_LocalScale;
 	}
 	// --- box update --------------------------------------------------------------------------------
-	D3DXMATRIX boxmat = m_WorldMatrix;
-	D3DXVec3TransformCoord(&m_Box.vCenter, &m_Box.vOldCenter, &boxmat);
-	m_Box.fExtent[0] = m_Box.fOldExtent[0] * m_WorldScale.x;
-	m_Box.fExtent[1] = m_Box.fOldExtent[1] * m_WorldScale.y;
-	m_Box.fExtent[2] = m_Box.fOldExtent[2] * m_WorldScale.z;
-	m_Box.vMin.x = m_Box.vCenter.x - m_Box.fExtent[0];
-	m_Box.vMin.y = m_Box.vCenter.y - m_Box.fExtent[1];
-	m_Box.vMin.z = m_Box.vCenter.z - m_Box.fExtent[2];
-	m_Box.vMax.x = m_Box.vCenter.x + m_Box.fExtent[0];
-	m_Box.vMax.y = m_Box.vCenter.y + m_Box.fExtent[1];
-	m_Box.vMax.z = m_Box.vCenter.z + m_Box.fExtent[2];
-	D3DXVECTOR3 vOldAxis[3];
-	vOldAxis[0] = D3DXVECTOR3(1, 0, 0);
-	vOldAxis[1] = D3DXVECTOR3(0, 1, 0);
-	vOldAxis[2] = D3DXVECTOR3(0, 0, 1);
-	boxmat._41 = 0;
-	boxmat._42 = 0;
-	boxmat._43 = 0;
-	D3DXVec3TransformCoord(&m_Box.vAxis[0], &vOldAxis[0], &boxmat);
-	D3DXVec3TransformCoord(&m_Box.vAxis[1], &vOldAxis[1], &boxmat);
-	D3DXVec3TransformCoord(&m_Box.vAxis[2], &vOldAxis[2], &boxmat);
-	D3DXVec3Normalize(&m_Box.vAxis[0], &m_Box.vAxis[0]);
-	D3DXVec3Normalize(&m_Box.vAxis[1], &m_Box.vAxis[1]);
-	D3DXVec3Normalize(&m_Box.vAxis[2], &m_Box.vAxis[2]);
-#if defined(DEBUG) || defined(_DEBUG)
-	if (m_Box.m_pConstantBuffer)
-	{
-		D3DXVECTOR3 scl;
-		scl.x = m_Box.fExtent[0];
-		scl.y = m_Box.fExtent[1];
-		scl.z = m_Box.fExtent[2];
-		D3DXMatrixTransformation(&boxmat, NULL, NULL, &scl, NULL, &m_WorldRotation, &m_Box.vCenter);
-		D3DXMatrixTranspose(&boxmat, &boxmat);
-		g_pImmediateContext->UpdateSubresource(m_Box.m_pConstantBuffer, 0, 0, &boxmat, 0, 0);
-	}
-#endif
+	m_Box.Updata(&m_WorldPosition, &m_WorldRotation, &m_WorldScale);
 	// --------------------------------------------------------------------------------------------------------
 	D3DXMatrixTranspose(&m_WorldMatrix, &m_WorldMatrix);
 	for (auto temp : m_pChildList)
@@ -66,7 +31,16 @@ bool M3DInstance::Update()
 	}
 	// ----------------------------------------------------------------------------------------------------------
 	// 트리에서 업데이트
-	if (I_3DObjectMgr.m_pTree)I_3DObjectMgr.m_pTree->CheckInstanceObject(this);
+	if (I_3DObjectMgr.m_pTree)
+	{
+		if (!I_3DObjectMgr.m_pTree->CheckInstanceObject(this))
+		{
+			m_LocalPosition *= 0.99;
+			m_LocalScale *= 0.99;
+			Update();
+		}
+
+	}
 	return true;
 }
 
@@ -133,6 +107,17 @@ void M3DInstance::SetRotation(D3DXQUATERNION data)
 void M3DInstance::SetScale(D3DXVECTOR3 data)
 {
 	m_LocalScale = data;
+	if (m_LocalScale.x < 0) m_LocalScale.x = 0;
+	if (m_LocalScale.y < 0) m_LocalScale.y = 0;
+	if (m_LocalScale.z < 0) m_LocalScale.z = 0;
+	Update();
+}
+
+void M3DInstance::SetTransform(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scl)
+{
+	m_LocalPosition = pos;
+	m_LocalRotation = rot;
+	m_LocalScale = scl;
 	if (m_LocalScale.x < 0) m_LocalScale.x = 0;
 	if (m_LocalScale.y < 0) m_LocalScale.y = 0;
 	if (m_LocalScale.z < 0) m_LocalScale.z = 0;

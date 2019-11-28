@@ -79,7 +79,7 @@ bool M3DObject::PreFrame()
 	}
 	UpdateBox();
 	D3DXMatrixTranspose(&m_ConstantOBJ.matWorld, &m_ConstantOBJ.matWorld);
-	if (m_pConstantBuffer)
+if (m_pConstantBuffer)
 	{
 		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &m_ConstantOBJ, 0, 0);
 	}
@@ -191,7 +191,7 @@ void M3DObject::SetColor(D3DXVECTOR3 data)
 
 void M3DObject::UpdateBox()
 {
-	if (m_Box) m_Box->Updata();
+	if (m_Box) m_Box->Updata(&m_WorldPosition, &m_WorldRotation, &m_WorldScale);
 }
 
 M3DObject * M3DObject::GetParents()
@@ -223,7 +223,6 @@ void M3DObject::Copy(M3DObject * target)
 		m_Box->Init();
 #endif // DEBUG
 		m_Box->Copy(target->m_Box);
-		m_Box->m_pTarget = this;
 	}
 	CreateConstantBuffer();
 }

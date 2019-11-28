@@ -70,7 +70,7 @@ bool MSelect::CheckTri(MTreeNode * pNode, MRAY * ray, D3DXVECTOR3* minintersecti
 	return result;
 }
 
-MTreeNode* MSelect::CheckNode(MTreeNode* pNode, MRAY* ray)
+void MSelect::CheckNode(MTreeNode* pNode, MRAY* ray, vector<MTreeNode*>& list)
 {
 	int m_DepthLevelOfMapNode = I_3DObjectMgr.m_pTree->m_DepthLevelOfMapNode;
 	MTreeNode* minNode = nullptr;
@@ -78,57 +78,186 @@ MTreeNode* MSelect::CheckNode(MTreeNode* pNode, MRAY* ray)
 	{
 		if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 		{
-			return pNode;
+			list.push_back(pNode);
+			return;
 		}
 		else
 		{
 			for (int i = 0; i < pNode->m_pChild.size(); i++)
 			{
-				float mindistance = 1000000000;
-				MTreeNode* result = CheckNode(pNode->m_pChild[i], ray);
-				if (result)
-				{
-					float distance = I_Collision.GetDistance(ray->vOrigin, pNode->m_Box.vCenter);
-					if (mindistance > distance)
-					{
-						mindistance = distance;
-						minNode = result;
-					}
-				}
+				CheckNode(pNode->m_pChild[i], ray, list);
 			}
-			return minNode;
+			return;
 		}
 	}
 	else
 	{
-		return nullptr;
+		return;
 	}
 }
 
-
-M3DObject* MSelect::PickObject()
+void MSelect::CheckUPNode(MTreeNode * pNode, MRAY * ray, vector<MTreeNode*>& list)
 {
-	return nullptr;
-}
-
-MMapNode* MSelect::PickTile()
-{
-	MTreeNode* pNode = CheckNode(I_3DObjectMgr.m_pTree->m_pRootNode, &GetScreenRay());
-	if (pNode) return pNode->m_Tile;
-	return nullptr;
-}
-
-bool MSelect::PickGroundPosition(D3DXVECTOR3 * result)
-{
-	MTreeNode* pNode = CheckNode(I_3DObjectMgr.m_pTree->m_pRootNode, &GetScreenRay());
-	if (pNode)
+	int m_DepthLevelOfMapNode = I_3DObjectMgr.m_pTree->m_DepthLevelOfMapNode;
+	MTreeNode* minNode = nullptr;
+	MBoundingBox box;
+	box.Copy(&pNode->m_Box);
+	box.UpdataMaxY(99999999);
+	if (I_Collision.AABBtoRay(&box, ray))
 	{
-		if (CheckTri(pNode, &GetScreenRay(), result))
+		list.push_back(pNode);
+		if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 		{
-			return true;
+			return;
+		}
+		else
+		{
+			for (int i = 0; i < pNode->m_pChild.size(); i++)
+			{
+				CheckUPNode(pNode->m_pChild[i], ray, list);
+			}
+			return;
 		}
 	}
-	return false;
+	else
+	{
+		return;
+	}
+}
+
+
+M3DInstance* MSelect::PickObject(DWORD* ModelID, DWORD* InstanceID, D3DXVECTOR3* intersection)
+{
+	M3DInstance* result = nullptr;
+	vector<MTreeNode*> nodelist;
+	MRAY ray = GetScreenRay();
+	float mindistnace = 9999999999;
+	if (CheckUPNodeList(nodelist))
+	{
+		for (int i = 0; i < nodelist.size(); i++)
+		{
+			for (auto obj : nodelist[i]->m_pInstanceList)
+			{
+				D3DXVECTOR3 inter;
+				if (MCollision::OBBtoRay(&obj->m_Box, &ray, &inter))
+				{
+					float distance = MCollision::GetDistance(ray.vOrigin, inter);
+					if (distance < mindistnace)
+					{
+						result = obj;
+						if (intersection) *intersection = inter;
+					}
+				}
+			}
+		}
+		if (result == nullptr) return result;
+		if (ModelID)
+		{
+			*ModelID = I_3DObjectMgr.GetInstanceModelID(result->m_pModel->m_name);
+			if (InstanceID)
+			{
+				int instcount = result->m_pModel->m_iCount;
+				for (int i = 0; i < instcount; i++)
+				{
+					if (result == result->m_pModel->GetInstanceObject(i))
+					{
+						*InstanceID = i;
+						return result;
+					}
+				}
+			}
+		}
+	}
+	return result;
+}
+
+MMapNode * MSelect::PickMapNode()
+{
+	MMapNode* returnNode = nullptr;
+	vector<MTreeNode*> list;
+	D3DXVECTOR3 minvec(9999999, 9999999, 9999999);
+	D3DXVECTOR3 result(0, 0, 0);
+	MRAY ray = GetScreenRay();
+	if (CheckNodeList(list))
+	{
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (CheckTri(list[i], &ray, &result))
+			{
+				float mindistance = I_Collision.GetDistance(ray.vOrigin, minvec);
+				float distance = I_Collision.GetDistance(ray.vOrigin, result);
+				if (mindistance > distance)
+				{
+					minvec = result;
+					returnNode = list[i]->m_Tile;
+				}
+			}
+		}
+	}
+	return returnNode;
+}
+
+bool MSelect::CheckNodeList(vector<MTreeNode*>& list)
+{
+	CheckNode(I_3DObjectMgr.m_pTree->m_pRootNode, &GetScreenRay(), list);
+	if (list.size() == 0) { return false; }
+	else { return true; }
+}
+
+bool MSelect::CheckUPNodeList(vector<MTreeNode*>& list)
+{
+	CheckUPNode(I_3DObjectMgr.m_pTree->m_pRootNode, &GetScreenRay(), list);
+	if (list.size() == 0) { return false; }
+	else { return true; }
+}
+
+bool MSelect::PickGroundPosition(D3DXVECTOR3* result, DWORD* index)
+{
+	bool bresult = false;
+	float mindistance = -1;
+	vector<MTreeNode*> list;
+	D3DXVECTOR3 minvec(999999,999999,999999);
+	DWORD		minindex = -1;
+	MRAY ray = GetScreenRay();
+	CheckNode(I_3DObjectMgr.m_pTree->m_pRootNode, &ray, list);
+	if (list.size() != 0)
+	{
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (CheckTri(list[i], &ray, &minvec, &minindex))
+			{
+				bresult = true;
+				if (mindistance == -1)
+				{
+					mindistance = I_Collision.GetDistance(ray.vOrigin, minvec);
+					if (index)
+					{
+						*index = minindex;
+					}
+					if (result)
+					{
+						*result = minvec;
+					}
+				}
+				else
+				{
+					float distance = I_Collision.GetDistance(ray.vOrigin, minvec);
+					if (mindistance > distance)
+					{
+						if (index)
+						{
+							*index = minindex;
+						}
+						if (result)
+						{
+							*result = minvec;
+						}
+					}
+				}
+			}
+		}
+	}
+	return bresult;
 }
 
 MSelect::MSelect()

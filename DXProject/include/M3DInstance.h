@@ -3,9 +3,11 @@
 #include "MBoundingBox.h"
 
 class M3DInstanceModel;
+class MTree;
 class M3DInstance
 {
 	friend class M3DInstanceModel;
+	friend class MTree;
 public:
 	MBoundingBox			m_Box;
 	M3DInstanceModel*		m_pModel;
@@ -35,6 +37,7 @@ public:
 	void					SetPosition(D3DXVECTOR3 data);
 	void					SetRotation(D3DXQUATERNION data);
 	void					SetScale(D3DXVECTOR3 data);
+	void					SetTransform(D3DXVECTOR3 pos, D3DXQUATERNION rot, D3DXVECTOR3 scl);
 	D3DXVECTOR3				GetPosition();
 	D3DXQUATERNION			GetRotation();
 	D3DXVECTOR3				GetScale();

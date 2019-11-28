@@ -1,6 +1,6 @@
 #include "M3DInstanceModel.h"
 #include "MCameraMgr.h"
-
+#include "M3DObjectMgr.h"
 
 bool M3DInstanceModel::CreateInstanceBuffer()
 {
@@ -58,6 +58,7 @@ bool M3DInstanceModel::DeleteInstanceObject(int index)
 	map<int, M3DInstance*>::iterator temp = m_InstanceList.find(index);
 	if (temp != m_InstanceList.end())
 	{
+		I_3DObjectMgr.m_pTree->DeleteInstancObject((*temp).second);
 		(*temp).second->Release();
 		delete (*temp).second;
 		m_InstanceList.erase(index);
@@ -124,9 +125,12 @@ bool M3DInstanceModel::Render()
 	g_pImmediateContext->DrawIndexedInstanced(m_Mesh->m_iIndexCount, m_MatrixList.size(), 0, 0, 0);
 	m_MatrixList.clear();
 #if defined(DEBUG) || defined(_DEBUG)
-	for (auto temp : m_InstanceList)
+	if (g_isBoxRender)
 	{
-		temp.second->m_Box.Render();
+		for (auto temp : m_InstanceList)
+		{
+			temp.second->m_Box.Render();
+		}
 	}
 #endif // DEBUG
 	return true;

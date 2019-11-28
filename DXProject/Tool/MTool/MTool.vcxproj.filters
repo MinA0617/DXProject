@@ -81,7 +81,7 @@
     <ClInclude Include="MObjectCtlForm.h">
       <Filter>Core\Dialog\Object</Filter>
     </ClInclude>
-    <ClInclude Include="MCreateInstance.h">
+    <ClInclude Include="MCreateDeleteInstance.h">
       <Filter>Core\Modify</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,7 +131,7 @@
     <ClCompile Include="MObjectCtlForm.cpp">
       <Filter>Core\Dialog\Object</Filter>
     </ClCompile>
-    <ClCompile Include="MCreateInstance.cpp">
+    <ClCompile Include="MCreateDeleteInstance.cpp">
       <Filter>Core\Modify</Filter>
     </ClCompile>
   </ItemGroup>

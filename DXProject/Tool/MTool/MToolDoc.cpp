@@ -127,6 +127,33 @@ bool CMToolDoc::SaveTileIndex(FILE * file)
 	return true;
 }
 
+bool CMToolDoc::SaveObject(FILE * file)
+{
+	int pathcount = theApp.m_Tool.instance.filepath.size();
+	_ftprintf(file, L"%d \n", pathcount);
+	for (int i = 0; i < pathcount; i++)
+	{
+		_ftprintf(file, L"%s \n", theApp.m_Tool.instance.filepath[i].c_str());
+	}
+	int count = I_3DObjectMgr.m_iInstanceListCount;
+	_ftprintf(file, L"%d \n", count);
+	for (int i = 0; i < count; i++)
+	{
+		M3DInstanceModel* temp = I_3DObjectMgr.GetInstanceModel(i);
+		int matcount = temp->m_iSize;
+		_ftprintf(file, L"%s %d \n", temp->m_name.c_str(), matcount);
+		for (auto ins : temp->m_InstanceList)
+		{
+			D3DXVECTOR3 pos = ins.second->GetPosition();
+			D3DXQUATERNION rot = ins.second->GetRotation();
+			D3DXVECTOR3 scl = ins.second->GetScale();
+			_ftprintf(file, L"%10.4f %10.4f %10.4f %10.4f %10.4f %10.4f %10.4f %10.4f %10.4f %10.4f \n",
+				pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, rot.w, scl.x, scl.y, scl.z);
+		}
+	}
+	return true;
+}
+
 BOOL CMToolDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
@@ -227,6 +254,17 @@ void CMToolDoc::Dump(CDumpContext& dc) const
 // CMToolDoc 명령
 
 
+CString CMToolDoc::AnotherName()
+{
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"All Files(*.*)|*.*");
+	if (dlg.DoModal() == IDOK)
+	{
+		CString path = dlg.GetPathName();
+		return path;
+	}
+	return NULL;
+}
+
 void CMToolDoc::OnFileSave()
 {
 	if (!I_3DObjectMgr.m_InWorldFiled)
@@ -253,6 +291,7 @@ void CMToolDoc::OnFileSave()
 		SaveHeightMap(selFileName, m_pStream, height);
 		SaveAlphaMap(selFileName, m_pStream);
 		SaveTileIndex(m_pStream);
+		SaveObject(m_pStream);
 
 		int textureCount = I_3DObjectMgr.m_InWorldFiled->ground->m_TextureList.size();
 		_ftprintf(m_pStream, L"%d\n", textureCount);
@@ -271,6 +310,7 @@ void CMToolDoc::OnFileSave()
 		}
 		fclose(m_pStream);
 		AfxMessageBox(L"저장하였습니다!");
+		// 오브젝트 세이브로드 추가 로드 실패시 다른 경로 찾아주기
 	}
 	else
 	{
@@ -293,17 +333,40 @@ void CMToolDoc::OnFileOpen()
 		int mapsize, tilesize;
 		float sellsize, height;
 		M_STR hm, am;
-		int tiletexturecount, brushcount;
 		fscanf_s(m_pStream, "%d %d %f %f\n", &mapsize, &tilesize, &sellsize, &height);
 		fscanf_s(m_pStream, "%S\n", buffer, MAX_PATH);
 		hm = buffer;
 		fscanf_s(m_pStream, "%S\n", buffer, MAX_PATH);
 		am = buffer;
-
-		I_Parser.Load_HM(hm.c_str(), sellsize, height, tilesize);
+		if (!I_Parser.Load_HM(hm.c_str(), sellsize, height, tilesize))
+		{
+			while (1)
+			{
+				M_STR oldpath = hm;
+				oldpath += L" 파일은 올바른 경로가 아닙니다! 새로운 경로를 지정해주세요.";
+				AfxMessageBox(oldpath.c_str());
+				M_STR newstr = AnotherName();
+				if (I_Parser.Load_HM(newstr.c_str(), sellsize, height, tilesize))
+				{
+					break;
+				}
+			}
+		}
 		I_3DObjectMgr.m_InWorldFiled->ground->CreateAlphaTexture(1, 1);
-		theApp.m_Tool.canvas.Load(am);
-
+		if (!theApp.m_Tool.canvas.Load(am))
+		{
+			while (1)
+			{
+				M_STR oldpath = am;
+				oldpath += L" 파일은 올바른 경로가 아닙니다! 새로운 경로를 지정해주세요.";
+				AfxMessageBox(oldpath.c_str());
+				M_STR newstr = AnotherName();
+				if (theApp.m_Tool.canvas.Load(newstr))
+				{
+					break;
+				}
+			}
+		}
 		M3DHeightMap* heightmap = I_3DObjectMgr.m_InWorldFiled->ground;
 		for (auto temp : heightmap->m_List)
 		{
@@ -323,24 +386,104 @@ void CMToolDoc::OnFileOpen()
 			}
 			fscanf_s(m_pStream, "\n");
 		}
+		int pathcount;
+		fscanf_s(m_pStream, "%d \n", &pathcount);
+		for (int i = 0; i < pathcount; i++)
+		{
+			M_STR str;
+			fscanf_s(m_pStream, "%S \n", buffer, MAX_PATH);
+			str = buffer;
+			if (!frame->m_ObjectPane.m_wndForm->LoadOBJ(str.c_str()))
+			{
+				while (1)
+				{
+					M_STR oldpath = str;
+					oldpath += L" 파일은 올바른 경로가 아닙니다! 새로운 경로를 지정해주세요.";
+					AfxMessageBox(oldpath.c_str());
+					M_STR newstr = AnotherName();
+					if (frame->m_ObjectPane.m_wndForm->LoadOBJ(newstr.c_str()))
+					{
+						break;
+					}
+				}
+			}
+		}
+		int modelCount;
+		fscanf_s(m_pStream, "%d \n", &modelCount);
+		for (int i = 0; i < modelCount; i++)
+		{
+			M_STR name;
+			int instanceCount;
+			fscanf_s(m_pStream, "%S", buffer, MAX_PATH);
+			name = buffer;
+			fscanf_s(m_pStream, "%d \n", &instanceCount);
+			int id = I_3DObjectMgr.GetInstanceModelID(name);
+			if (id != -1)
+			{
+				for (int j = 0; j < instanceCount; j++)
+				{
+					float px, py, pz, rx, ry, rz, rw, sx, sy, sz;
+					fscanf_s(m_pStream, "%f %f %f %f %f %f %f %f %f %f \n", &px, &py, &pz, &rx, &ry, &rz, &rw, &sx, &sy, &sz);
+					D3DXVECTOR3 pos(px, py, pz);
+					D3DXQUATERNION rot(rx, ry, rz, rw);
+					D3DXVECTOR3 scl(sx, sy, sz);
+					if (I_3DObjectMgr.AddInstanceObj(id, &pos, &rot, &scl) == -1)
+					{
+						AfxMessageBox(L"불러오기가 실패했습니다!");
+						return;
+					}
+				}
+
+			}
+			else
+			{
+				AfxMessageBox(L"불러오기가 실패했습니다!");
+				return;
+			}
+		}
+		int tiletexturecount, brushcount;
 		fscanf_s(m_pStream, "%d\n", &tiletexturecount);
 		for (int i = 0; i < tiletexturecount; i++)
 		{
 			M_STR path;
 			fscanf_s(m_pStream, "%S\n", &buffer, MAX_PATH);
 			path = buffer;
-			frame->m_MapPane.m_wndForm->LoadTile(path.c_str());
+			if(!frame->m_MapPane.m_wndForm->LoadTile(path.c_str()))
+			{
+				while (1)
+				{
+					M_STR oldpath = path;
+					oldpath += L" 파일은 올바른 경로가 아닙니다! 새로운 경로를 지정해주세요.";
+					AfxMessageBox(oldpath.c_str());
+					M_STR newstr = AnotherName();
+					if (frame->m_MapPane.m_wndForm->LoadTile(newstr.c_str()))
+					{
+						break;
+					}
+				}
+			}
 		}
-
 		fscanf_s(m_pStream, "%d\n", &brushcount);
 		for (int i = 0; i < brushcount; i++)
 		{
 			M_STR path;
 			fscanf_s(m_pStream, "%S\n", &buffer, MAX_PATH);
 			path = buffer;
-			frame->m_MapPane.m_wndForm->LoadBrush(path.c_str());
+			if (!frame->m_MapPane.m_wndForm->LoadBrush(path.c_str()))
+			{
+				while (1)
+				{
+					M_STR oldpath = path;
+					oldpath += L" 파일은 올바른 경로가 아닙니다! 새로운 경로를 지정해주세요.";
+					AfxMessageBox(oldpath.c_str());
+					M_STR newstr = AnotherName();
+					if (frame->m_MapPane.m_wndForm->LoadBrush(newstr.c_str()))
+					{
+						break;
+					}
+				}
+			}
 		}
-
 		fclose(m_pStream);
 		AfxMessageBox(L"불러왔습니다!");
 	}

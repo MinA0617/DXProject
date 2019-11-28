@@ -10,6 +10,7 @@
 #include "MLight.h"
 #include "MCollision.h"
 #include "MSelect.h"
+#include "MFunction.h"
 
 class MCore : public MWindow
 {

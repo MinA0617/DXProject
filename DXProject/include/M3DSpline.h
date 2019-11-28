@@ -6,10 +6,10 @@ class M3DSpline : public M3DObject
 protected:
 	ID3D11Buffer*		m_pVertexBuffer;
 	ID3D11Buffer*		m_pIndexBuffer;
-	UINT				m_iVertexCount;
 	UINT				m_iIndexCount;
 public:
 	virtual bool	Load(SPLINE_VERTEX* data, UINT iCount);
+	virtual bool	Create(vector<SPLINE_VERTEX>& vertice, vector<DWORD>& indexs);
 	virtual bool	Init();
 	virtual bool	Frame();
 	virtual bool	Render();

@@ -13,7 +13,9 @@ MToolCore::~MToolCore()
 
 bool  MToolCore::Init()
 {
-	inmo = nullptr;
+	pushpull.Init();
+
+
 
 	data = new MDXWirte;
 	data->Init();
@@ -21,7 +23,6 @@ bool  MToolCore::Init()
 	data->AddData(L"0", D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 10));
 	data->AddData(L"0", D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 60));
 
-	filed == nullptr;
 	I_CameraMgr.CreateFPSCamera_Main();
 	light = &(I_LightMgr.m_List);
 	light->SetLocalPosition(D3DXVECTOR3(0, 100, 0));
@@ -39,84 +40,84 @@ bool  MToolCore::Init()
 
 bool  MToolCore::Frame()
 {
-	// --test
-	if (inmo != nullptr)
+	// 비교 //
+	if (m_BeforeState != m_State)
 	{
-		M3DInstanceModel* temp = (*I_3DObjectMgr.InstanceModelList.find(0)).second;
-		M_STR str = to_wstring(temp->m_MatrixList.size());
-		data->UpdateData(1, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 60));
-	}
-	if (g_ActionInput.Delete == KEY_PUSH)
-	{
-		if (inmo == nullptr)
+		if (m_BeforeState == PUSH)
 		{
-			inmo = new M3DInstanceModel;
-			inmo->Init();
-			I_Parser.Load(L"../../data/obj/Box001.OBJ");
-			M_STR name[1];
-			name[0] = L"Box001";
-			int result = I_3DObjectMgr.AddInWorld(name);
-			inmo->m_Mesh = I_3DObjectMgr.findObject(result)->m_pObj;
-			inmo->m_Box.Copy(I_3DObjectMgr.findObject(result)->m_Box);
-			I_3DObjectMgr.DeleteInWorld(result);
-			inmo->m_Material->m_PixelShaderID = PS3DINSTANCE;
-			inmo->m_Mesh->m_VertexShaderID = VS3DINSTANCE;
-
-			int id = I_3DObjectMgr.AddInstanceModel(inmo);
-			I_3DObjectMgr.AddInstanceObj(id, 100);
-			for (int i = 0; i < 100; i++)
-			{
-				M3DInstance* temp = I_3DObjectMgr.GetInstanceObj(id, i);
-				int x, y, z;
-				x = (i * (5141 * (i + 5))) % 360;
-				y = (i * (5554 * (i + 7))) % 100;
-				z = (i * (4587 * (i + 8))) % 360;
-				temp->SetPosition(D3DXVECTOR3(x, y, z));
-				temp->SetScale(D3DXVECTOR3(1 + (i*0.02), 1 + (i*0.02), 1 + (i*0.02)));
-			}
+			pushpull.Update();
+			pushpull.SetNonRender();
 		}
 	}
-	// -----
-	M_STR str = to_wstring(I_Timer.GetFramePerSecond());
-	data->UpdateData(0, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 10));
-
-	I_CameraMgr.m_MainCamera->isRotition = false;
-	if (g_ActionInput.a_RightClick >= KEY_PUSH)
+	m_BeforeState = m_State;
+	// 스위치문 //
+	switch (m_State)
 	{
-		I_CameraMgr.m_MainCamera->isRotition = true;
-	}
-
-	if (g_ActionInput.a_LeftClick >= KEY_PUSH)
-	{
-		switch (m_State)
+	case TILEING:
+		if (g_ActionInput.a_LeftClick >= KEY_PUSH)
 		{
-		case TILEING:
 			tileing.SetTile();
-			break;
-		case BRUSH:
+		}
+		break;
+	case BRUSH:
+		if (g_ActionInput.a_LeftClick >= KEY_PUSH)
+		{
 			if (g_ActionInput.SHIFT >= KEY_PUSH)
 			{
 				if (g_ActionInput.a_LeftClick != KEY_PUSH) break;
 			}
 			if (g_ActionInput.CTRL >= KEY_PUSH) canvas.m_bIsEraser = true;
 			else canvas.m_bIsEraser = false;
-			canvas.Brushing();
-			break;
-		case PUSH:
+			canvas.m_bIsRealDraw = true;
+		}
+		else
+		{
+			//canvas.m_bIsRealDraw = true;
+			canvas.m_bIsRealDraw = false;
+		}
+		canvas.Frame();
+		break;
+	case PUSH:
+		pushpull.Frame();
+		if (g_ActionInput.a_LeftClick >= KEY_PUSH)
+		{
 			if (g_ActionInput.CTRL >= KEY_PUSH) pushpull.m_bReversal = true;
 			else pushpull.m_bReversal = false;
 			pushpull.PushPull();
-			break;
-		case CREATEOBJ:
-			if (g_ActionInput.a_LeftClick == KEY_PUSH)
-			{
-				instance.Create();
-			}
-		default:
-			break;
 		}
+		if (g_ActionInput.a_LeftClick == KEY_UP)
+		{
+			pushpull.Update();
+		}
+		break;
+	case CREATEOBJ:
+		if (g_ActionInput.a_LeftClick == KEY_PUSH)
+		{
+			instance.Create();
+		}
+		break;
+	case DELETEOBJ:
+		if (g_ActionInput.a_LeftClick == KEY_PUSH)
+		{
+			instance.Delete();
+		}
+		break;
+	default:
+		break;
 	}
 
+	// --------------- 스트링 ---------------------
+	M_STR str = to_wstring(I_Timer.GetFramePerSecond());
+	data->UpdateData(0, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 10));
+	data->UpdateData(0, str, D3DXVECTOR4(0, 0, 0, 1), D3DXVECTOR2(20, 10));
+	I_CameraMgr.m_MainCamera->isRotition = false;
+	if (g_ActionInput.a_RightClick >= KEY_PUSH)
+	{
+		I_CameraMgr.m_MainCamera->isRotition = true;
+	}
+	// --------------- 빛 회전 ---------------------
+
+	// --------------- 빛 회전 ---------------------
 	if(1)
 	{
 		D3DXVECTOR3 tt;
@@ -124,22 +125,32 @@ bool  MToolCore::Frame()
 		D3DXVec3Normalize(&tt, &D3DXVECTOR3(cos(y), -1, sin(y)));
 		light->m_ConstantLigth.m_Direction = tt;
 	}
+	// --------------- 빛 회전 ---------------------
 
-	if (g_ActionInput.F1 >= KEY_PUSH)
+
+	// --------------- 단축키 ----------------------
+	if (g_ActionInput.F1 == KEY_PUSH)
 	{
-		if(I_3DObjectMgr.m_InWorldFiled) g_bIsLOD = true;
+		if(I_3DObjectMgr.m_InWorldFiled) g_bIsLOD = !g_bIsLOD;
 	}
-	if (g_ActionInput.F2 >= KEY_PUSH)
+	if (g_ActionInput.F2 == KEY_PUSH)
 	{
-		if (I_3DObjectMgr.m_InWorldFiled) g_bIsLOD = false;
+		g_isBoxRender = !g_isBoxRender;
 	}
 	if (g_ActionInput.F3 >= KEY_PUSH)
 	{
-		I_Device.m_RasterizerStateID = MSolidFrame;
+
 	}
-	if (g_ActionInput.F4 >= KEY_PUSH)
+	if (g_ActionInput.F4 == KEY_PUSH)
 	{
-		I_Device.m_RasterizerStateID = MWireFrame;
+		if (I_Device.m_RasterizerStateID == MSolidFrame)
+		{
+			I_Device.m_RasterizerStateID = MWireFrame;
+		}
+		else
+		{
+			I_Device.m_RasterizerStateID = MSolidFrame;
+		}
 	}
 	if (g_ActionInput.S >= KEY_PUSH)
 	{
@@ -157,11 +168,25 @@ bool  MToolCore::Frame()
 	{
 		I_CameraMgr.m_MainCamera->MoveRight(300);
 	}
+	// --------------- 단축키 ----------------------
 	return true;
 }
 
 bool  MToolCore::Render()
 {
+	switch (m_State)
+	{
+	case TILEING:
+		break;
+	case BRUSH:
+		break;
+	case PUSH:
+		break;
+	case CREATEOBJ:
+		break;
+	default:
+		break;
+	}
 	return true;
 }
 

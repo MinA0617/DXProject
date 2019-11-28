@@ -11,7 +11,6 @@ bool MFiled::Set(M_STR name, M3DHeightMap* map)
 	m_Box->Init();
 #endif // DEBUG
 
-	m_Box->m_pTarget = this;
 	m_Box->vMin = D3DXVECTOR3(-(ground->m_iCount - 1) * ground->m_fLeafSize / 2, 0, -(ground->m_iCount - 1) * ground->m_fLeafSize / 2);
 	m_Box->vMax = D3DXVECTOR3((ground->m_iCount - 1) * ground->m_fLeafSize / 2, ground->m_fYmax, (ground->m_iCount - 1) * ground->m_fLeafSize / 2);
 	m_Box->fOldExtent[0] = (m_Box->vMax.x - m_Box->vMin.x) / 2;
@@ -37,7 +36,10 @@ bool MFiled::Frame()
 bool MFiled::Render()
 {
 #if defined(DEBUG) || defined(_DEBUG)
-	if (m_Box)m_Box->Render();
+	if (g_isBoxRender)
+	{
+		if (m_Box)m_Box->Render();
+	}
 #endif // DEBUG
 	if (ground) ground->Render();
 	return true;

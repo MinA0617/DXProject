@@ -257,7 +257,7 @@ bool MCollision::AABBtoRay(MBoundingBox * box, MRAY * ray, D3DXVECTOR3* intersec
 	return true;
 }
 
-inline bool MCollision::OBBtoRay(MBoundingBox* box, MRAY * ray, D3DXVECTOR3* intersection)
+bool MCollision::OBBtoRay(MBoundingBox* box, MRAY * ray, D3DXVECTOR3* intersection)
 {
 	float t_min = -999999.0f;
 	float t_max = 999999.0f;
@@ -288,7 +288,10 @@ inline bool MCollision::OBBtoRay(MBoundingBox* box, MRAY * ray, D3DXVECTOR3* int
 			if (t_min > t_max)
 				return false;
 		}
-		if (intersection)ray->vOrigin + ray->vDirection* t_min;
+		if (intersection)
+		{
+			*intersection = ray->vOrigin + ray->vDirection* t_min;
+		}
 	}
 	return true;
 }

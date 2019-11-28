@@ -4,6 +4,7 @@
 
 M3DSpline::M3DSpline()
 {
+	m_pVertexBuffer = nullptr;
 }
 
 
@@ -14,7 +15,7 @@ M3DSpline::~M3DSpline()
 bool M3DSpline::Init()
 {
 	I_MaterialMgr[MaterialID]->m_PixelShaderID = PSSPLINE;
-
+	CreateConstantBuffer();
 	return true;
 }
 
@@ -34,6 +35,7 @@ bool M3DSpline::Frame()
 
 bool M3DSpline::Render()
 {
+	if (!m_pVertexBuffer) return false;
 	///// 스테이트 매니져로 블랜드셋팅을 받아오기 ////
 
 	I_MaterialMgr[MaterialID]->Render();
@@ -97,5 +99,36 @@ bool M3DSpline::Load(SPLINE_VERTEX* data, UINT iCount)
 	//SubresourceData.pSysMem = index3D;
 	//if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pIndexBuffer))) return false;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	return true;
+}
+
+bool M3DSpline::Create(vector<SPLINE_VERTEX>& vertice, vector<DWORD>& indexs)
+{
+	if (vertice.size() == 0) return false;
+	if (indexs.size() == 0) return false;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	D3D11_BUFFER_DESC BufferDesc;				//// 공용 버퍼 데스크
+	D3D11_SUBRESOURCE_DATA SubresourceData;		//// 공용 리소스 데이터
+	HRESULT CreateBufferResult;					//// 공용 결과값
+	///// 버텍스 버퍼 ///////////////////////////////////////////////////////////////////////////////////////////////////
+	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
+	BufferDesc.ByteWidth = sizeof(SPLINE_VERTEX) * vertice.size();		//// 사이즈 (Byte단위)
+	BufferDesc.Usage = D3D11_USAGE_DEFAULT;							//// 사용모드 (DEFAULT는 그래픽카드에 생성)
+	BufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;				//// 어떤 버퍼로 사용되는지
+	ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
+	SubresourceData.pSysMem = &vertice.at(0);
+	if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pVertexBuffer))) return false;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//// 인덱스 버퍼 /////////////////////////////////////////////////////////////////////////////////////////////////////
+	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
+	BufferDesc.ByteWidth = sizeof(DWORD) * indexs.size();			//// 사이즈 (Byte단위)
+	BufferDesc.Usage = D3D11_USAGE_DEFAULT;							//// 사용모드 (DEFAULT는 그래픽카드에 생성)
+	BufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;					//// 어떤 버퍼로 사용되는지
+	ZeroMemory(&SubresourceData, sizeof(D3D11_SUBRESOURCE_DATA));
+	SubresourceData.pSysMem = &indexs.at(0);
+	if (FAILED(CreateBufferResult = g_pDevice->CreateBuffer(&BufferDesc, &SubresourceData, &m_pIndexBuffer))) return false;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	m_iIndexCount = indexs.size();
 	return true;
 }

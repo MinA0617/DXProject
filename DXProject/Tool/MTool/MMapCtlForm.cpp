@@ -256,7 +256,7 @@ void MMapCtlForm::OnBnClickedOpenTile()
 		return;
 	}
 	CString selFileName;
-	CFileDialog dlg(TRUE, L"bmp", NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"bmp Files(*.bmp)|*.bmp|png Files(*.png) | *.png |jpg Files(*.jpg) | *.jpg | All Files(*.*)|*.*|", this);
+	CFileDialog dlg(TRUE, L"bmp", NULL, OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, L"bmp Files(*.bmp)|*.bmp|png Files(*.png) | *.png|jpg Files(*.jpg) | *.jpg|All Files(*.*)|*.*|", this);
 	if (dlg.DoModal() == IDOK)
 	{
 		selFileName = dlg.GetPathName();

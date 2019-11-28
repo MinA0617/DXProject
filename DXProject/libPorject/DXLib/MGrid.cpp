@@ -34,7 +34,7 @@ bool MGrid::SetGrid(UINT GridSize, UINT StepSize)
 
 
 #pragma region CreateData
-	m_iVertexCount = ((GridSize / StepSize) * 8) + 4;
+	int m_iVertexCount = ((GridSize / StepSize) * 8) + 4;
 	m_iIndexCount = m_iVertexCount;
 	vector<SPLINE_VERTEX> vertices;
 	vector<DWORD> index;

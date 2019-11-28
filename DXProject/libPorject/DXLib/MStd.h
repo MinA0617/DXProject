@@ -58,6 +58,11 @@ using namespace std;
 #define SAFE_RELEASE(temp)	if (temp){temp->Release();temp = NULL;}
 #define SAFE_DELETE(temp)	if(temp){delete temp;}
 
+#define MPI (float)3.141592f
+#define DegreeToRandian(degree) (degree*(MPI/180.0f ))
+#define RadianToDegree(radian) (radian*(180.0f/MPI ))
+
+
 using M_STR = basic_string<TCHAR>;
 
 //using M_STR = wstring;

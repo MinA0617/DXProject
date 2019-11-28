@@ -20,6 +20,7 @@ public:
 	bool		SaveHeightMap(CString path, FILE* file, float height);
 	bool		SaveAlphaMap(CString path, FILE* file);
 	bool		SaveTileIndex(FILE* file);
+	bool		SaveObject(FILE* file);
 // 재정의입니다.
 public:
 	virtual BOOL OnNewDocument();
@@ -48,6 +49,7 @@ protected:
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
 public:
+	CString AnotherName();
 	afx_msg void OnFileSave();
 	afx_msg void OnFileOpen();
 };

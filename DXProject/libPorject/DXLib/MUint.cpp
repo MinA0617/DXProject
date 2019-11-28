@@ -31,7 +31,6 @@ bool MUnit::Create(M_STR name, M_STR sktname, M_STR* namelist, int namecount)
 				box->Init();
 #endif // DEBUG
 				box->Copy(oldbone->m_Box);
-				box->m_pTarget = newbone;
 				newbone->m_Box = box;
 			}
 			newbone->m_name = oldbone->m_name;
@@ -74,7 +73,7 @@ bool MUnit::Init()
 bool MUnit::Frame()
 {
 	skt->Frame();
-	if(m_Box)m_Box->Updata();
+	if (m_Box)m_Box->Updata(&m_WorldPosition, &m_WorldRotation, &m_WorldScale);
 	for (int i = 0; i < m_iCount; i++)
 	{
 		obj[i]->Frame();

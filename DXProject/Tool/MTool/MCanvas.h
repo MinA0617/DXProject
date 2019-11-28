@@ -4,10 +4,18 @@ class MCanvas
 {
 private:
 	ID3D11Texture2D*			m_pCanvasTexture;
-	ID3D11ShaderResourceView*	m_pShaderResourceView;	////
-	ID3D11RenderTargetView*		m_pRenderTargetView;	//// 랜더타켓 뷰 = 오프스크린
-	D3D11_VIEWPORT				m_ViewPort;				//// 메인스크린의 속성값
+	ID3D11ShaderResourceView*	m_pShaderResourceView;
+	ID3D11RenderTargetView*		m_pRenderTargetView;
+	//ID3D11Texture2D*			m_pBeforeTexture;
+	//ID3D11ShaderResourceView*	m_pBeforeShaderResourceView;
+	//ID3D11RenderTargetView*		m_pBeforeRenderTargetView;
+	ID3D11Texture2D*			m_pPreviewTexture;
+	ID3D11ShaderResourceView*	m_pPreviewShaderResourceView;
+	ID3D11RenderTargetView*		m_pPreviewRenderTargetView;
+	D3D11_VIEWPORT				m_ViewPort;
 	UINT						m_iViewports;
+	//UINT						m_iPreViewViewports;
+	D3DXVECTOR3					m_center;
 private:
 	ID3D11RenderTargetView*		m_pOldRenderTargetView;
 	ID3D11DepthStencilView*		m_pOldDepthStencilView;
@@ -29,6 +37,7 @@ public:
 	D3DXVECTOR2					m_TextureSize;
 	DWORD						m_BrushID;
 	float						m_Channel;
+	bool						m_bIsRealDraw;
 	bool						m_bIsEraser;
 	float						m_fOpacity;
 public:
@@ -41,10 +50,8 @@ public:
 
 	bool						Init();
 	bool						Frame();
-	bool						Render();
+	bool						Draw();
 	bool						Release();
-
-	bool						Brushing();
 public:
 	MCanvas();
 	~MCanvas();

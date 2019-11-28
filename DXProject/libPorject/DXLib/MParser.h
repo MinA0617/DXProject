@@ -31,6 +31,8 @@ protected:
 	M_STR			DataToMSTR(ITOR &data);
 	D3DXVECTOR3		FindMin(vector<MVERTEX>	&vertices);
 	D3DXVECTOR3		FindMax(vector<MVERTEX> &vertices);
+	M_STR			AnotherPath(M_STR oldpath);
+	bool			Load_Map(M3DInstanceModel* target, M_STR name, MAPTYPE maptype);
 	bool			CreateBuffer(MMesh* Target, vector<MVERTEX>	&vertices, vector<DWORD> &index);
 	bool			CreateBuffer(MMesh* Target, vector<DWORD> &index);
 	bool			CheckChar(string::iterator data);

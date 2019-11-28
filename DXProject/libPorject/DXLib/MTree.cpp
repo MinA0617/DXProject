@@ -1,16 +1,6 @@
 #include "MTree.h"
 #include "M3DObjectMgr.h"
 
-
-bool MTree::AddObject(M3DObject * pObj)
-{
-	if (CheckRoot(pObj))
-	{
-	
-	}
-	return false;
-}
-
 bool MTree::Build(float fX, float fZ, float fMinSize, int renderlevel)
 {
 	m_DepthLevelOfMapNode = renderlevel;
@@ -36,7 +26,7 @@ bool MTree::SetMaxY(MTreeNode * pNode, M3DHeightMap * target)
 {
 	if (pNode->m_isLeaf == true)
 	{
-		pNode->m_Box.vMax.y = target->FindLeafYMax(pNode->m_Box.vMin.x, -pNode->m_Box.vMax.z);
+		pNode->m_Box.UpdataMaxY(target->FindLeafYMax(pNode->m_Box.vMin.x, pNode->m_Box.vMin.z));
 	}
 	else
 	{
@@ -46,11 +36,14 @@ bool MTree::SetMaxY(MTreeNode * pNode, M3DHeightMap * target)
 			SetMaxY(pNode->m_pChild[i], target);
 			topy[i] = pNode->m_pChild[i]->m_Box.vMax.y;
 		}
-		pNode->m_Box.vMax.y = max(max(topy[0], topy[1]), max(topy[2], topy[3]));
+		pNode->m_Box.UpdataMaxY(max(max(topy[0], topy[1]), max(topy[2], topy[3])));
 	}
 	if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 	{
-		FindMapNode(pNode, target);
+		if (pNode->m_Tile == nullptr)
+		{
+			FindMapNode(pNode, target);
+		}
 	}
 	return true;
 }
@@ -88,7 +81,9 @@ MTreeNode*	MTree::CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ,
 {
 	MTreeNode* pNode = new MTreeNode;
 	pNode->m_pChild.reserve(0);
-
+#if defined(DEBUG) || defined(_DEBUG)
+	pNode->m_Box.Init();
+#endif
 	pNode->m_Box.vMin.x = fMinX;
 	pNode->m_Box.vMin.y = 0;
 	pNode->m_Box.vMin.z = fMinZ;
@@ -106,7 +101,7 @@ MTreeNode*	MTree::CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ,
 	pNode->m_Box.vAxis[2] = D3DXVECTOR3(0, 0, 1);
 
 	pNode->m_Box.fOldExtent[0] = (fMaxX - fMinX) / 2;
-	pNode->m_Box.fOldExtent[1] = (fMaxX - fMinX) / 2;
+	pNode->m_Box.fOldExtent[1] = 0;
 	pNode->m_Box.fOldExtent[2] = (fMaxX - fMinX) / 2;
 
 	pNode->m_Box.vCenter.x = (fMinX + fMaxX) / 2;
@@ -116,6 +111,8 @@ MTreeNode*	MTree::CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ,
 	pNode->m_Box.fExtent[0] = pNode->m_Box.fOldExtent[0];
 	pNode->m_Box.fExtent[1] = pNode->m_Box.fOldExtent[1];
 	pNode->m_Box.fExtent[2] = pNode->m_Box.fOldExtent[2];
+
+	pNode->m_Box.SelfUpdate();
 
 	if (pParentNode != nullptr)
 	{
@@ -147,21 +144,6 @@ bool MTree::DeleteNode(MTreeNode * pNode)
 	}
 	delete pNode;
 	return true;
-}
-
-bool MTree::CheckRoot(M3DObject * pObj)
-{
-	//if (m_pRootNode->m_Box.vMin.x <= pObj->m_BoxList->vMin.x && m_pRootNode->m_Box.vMax.x >= pObj->m_BoxList->vMax.x)
-	//{
-	//	if (m_pRootNode->m_Box.vMin.y <= pObj->m_BoxList->vMin.y && m_pRootNode->m_Box.vMax.y >= pObj->m_BoxList->vMax.y)
-	//	{
-	//		if (m_pRootNode->m_Box.vMin.z <= pObj->m_BoxList->vMin.z && m_pRootNode->m_Box.vMax.z >= pObj->m_BoxList->vMax.z)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//}
-	return false;
 }
 
 //bool MTree::CheckNode(MTreeNode pNode, M3DObject * pObj)
@@ -200,12 +182,21 @@ bool MTree::SubDivide(MTreeNode* pNode)
 	pChildNode[1] = CreateNode(x[1], z[1], x[2], z[2], pNode);
 	pChildNode[2] = CreateNode(x[1], z[0], x[2], z[1], pNode);
 	pChildNode[3] = CreateNode(x[0], z[0], x[1], z[1], pNode);
+	//pChildNode[0] = CreateNode(x[0], z[0], x[1], z[1], pNode);
+	//pChildNode[1] = CreateNode(x[1], z[0], x[2], z[1], pNode);
+	//pChildNode[2] = CreateNode(x[1], z[1], x[2], z[2], pNode);
+	//pChildNode[3] = CreateNode(x[0], z[1], x[1], z[2], pNode);
 
 	for (int i = 0; i < 4; i++)
 	{
 		pNode->m_pChild.push_back(pChildNode[i]);
 	}
 	return true;
+}
+
+bool MTree::CheckAABB(MBoundingBox * box)
+{
+	return abs(box->vAxis[0].x - 1.00000) < 0.0001;
 }
 
 int MTree::CheckNode(MTreeNode * node)
@@ -251,51 +242,113 @@ int MTree::CheckNode(MTreeNode * node)
 
 int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
 {
-	if (pNode->m_Box.vMin.x <= data->m_Box.vMin.x && pNode->m_Box.vMax.x >= data->m_Box.vMax.x)
+	if (CheckAABB(&data->m_Box))
 	{
-		if (pNode->m_Box.vMin.z <= data->m_Box.vMin.z && pNode->m_Box.vMax.z >= data->m_Box.vMax.z)
+		if (pNode->m_Box.vMin.x <= data->m_Box.vMin.x && pNode->m_Box.vMax.x >= data->m_Box.vMax.x)
 		{
-			if (pNode->m_iDepth == m_DepthLevelOfMapNode)
+			if (pNode->m_Box.vMin.z <= data->m_Box.vMin.z && pNode->m_Box.vMax.z >= data->m_Box.vMax.z)
 			{
-				map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
-				if (temp != m_InstanceObjTable.end())
+				if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 				{
-					(*temp).second->m_pInstanceList.erase(data);
-					m_InstanceObjTable.erase(data);
+					map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+					if (temp != m_InstanceObjTable.end())
+					{
+						(*temp).second->m_pInstanceList.erase(data);
+						m_InstanceObjTable.erase(data);
+					}
+					m_InstanceObjTable.insert(make_pair(data, pNode));
+					pNode->m_pInstanceList.insert(data);
+					return true;
 				}
-				m_InstanceObjTable.insert(make_pair(data, pNode));
-				pNode->m_pInstanceList.insert(data);
-				return true;
+				else
+				{
+					for (auto temp : pNode->m_pChild)
+					{
+						if (CheckInstanceObj(temp, data))
+						{
+							return true;
+						}
+					}
+					map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+					if (temp != m_InstanceObjTable.end())
+					{
+						(*temp).second->m_pInstanceList.erase(data);
+						m_InstanceObjTable.erase(data);
+					}
+					m_InstanceObjTable.insert(make_pair(data, pNode));
+					pNode->m_pInstanceList.insert(data);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	else
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			if ((pNode->m_Box.vMin.x <= data->m_Box.vPoint[i].x && pNode->m_Box.vMax.x >= data->m_Box.vPoint[i].x))
+			{
+				if (!(pNode->m_Box.vMin.z <= data->m_Box.vPoint[i].z && pNode->m_Box.vMax.z >= data->m_Box.vPoint[i].z))
+				{
+					return false;
+				}
 			}
 			else
 			{
-				for (auto temp : pNode->m_pChild)
-				{
-					if (CheckInstanceObj(temp, data))
-					{
-						return true;
-					}
-				}
-				map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
-				if (temp != m_InstanceObjTable.end())
-				{
-					(*temp).second->m_pInstanceList.erase(data);
-					m_InstanceObjTable.erase(data);
-				}
-				m_InstanceObjTable.insert(make_pair(data, pNode));
-				pNode->m_pInstanceList.insert(data);
-				return true;
+				return false;
 			}
 		}
+		if (pNode->m_iDepth == m_DepthLevelOfMapNode)
+		{
+			map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+			if (temp != m_InstanceObjTable.end())
+			{
+				(*temp).second->m_pInstanceList.erase(data);
+				m_InstanceObjTable.erase(data);
+			}
+			m_InstanceObjTable.insert(make_pair(data, pNode));
+			pNode->m_pInstanceList.insert(data);
+			return true;
+		}
+		else
+		{
+			for (auto temp : pNode->m_pChild)
+			{
+				if (CheckInstanceObj(temp, data))
+				{
+					return true;
+				}
+			}
+			map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+			if (temp != m_InstanceObjTable.end())
+			{
+				(*temp).second->m_pInstanceList.erase(data);
+				m_InstanceObjTable.erase(data);
+			}
+			m_InstanceObjTable.insert(make_pair(data, pNode));
+			pNode->m_pInstanceList.insert(data);
+			return true;
+		}
 	}
-	return false;
 }
 
-int MTree::CheckInstanceObject(M3DInstance * data)
+bool MTree::CheckInstanceObject(M3DInstance * data)
 {
-	// 기존것이던 새로운것이던 상관없음, 걍 추가됨 //
-	CheckInstanceObj(m_pRootNode, data);
-	return 0;
+	// 기존것이던 새로운것이던 상관없음, 있으면 테이블에서 제거하고 걍 추가됨 //
+	return CheckInstanceObj(m_pRootNode, data);
+}
+
+bool MTree::DeleteInstancObject(M3DInstance * data)
+{
+	map<M3DInstance*, MTreeNode*>::iterator iter = m_InstanceObjTable.find(data);
+	if (iter == m_InstanceObjTable.end())
+	{
+		return false;
+	}
+	(*iter).second->m_pInstanceList.erase((*iter).first);
+	m_InstanceObjTable.erase((*iter).first);
+	return true;
 }
 
 
@@ -303,12 +356,12 @@ bool MTree::Frame()
 {
 	m_RenderNodeList.clear();
 	m_RenderObjList.clear();
-	CheckNode(m_pRootNode);
 	return true;
 }
 
 bool MTree::Render()
 {
+	CheckNode(m_pRootNode);
 	if(I_3DObjectMgr.m_InWorldFiled)	I_3DObjectMgr.m_InWorldFiled->Render();
 	for (auto node : m_RenderNodeList)
 	{
@@ -344,6 +397,15 @@ MTree::~MTree()
 
 bool MTreeNode::Render()
 {
+#if defined(DEBUG) || defined(_DEBUG)
+	if (m_Tile)
+	{
+		if (g_isBoxRender)
+		{
+			m_Box.Render();
+		}
+	}
+#endif
 	for (auto obj : m_pObjList)
 	{
 		obj->Render();

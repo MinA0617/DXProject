@@ -165,7 +165,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockPane(&m_MapPane);
 
 	DWORD dwStyle2 = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI;
-	BOOL bRet2 = m_ObjectPane.CreateEx(NULL, L"ObjectTool", this, CRect(0, 0, 250, 800), TRUE, 54321, dwStyle2);
+	BOOL bRet2 = m_ObjectPane.CreateEx(NULL, L"ObjectTool", this, CRect(0, 0, 450, 800), TRUE, 54321, dwStyle2);
 	m_MapPane.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_ObjectPane);
 

@@ -36,21 +36,18 @@ private:
 	MTreeNode*	CreateNode(float fMinX, float fMinZ, float fMaxX, float fMaxZ, MTreeNode* pParentNode = nullptr);
 	bool		DeleteAll();
 	bool		DeleteNode(MTreeNode* pNode);
-	bool		CheckRoot(M3DObject* pObj);
-	//bool		CheckNode(MTreeNode pNode, M3DObject * pObj);
-	//bool		FindNode(MTreeNode* pNode, M3DObject* pObj);
 public:
-	bool		AddObject(M3DObject* pObj);
 	bool		Build(float fX, float fZ, float fMinSize = 10.0f, int renderlevel = 4);
 	bool		BuildHeightMap(M3DHeightMap* target);
 	bool		SetMaxY(MTreeNode* pNode, M3DHeightMap* target);
 	bool		FindMapNode(MTreeNode* node, M3DHeightMap* target);
-	//bool		SetCamera(MCamera* camera);
 	// --- test ----
-	map			<M3DInstance*, MTreeNode*> m_InstanceObjTable;
+	map<M3DInstance*, MTreeNode*> m_InstanceObjTable;
+	bool		CheckAABB(MBoundingBox* box);
 	int			CheckNode(MTreeNode* node);
 	int			CheckInstanceObj(MTreeNode* pNode, M3DInstance* data);
-	int			CheckInstanceObject(M3DInstance* data);
+	bool		CheckInstanceObject(M3DInstance* data);
+	bool		DeleteInstancObject(M3DInstance* data);
 public:
 	//bool		Init();
 	bool		Frame();

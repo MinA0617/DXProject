@@ -19,6 +19,9 @@ bool MBoundingBox::Copy(MBoundingBox* target)
 	fOldExtent[0] = target->fOldExtent[0];
 	fOldExtent[1] = target->fOldExtent[1];
 	fOldExtent[2] = target->fOldExtent[2];
+	fExtent[0] = target->fExtent[0];
+	fExtent[1] = target->fExtent[1];
+	fExtent[2] = target->fExtent[2];
 	return true;
 }
 
@@ -31,14 +34,38 @@ bool MBoundingBox::BuildForMinMax()
 	return true;
 }
 
-//bool MBoundingBox::Updata(D3DXMATRIX& mat)
-bool MBoundingBox::Updata()
+bool MBoundingBox::SelfUpdate()
 {
-	if (m_pTarget == nullptr) return false;
-	D3DXVECTOR3* pos = &m_pTarget->m_WorldPosition;
-	D3DXQUATERNION* rot = &m_pTarget->m_WorldRotation;
-	D3DXVECTOR3* scl = &m_pTarget->m_WorldScale;
+	D3DXMATRIX mat;
+	D3DXVECTOR3 scl(fExtent[0], fExtent[1], fExtent[2]);
+	D3DXMatrixTransformation(&mat, NULL, NULL, &scl, NULL, NULL, &vCenter);
+	vPoint[0] = D3DXVECTOR3(-1, -1, -1);
+	vPoint[1] = D3DXVECTOR3(-1, -1, 1);
+	vPoint[2] = D3DXVECTOR3(-1, 1, -1);
+	vPoint[3] = D3DXVECTOR3(-1, 1, 1);
+	vPoint[4] = D3DXVECTOR3(1, -1, -1);
+	vPoint[5] = D3DXVECTOR3(1, -1, 1);
+	vPoint[6] = D3DXVECTOR3(1, 1, -1);
+	vPoint[7] = D3DXVECTOR3(1, 1, 1);
+	for (int i = 0; i < 8; i++)
+	{
+		D3DXVec3TransformCoord(&vPoint[i], &vPoint[i], &mat);
+	}
+#if defined(DEBUG) || defined(_DEBUG)
+	if (m_pConstantBuffer)
+	{
+		D3DXMatrixTranspose(&mat, &mat);
+		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &mat, 0, 0);
+	}
+#endif
+	return true;
+}
+
+//bool MBoundingBox::Updata(D3DXMATRIX& mat)
+bool MBoundingBox::Updata(D3DXVECTOR3* pos, D3DXQUATERNION* rot, D3DXVECTOR3* scl)
+{
 	D3DXMATRIX matWorld;
+	D3DXVECTOR3 scale = *scl;
 	D3DXMatrixTransformation(&matWorld, NULL, NULL, scl, NULL, rot, pos);
 	D3DXVec3TransformCoord(&vCenter, &vOldCenter, &matWorld);
 	fExtent[0] = fOldExtent[0] * scl->x;
@@ -64,19 +91,43 @@ bool MBoundingBox::Updata()
 	D3DXVec3Normalize(&vAxis[1], &vAxis[1]);
 	D3DXVec3Normalize(&vAxis[2], &vAxis[2]);
 
+	scale.x = fExtent[0];
+	scale.y = fExtent[1];
+	scale.z = fExtent[2];
+	D3DXMatrixTransformation(&matWorld, NULL, NULL, &scale, NULL, rot, &vCenter);
+	vPoint[0] = D3DXVECTOR3(-1, -1, -1);
+	vPoint[1] = D3DXVECTOR3(-1, -1, 1);
+	vPoint[2] = D3DXVECTOR3(-1, 1, -1);
+	vPoint[3] = D3DXVECTOR3(-1, 1, 1);
+	vPoint[4] = D3DXVECTOR3(1, -1, -1);
+	vPoint[5] = D3DXVECTOR3(1, -1, 1);
+	vPoint[6] = D3DXVECTOR3(1, 1, -1);
+	vPoint[7] = D3DXVECTOR3(1, 1, 1);
+	for (int i = 0; i < 8; i++)
+	{
+		D3DXVec3TransformCoord(&vPoint[i], &vPoint[i], &matWorld);
+	}
 #if defined(DEBUG) || defined(_DEBUG)
 	if (m_pConstantBuffer)
 	{
-		scl->x = fExtent[0];
-		scl->y = fExtent[1];
-		scl->z = fExtent[2];
-		D3DXMatrixTransformation(&matWorld, NULL, NULL, scl, NULL, rot, &vCenter);
 		D3DXMatrixTranspose(&matWorld, &matWorld);
 		g_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &matWorld, 0, 0);
 	}
 #endif
 
-	return false;
+	return true;
+}
+
+bool MBoundingBox::UpdataMaxY(float maxy)
+{
+	// 노드한정 //
+	vMax.y = maxy;
+	vCenter.y = vMax.y / 2;
+	vOldCenter.y = vMax.y / 2;
+	fExtent[1] = vMax.y / 2;
+	fOldExtent[1] = vMax.y / 2;
+	SelfUpdate();
+	return true;
 }
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -96,6 +147,10 @@ bool MBoundingBox::Init()
 
 bool MBoundingBox::Render()
 {
+	if (m_pConstantBuffer == NULL)
+	{
+		Init();
+	}
 	I_DxState.BS_Set(MAlphaBlend);
 	I_DxState.SS_Set(MWrapLinear);
 	I_DxState.DSS_Set(MDepthEnable);
@@ -130,6 +185,7 @@ bool MBoundingBox::Release()
 #endif
 MBoundingBox::MBoundingBox()
 {
+	m_pConstantBuffer = NULL;
 	vMin = D3DXVECTOR3(0, 0, 0);
 	vMax = D3DXVECTOR3(0, 0, 0);
 	vCenter = D3DXVECTOR3(0, 0, 0);
@@ -140,7 +196,6 @@ MBoundingBox::MBoundingBox()
 	fOldExtent[1] = 0;
 	fOldExtent[2] = 0;
 	n_bCanOverlap = false;
-	m_pTarget = nullptr;
 }
 
 
