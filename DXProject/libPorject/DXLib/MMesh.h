@@ -17,7 +17,7 @@ public:
 	ID3D11Buffer*		m_pVertexBuffer;
 	ID3D11Buffer*		m_pIndexBuffer;
 public:
-	bool				SetSkeletonAndCreateData(MSkeleton* skt) { return false; };
+	bool				SetSkeletonAndCreateData(MSkeleton* skt, vector<CVERTEX>& OldData) { return false; };
 public:
 	virtual bool Init();
 	virtual bool Frame();

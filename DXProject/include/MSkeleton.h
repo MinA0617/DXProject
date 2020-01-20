@@ -12,6 +12,7 @@ public:
 	//vector<M3DBone*>		m_BoneList;
 	ID3D11Buffer*			m_pBoneBuffer;
 	ID3D11Buffer*			m_pZeroBuffer;
+	vector<D3DXMATRIX>		m_Coculration;
 	vector<CONSTANT_BONE>	m_ConstantBone;
 	vector<CONSTANT_BONE>	m_ConstantZero;
 	bool					m_bIsSlerp;

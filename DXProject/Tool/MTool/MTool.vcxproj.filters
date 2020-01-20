@@ -84,6 +84,9 @@
     <ClInclude Include="MCreateDeleteInstance.h">
       <Filter>Core\Modify</Filter>
     </ClInclude>
+    <ClInclude Include="MCharactorLoader.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MTool.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="MCreateDeleteInstance.cpp">
       <Filter>Core\Modify</Filter>
+    </ClCompile>
+    <ClCompile Include="MCharactorLoader.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

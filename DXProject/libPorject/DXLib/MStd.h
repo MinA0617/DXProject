@@ -1,6 +1,6 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
-#define MAX_BONE 64
+#define MAX_BONE 256
 #include <windows.h>
 
 #pragma comment (lib, "d3d11.lib")

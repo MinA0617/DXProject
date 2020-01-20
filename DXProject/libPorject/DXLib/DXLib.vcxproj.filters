@@ -133,9 +133,6 @@
     <ClCompile Include="MSkinModel.cpp">
       <Filter>Object\3DObject\3DModel</Filter>
     </ClCompile>
-    <ClCompile Include="MUint.cpp">
-      <Filter>Object\3DObject\3DHelper</Filter>
-    </ClCompile>
     <ClCompile Include="MSkinMesh.cpp">
       <Filter>Object\Resource\Obj</Filter>
     </ClCompile>
@@ -181,14 +178,26 @@
     <ClCompile Include="MRenderTargetMgr.cpp">
       <Filter>Manager\DirectMgr</Filter>
     </ClCompile>
-    <ClCompile Include="M3DInstanceModel.cpp">
-      <Filter>Object\3DObject\Instance</Filter>
-    </ClCompile>
     <ClCompile Include="M3DInstance.cpp">
       <Filter>Object\3DObject\Instance</Filter>
     </ClCompile>
     <ClCompile Include="MFunction.cpp">
       <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DNObject.cpp">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="MUint.cpp">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DInstanceSkinning.cpp">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DInstanceModel.cpp">
+      <Filter>Object\3DObject\Instance\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="M3DInstanceSkinModel.cpp">
+      <Filter>Object\3DObject\Instance\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -339,9 +348,6 @@
     <ClInclude Include="MSkinModel.h">
       <Filter>Object\3DObject\3DModel</Filter>
     </ClInclude>
-    <ClInclude Include="MUint.h">
-      <Filter>Object\3DObject\3DHelper</Filter>
-    </ClInclude>
     <ClInclude Include="MSkinMesh.h">
       <Filter>Object\Resource\Obj</Filter>
     </ClInclude>
@@ -387,14 +393,26 @@
     <ClInclude Include="MRenderTargetMgr.h">
       <Filter>Manager\DirectMgr</Filter>
     </ClInclude>
-    <ClInclude Include="M3DInstanceModel.h">
-      <Filter>Object\3DObject\Instance</Filter>
-    </ClInclude>
     <ClInclude Include="M3DInstance.h">
       <Filter>Object\3DObject\Instance</Filter>
     </ClInclude>
     <ClInclude Include="MFunction.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DNObject.h">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="MUint.h">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DInstanceSkinning.h">
+      <Filter>Object\3DObject\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DInstanceSkinModel.h">
+      <Filter>Object\3DObject\Instance\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="M3DInstanceModel.h">
+      <Filter>Object\3DObject\Instance\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -467,6 +485,9 @@
     <Filter Include="Object\3DObject\Instance">
       <UniqueIdentifier>{e0542cca-6f80-48a5-9fec-7e539048aa4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\3DObject\Instance\Mesh">
+      <UniqueIdentifier>{77ebe27a-08ee-4c24-96ad-8c1c46a690ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DXLib.rc">
@@ -514,6 +535,9 @@
       <Filter>Manager\ShaderMgr\Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\..\data\Shader\3DINSTANCE.hlsl">
+      <Filter>Manager\ShaderMgr\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\3DINSTANCESKIN.hlsl">
       <Filter>Manager\ShaderMgr\Shader</Filter>
     </FxCompile>
   </ItemGroup>

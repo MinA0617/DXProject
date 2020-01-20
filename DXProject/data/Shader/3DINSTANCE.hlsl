@@ -50,7 +50,7 @@ struct VS3D_INPUT
 	float3 Position				: POSITION;	 // simentci
 	float3 UVPos				: TEXCOORD;
 	float3 Normal				: NORMAL;
-	float3 Tangent[g_iNumLight]	: TANGENTVECTOR;
+	float3 Tangent				: TANGENTVECTOR;
 	column_major matrix Worldmat				: WORLDMAT;
 };
 

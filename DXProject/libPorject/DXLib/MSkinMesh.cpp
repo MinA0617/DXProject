@@ -11,15 +11,15 @@ MSkinMesh::~MSkinMesh()
 {
 }
 
-bool MSkinMesh::SetSkeletonAndCreateData(MSkeleton * skt)
+bool MSkinMesh::SetSkeletonAndCreateData(MSkeleton * skt, vector<CVERTEX>& OldData)
 {
 	vector<MVERTEX>		mv;
 	vector<SKINDATA>	ms;
-	if (m_OldData.size() == 0)
+	if (OldData.size() == 0)
 	{
 		return false;
 	}
-	for (auto temp : m_OldData)
+	for (auto temp : OldData)
 	{
 		MVERTEX newv;
 		newv.p = temp.p;
@@ -38,7 +38,7 @@ bool MSkinMesh::SetSkeletonAndCreateData(MSkeleton * skt)
 		mv.push_back(newv);
 		ms.push_back(news);
 	}
-	m_OldData.clear();
+	//OldData.clear();
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	D3D11_BUFFER_DESC BufferDesc;				//// 공용 버퍼 데스크
 	D3D11_SUBRESOURCE_DATA SubresourceData;		//// 공용 리소스 데이터

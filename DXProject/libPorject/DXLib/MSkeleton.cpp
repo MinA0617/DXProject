@@ -10,6 +10,7 @@ MSkeleton::MSkeleton()
 	m_fAniTime = 0;
 	m_fDelay = 0;
 	m_bIsSlerp = false;
+	m_Coculration.resize(MAX_BONE);
 }
 
 
@@ -236,6 +237,7 @@ bool MSkeleton::Frame()
 		(*data).second->Frame();
 		m_ConstantBone[i].matBoneWorld = (*data).second->m_ConstantOBJ.matWorld;
 		i++;
+		m_Coculration[i] = m_ConstantBone[i].matBoneWorld * m_ConstantZero[i].matBoneWorld;
 	}
 	PreFrame();
 	g_pImmediateContext->UpdateSubresource(m_pBoneBuffer, 0, 0, &m_ConstantBone.at(0), 0, 0);

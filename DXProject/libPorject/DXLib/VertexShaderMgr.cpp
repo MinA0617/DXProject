@@ -160,7 +160,54 @@ bool VertexShaderMgr::Init()
 	if (FAILED(LoadShaderResult)) return false;
 #pragma endregion VS3DINSTANCE
 	
+#pragma region VS3DSKININSTANCE
+	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/3DINSTANCESKIN.hlsl", NULL, NULL, "VS", "vs_5_0", dwShaderFlags, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
+	if (FAILED(LoadShaderResult))
+	{
+		MessageBoxA(g_hWnd, (char*)pErrorMsgs->GetBufferPointer(), "Error", MB_OK);
+		return false;
+	}
+	g_pDevice->CreateVertexShader(pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), NULL, &m_VSList[VS3DSKININSTANCE]);	// 컴파일된 쉐이더를 생성해 준다
+	vector<D3D11_INPUT_ELEMENT_DESC> layoutvec;
+	layoutvec.reserve(267);
+	const D3D11_INPUT_ELEMENT_DESC layout7[] =
+	{
+		{"POSITION",		0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TEXCOORD",		0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"NORMAL",			0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"TANGENTVECTOR",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 
+		{"NUMWEIGHT",		0, DXGI_FORMAT_R32_SINT,			1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"BONEID",			0, DXGI_FORMAT_R32G32B32A32_SINT,	1, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"BONEWEIGHT",		0, DXGI_FORMAT_R32G32B32A32_FLOAT,	1, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+		{"WORLDMAT",		0, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		{"WORLDMAT",		1, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 16, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		{"WORLDMAT",		2, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 32, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		{"WORLDMAT",		3, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 48, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+	};
+	for (int i = 0; i < _countof(layout7); i++)
+	{
+		layoutvec.push_back(layout7[i]);
+	}
+	for (int i = 0; i < MAX_BONE; i++)
+	{
+		D3D11_INPUT_ELEMENT_DESC forlayout;
+		forlayout.SemanticName = "BONEMAT";
+		forlayout.SemanticIndex = i;
+		forlayout.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		forlayout.InputSlot = 3;
+		forlayout.AlignedByteOffset = i * 16;
+		forlayout.InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		forlayout.InstanceDataStepRate = 1;
+		layoutvec.push_back(forlayout);
+	}
+	layoutNum = layoutvec.size();
+	LoadShaderResult = g_pDevice->CreateInputLayout(&layoutvec.at(0), layoutNum, pVSShader->GetBufferPointer(), pVSShader->GetBufferSize(), &m_LOList[VS3DSKININSTANCE]);
+	if (pVSShader)pVSShader->Release();
+	if (pErrorMsgs)pErrorMsgs->Release();
+	if (FAILED(LoadShaderResult)) return false;
+#pragma endregion VS3DSKININSTANCE
 //#pragma region VSFILED2
 //	LoadShaderResult = D3DX11CompileFromFile(L"../../data/Shader/VS3DFiled2.vsh", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pVSShader, &pErrorMsgs, NULL);
 //	if (FAILED(LoadShaderResult))

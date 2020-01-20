@@ -14,7 +14,7 @@ struct MTreeNode
 	MMapNode*				m_Tile;
 	vector<MTreeNode*>		m_pChild;
 	vector<M3DObject*>		m_pObjList;
-	set<M3DInstance*>		m_pInstanceList;
+	set<M3DNObject*>		m_pNObjList;
 	bool					Render();
 	bool					MapRender();
 	MTreeNode() { m_Tile = nullptr; };
@@ -24,7 +24,7 @@ class MTree
 {
 public:
 	vector<MTreeNode*>		m_RenderNodeList;
-	vector<M3DInstance*>	m_RenderObjList;
+	vector<M3DNObject*>	m_RenderObjList;
 	MTreeNode*				m_pRootNode;
 	float					m_fMinDivideSize;
 	DWORD					m_dwMaxDepth;
@@ -42,12 +42,12 @@ public:
 	bool		SetMaxY(MTreeNode* pNode, M3DHeightMap* target);
 	bool		FindMapNode(MTreeNode* node, M3DHeightMap* target);
 	// --- test ----
-	map<M3DInstance*, MTreeNode*> m_InstanceObjTable;
+	map<M3DNObject*, MTreeNode*> m_InstanceObjTable;
 	bool		CheckAABB(MBoundingBox* box);
 	int			CheckNode(MTreeNode* node);
-	int			CheckInstanceObj(MTreeNode* pNode, M3DInstance* data);
-	bool		CheckInstanceObject(M3DInstance* data);
-	bool		DeleteInstancObject(M3DInstance* data);
+	int			CheckInstanceObj(MTreeNode* pNode, M3DNObject* data);
+	bool		CheckInstanceObject(M3DNObject* data);
+	bool		DeleteInstancObject(M3DNObject* data);
 public:
 	//bool		Init();
 	bool		Frame();

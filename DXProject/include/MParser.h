@@ -33,25 +33,24 @@ protected:
 	D3DXVECTOR3		FindMax(vector<MVERTEX> &vertices);
 	M_STR			AnotherPath(M_STR oldpath);
 	bool			Load_Map(M3DInstanceModel* target, M_STR name, MAPTYPE maptype);
-	bool			CreateBuffer(MMesh* Target, vector<MVERTEX>	&vertices, vector<DWORD> &index);
-	bool			CreateBuffer(MMesh* Target, vector<DWORD> &index);
+	bool			CreateVertexBuffer(MMesh* Target, vector<MVERTEX>	&vertices);
+	bool			CreateIndexBuffer(MMesh* Target, vector<DWORD> &index);
 	bool			CheckChar(string::iterator data);
-	bool			CreateGeometryData(ITOR &data, M3DModel* target);
-	bool			CreateSkinningData(ITOR &data, MSkinModel* target, MSkinMesh* mesh);
+	//bool			CreateGeometryData(ITOR &data, M3DModel* target);
+	//bool			CreateSkinningData(ITOR &data, MSkinModel* target, MSkinMesh* mesh);
 	bool			SetBBData(M_STR name, MSkeleton* skt, bool isClear);
-	bool			CreateOBJData(M_STR name, MSkeleton* target = nullptr);
+	//bool			CreateOBJData(M_STR name, MSkeleton* target = nullptr);
 	bool			CreateSKTData(M_STR name);
 	bool			CreateKEYData(M_STR name);
 public:
 	// -------------------------------------------------------------------------------------------
 	// 인스턴스 용
+	bool			CreateSkinMeshData(ITOR &data, M3DInstanceModel* target, MSkeleton* skt);
 	bool			CreateMeshData(ITOR &data, M3DInstanceModel* target);
-	bool			CreateInstanceOBJData(vector<string>& list, vector<M_STR>& namelist);
+	bool			CreateInstanceOBJData(vector<string>& list, vector<M_STR>& namelist, MSkeleton* target);
 	bool			ParsingDate(M_STR filename, vector<string>& list);
-	bool			Load(M_STR filename, vector<M_STR>& namelist);
-	// -------------------------------------------------------------------------------------------
-
-	bool			Load(M_STR filename, MSkeleton* target = nullptr);
+	bool			Load(M_STR filename, vector<M_STR>& namelist, MSkeleton* target = nullptr);
+	bool			Load(M_STR filename);
 	MFiled*			Load_HM(M_STR filename, float leafsize = 10, float height = 1.0, int minlevel = 64, float lodstartdistance = 1000, bool isChange = true);
 	bool			Load_BB(M_STR filename, MSkeleton* skt, bool isClear = true);
 private:

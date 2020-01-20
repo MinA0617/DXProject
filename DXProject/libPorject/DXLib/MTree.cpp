@@ -217,7 +217,7 @@ int MTree::CheckNode(MTreeNode * node)
 		}
 		else
 		{
-			for (auto temp : node->m_pInstanceList)
+			for (auto temp : node->m_pNObjList)
 			{
 				if (I_CameraMgr.frustum.CheckOBB(&temp->m_Box))
 				{
@@ -240,7 +240,7 @@ int MTree::CheckNode(MTreeNode * node)
 	}
 }
 
-int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
+int MTree::CheckInstanceObj(MTreeNode* pNode, M3DNObject * data)
 {
 	if (CheckAABB(&data->m_Box))
 	{
@@ -250,14 +250,14 @@ int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
 			{
 				if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 				{
-					map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+					map<M3DNObject*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
 					if (temp != m_InstanceObjTable.end())
 					{
-						(*temp).second->m_pInstanceList.erase(data);
+						(*temp).second->m_pNObjList.erase(data);
 						m_InstanceObjTable.erase(data);
 					}
 					m_InstanceObjTable.insert(make_pair(data, pNode));
-					pNode->m_pInstanceList.insert(data);
+					pNode->m_pNObjList.insert(data);
 					return true;
 				}
 				else
@@ -269,14 +269,14 @@ int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
 							return true;
 						}
 					}
-					map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+					map<M3DNObject*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
 					if (temp != m_InstanceObjTable.end())
 					{
-						(*temp).second->m_pInstanceList.erase(data);
+						(*temp).second->m_pNObjList.erase(data);
 						m_InstanceObjTable.erase(data);
 					}
 					m_InstanceObjTable.insert(make_pair(data, pNode));
-					pNode->m_pInstanceList.insert(data);
+					pNode->m_pNObjList.insert(data);
 					return true;
 				}
 			}
@@ -301,14 +301,14 @@ int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
 		}
 		if (pNode->m_iDepth == m_DepthLevelOfMapNode)
 		{
-			map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+			map<M3DNObject*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
 			if (temp != m_InstanceObjTable.end())
 			{
-				(*temp).second->m_pInstanceList.erase(data);
+				(*temp).second->m_pNObjList.erase(data);
 				m_InstanceObjTable.erase(data);
 			}
 			m_InstanceObjTable.insert(make_pair(data, pNode));
-			pNode->m_pInstanceList.insert(data);
+			pNode->m_pNObjList.insert(data);
 			return true;
 		}
 		else
@@ -320,33 +320,33 @@ int MTree::CheckInstanceObj(MTreeNode* pNode, M3DInstance * data)
 					return true;
 				}
 			}
-			map<M3DInstance*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
+			map<M3DNObject*, MTreeNode*>::iterator temp = m_InstanceObjTable.find(data);
 			if (temp != m_InstanceObjTable.end())
 			{
-				(*temp).second->m_pInstanceList.erase(data);
+				(*temp).second->m_pNObjList.erase(data);
 				m_InstanceObjTable.erase(data);
 			}
 			m_InstanceObjTable.insert(make_pair(data, pNode));
-			pNode->m_pInstanceList.insert(data);
+			pNode->m_pNObjList.insert(data);
 			return true;
 		}
 	}
 }
 
-bool MTree::CheckInstanceObject(M3DInstance * data)
+bool MTree::CheckInstanceObject(M3DNObject * data)
 {
 	// 기존것이던 새로운것이던 상관없음, 있으면 테이블에서 제거하고 걍 추가됨 //
 	return CheckInstanceObj(m_pRootNode, data);
 }
 
-bool MTree::DeleteInstancObject(M3DInstance * data)
+bool MTree::DeleteInstancObject(M3DNObject * data)
 {
-	map<M3DInstance*, MTreeNode*>::iterator iter = m_InstanceObjTable.find(data);
+	map<M3DNObject*, MTreeNode*>::iterator iter = m_InstanceObjTable.find(data);
 	if (iter == m_InstanceObjTable.end())
 	{
 		return false;
 	}
-	(*iter).second->m_pInstanceList.erase((*iter).first);
+	(*iter).second->m_pNObjList.erase((*iter).first);
 	m_InstanceObjTable.erase((*iter).first);
 	return true;
 }
@@ -410,7 +410,7 @@ bool MTreeNode::Render()
 	{
 		obj->Render();
 	}
-	for (auto obj : m_pInstanceList)
+	for (auto obj : m_pNObjList)
 	{
 		obj->PreRender();
 	}

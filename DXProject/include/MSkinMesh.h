@@ -5,9 +5,8 @@ class MSkinMesh : public MMesh
 {
 public:
 	ID3D11Buffer*		m_pSkinBuffer;
-	vector<CVERTEX>		m_OldData;
 public:
-	bool				SetSkeletonAndCreateData(MSkeleton* skt);
+	bool				SetSkeletonAndCreateData(MSkeleton* skt, vector<CVERTEX>& OldData);
 public:
 	bool Init() override;
 	bool Render() override;

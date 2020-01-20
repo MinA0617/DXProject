@@ -14,7 +14,7 @@ private:
 	static bool				CheckNodeList(vector<MTreeNode*>& list);
 	static bool				CheckUPNodeList(vector<MTreeNode*>& list); // y축값 늘려서 계산 and 타일레벨이 아닌 상위노드도 체크
 public:
-	static M3DInstance*		PickObject(DWORD* ModelID = nullptr, DWORD* InstanceID = nullptr, D3DXVECTOR3* intersection = nullptr);
+	static M3DNObject*		PickObject(DWORD* ModelID = nullptr, DWORD* InstanceID = nullptr, D3DXVECTOR3* intersection = nullptr);
 	static MMapNode*		PickMapNode();
 	static bool				PickGroundPosition(D3DXVECTOR3* result = nullptr, DWORD* index = nullptr);
 public:

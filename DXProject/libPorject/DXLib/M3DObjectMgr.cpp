@@ -286,7 +286,7 @@ int M3DObjectMgr::AddInstanceObj(int id, D3DXVECTOR3 * pos, D3DXQUATERNION * rot
 	if (temp != InstanceModelList.end())
 	{
 		int result = (*temp).second->CreateInstanceObject();
-		M3DInstance * instance = (*temp).second->GetInstanceObject(result);
+		M3DNObject * instance = (*temp).second->GetInstanceObject(result);
 		instance->SetTransform(*pos, *rot, *scl);
 		//m_pTree->CheckInstanceObject((*temp).second->GetInstanceObject(result));
 		return result;
@@ -328,12 +328,12 @@ M3DInstanceModel * M3DObjectMgr::GetInstanceModel(int id)
 	return nullptr;
 }
 
-M3DInstance* M3DObjectMgr::GetInstanceObj(int id, int lowid)
+M3DNObject* M3DObjectMgr::GetInstanceObj(int id, int lowid)
 {
 	map<int, M3DInstanceModel*>::iterator temp = InstanceModelList.find(id);
 	if (temp != InstanceModelList.end())
 	{
-		M3DInstance* result = (*temp).second->GetInstanceObject(lowid);
+		M3DNObject* result = (*temp).second->GetInstanceObject(lowid);
 		return result;
 	}
 	return nullptr;
@@ -395,12 +395,9 @@ bool M3DObjectMgr::Render()
 	{
 		for (auto data : m_InWorldUnitList)
 		{
-			if (data.second->m_Box)
+			if (I_CameraMgr.frustum.CheckOBB(&data.second->m_Box))
 			{
-				if (I_CameraMgr.frustum.CheckOBB(data.second->m_Box))
-				{
-					data.second->Render();
-				}
+				data.second->Render();
 			}
 		}
 	}

@@ -1,9 +1,9 @@
 #pragma once
 #include "MStd.h"
 #include "D3Dcompiler.h"
-#define PS_NUM 6
+#define PS_NUM 7
 
-enum PixelShader { PS2D, PS3D, PSSPLINE, PSBONE, PSFILED, PS3DINSTANCE, PSFILED2 };
+enum PixelShader { PS2D, PS3D, PSSPLINE, PSBONE, PSFILED, PS3DINSTANCE, PS3DSKININSTANCE };
 
 class PixelShaderMgr : public MSingleton<PixelShaderMgr>
 {

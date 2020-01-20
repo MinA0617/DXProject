@@ -126,9 +126,9 @@ void MSelect::CheckUPNode(MTreeNode * pNode, MRAY * ray, vector<MTreeNode*>& lis
 }
 
 
-M3DInstance* MSelect::PickObject(DWORD* ModelID, DWORD* InstanceID, D3DXVECTOR3* intersection)
+M3DNObject* MSelect::PickObject(DWORD* ModelID, DWORD* InstanceID, D3DXVECTOR3* intersection)
 {
-	M3DInstance* result = nullptr;
+	M3DNObject* result = nullptr;
 	vector<MTreeNode*> nodelist;
 	MRAY ray = GetScreenRay();
 	float mindistnace = 9999999999;
@@ -136,7 +136,7 @@ M3DInstance* MSelect::PickObject(DWORD* ModelID, DWORD* InstanceID, D3DXVECTOR3*
 	{
 		for (int i = 0; i < nodelist.size(); i++)
 		{
-			for (auto obj : nodelist[i]->m_pInstanceList)
+			for (auto obj : nodelist[i]->m_pNObjList)
 			{
 				D3DXVECTOR3 inter;
 				if (MCollision::OBBtoRay(&obj->m_Box, &ray, &inter))
@@ -153,13 +153,14 @@ M3DInstance* MSelect::PickObject(DWORD* ModelID, DWORD* InstanceID, D3DXVECTOR3*
 		if (result == nullptr) return result;
 		if (ModelID)
 		{
-			*ModelID = I_3DObjectMgr.GetInstanceModelID(result->m_pModel->m_name);
+			M3DInstance* temp = (M3DInstance*)&result;
+			*ModelID = I_3DObjectMgr.GetInstanceModelID(temp->m_pModel->m_name);
 			if (InstanceID)
 			{
-				int instcount = result->m_pModel->m_iCount;
+				int instcount = temp->m_pModel->m_iCount;
 				for (int i = 0; i < instcount; i++)
 				{
-					if (result == result->m_pModel->GetInstanceObject(i))
+					if (result == temp->m_pModel->GetInstanceObject(i))
 					{
 						*InstanceID = i;
 						return result;

@@ -43,9 +43,9 @@ int M3DInstanceModel::CreateInstanceObject(int count)
 	return flag;
 }
 
-M3DInstance * M3DInstanceModel::GetInstanceObject(int index)
+M3DNObject* M3DInstanceModel::GetInstanceObject(int index)
 {
-	map<int,M3DInstance*>::iterator temp = m_InstanceList.find(index);
+	map<int, M3DNObject*>::iterator temp = m_InstanceList.find(index);
 	if (temp != m_InstanceList.end())
 	{
 		return (*temp).second;
@@ -55,7 +55,7 @@ M3DInstance * M3DInstanceModel::GetInstanceObject(int index)
 
 bool M3DInstanceModel::DeleteInstanceObject(int index)
 {
-	map<int, M3DInstance*>::iterator temp = m_InstanceList.find(index);
+	map<int, M3DNObject*>::iterator temp = m_InstanceList.find(index);
 	if (temp != m_InstanceList.end())
 	{
 		I_3DObjectMgr.m_pTree->DeleteInstancObject((*temp).second);

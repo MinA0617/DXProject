@@ -225,6 +225,9 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClCompile Include="M3DBone.cpp" />
     <ClCompile Include="M3DInstance.cpp" />
     <ClCompile Include="M3DInstanceModel.cpp" />
+    <ClCompile Include="M3DInstanceSkinModel.cpp" />
+    <ClCompile Include="M3DInstanceSkinning.cpp" />
+    <ClCompile Include="M3DNObject.cpp" />
     <ClCompile Include="MFiled.cpp" />
     <ClCompile Include="M3DHeightMap.cpp" />
     <ClCompile Include="MBoundingBox.cpp" />
@@ -291,6 +294,9 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
     <ClInclude Include="M3DBone.h" />
     <ClInclude Include="M3DInstance.h" />
     <ClInclude Include="M3DInstanceModel.h" />
+    <ClInclude Include="M3DInstanceSkinModel.h" />
+    <ClInclude Include="M3DInstanceSkinning.h" />
+    <ClInclude Include="M3DNObject.h" />
     <ClInclude Include="MFiled.h" />
     <ClInclude Include="M3DHeightMap.h" />
     <ClInclude Include="MBoundingBox.h" />
@@ -358,6 +364,10 @@ copy "DXLib_R.lib" "../../lib/Release/DXLib_0"</Command>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\data\Shader\3DINSTANCE.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\..\data\Shader\3DINSTANCESKIN.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

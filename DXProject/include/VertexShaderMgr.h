@@ -1,9 +1,9 @@
 #pragma once
 #include "MStd.h"
 #include "D3Dcompiler.h"
-#define VS_NUM 6
+#define VS_NUM 7
 
-enum VertexShader { VS2D, VS3D, VSSPLINE, VSCHARACTER, VSFILED, VS3DINSTANCE, VSFILED2};
+enum VertexShader { VS2D, VS3D, VSSPLINE, VSCHARACTER, VSFILED, VS3DINSTANCE, VS3DSKININSTANCE};
 
 class VertexShaderMgr : public MSingleton<VertexShaderMgr>
 {

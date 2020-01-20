@@ -54,7 +54,7 @@ public:
 	int							GetInstanceModelID(M_STR name);
 	M3DInstanceModel*			GetInstanceModel(M_STR name);
 	M3DInstanceModel*			GetInstanceModel(int id);
-	M3DInstance*				GetInstanceObj(int id, int lowid);
+	M3DNObject*					GetInstanceObj(int id, int lowid);
 	
 	bool						InstanceRender();
 	// ------------
